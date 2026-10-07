@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07100c">
+<title>GoalRadar — See the game differently</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#050908;color:#f3f7f4;font-family:Inter,Arial,sans-serif;line-height:1.5}a{text-decoration:none;color:inherit}button{font:inherit;cursor:pointer}.topbar{height:72px;display:flex;align-items:center;gap:30px;padding:0 5%;border-bottom:1px solid #17201b;background:#060a08dd;backdrop-filter:blur(12px);position:sticky;top:0;z-index:10}.logo{font-weight:900;letter-spacing:1px;font-size:20px}.logo span{color:#a9ff35}.radar{color:#a9ff35;margin-right:5px}nav{display:flex;gap:22px;font-size:13px;color:#9ca79f;flex:1}nav a:hover{color:#a9ff35}.auth{display:flex;gap:8px}.ghost,.secondary{background:transparent;color:#dce4df;border:1px solid #29332d;padding:10px 15px;border-radius:7px}.primary{display:inline-flex;align-items:center;gap:12px;background:#a9ff35;color:#061006;border:0;padding:13px 18px;border-radius:7px;font-weight:900;box-shadow:0 0 25px #8ee62c22}.primary.small{padding:9px 14px}.menu{display:none;background:none;color:white;border:0;font-size:22px}.hero{min-height:590px;padding:80px 7%;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:50px;background:radial-gradient(circle at 75% 45%,#193b20 0,#08100c 35%,#050908 68%)}.eyebrow{color:#a9ff35;font-size:11px;letter-spacing:2px;font-weight:900;margin-bottom:10px}.hero h1{font-size:clamp(45px,7vw,82px);line-height:.94;margin:0 0 22px;letter-spacing:-3px}.hero h1 em{font-style:normal;color:#a9ff35}.hero p{max-width:550px;color:#aab5ae;font-size:17px}.hero-actions{display:flex;gap:12px;margin-top:28px}.hero-card{height:360px;position:relative;border:1px solid #243128;border-radius:18px;overflow:hidden;background:linear-gradient(145deg,#102017,#050907);display:flex;align-items:center;justify-content:center}.stadium-glow{position:absolute;width:330px;height:330px;border-radius:50%;background:#a9ff3520;filter:blur(45px)}.score-card{position:relative;width:78%;background:#0a110dE8;border:1px solid #304138;border-radius:14px;padding:28px;box-shadow:0 25px 80px #000}.label,.confidence span{font-size:10px;letter-spacing:1.5px;color:#7f8b84;font-weight:bold}.teams{display:flex;justify-content:space-between;align-items:center;margin:35px 0 20px;font-size:27px;font-weight:900}.teams b{font-size:10px;color:#637067}.pick{font-size:20px;font-weight:900;color:#a9ff35}.confidence{display:flex;justify-content:space-between;align-items:end;margin-top:22px}.confidence strong{font-size:25px}.bar{height:5px;background:#1c281f;margin:8px 0 12px;border-radius:5px}.bar i{display:block;height:100%;background:#a9ff35;border-radius:5px}.score-card small{color:#849087}.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);background:#0a100c;border-top:1px solid #17221b;border-bottom:1px solid #17221b}.stats-strip div{padding:25px;text-align:center;border-right:1px solid #17221b}.stats-strip b{display:block;font-size:28px}.stats-strip span{color:#7f8b84;font-size:12px}.section{padding:75px 7%}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px}.section h2{font-size:34px;margin:0;letter-spacing:-1px}.date{font-size:11px;color:#77827b}.filters{display:flex;gap:8px;overflow:auto;padding-bottom:20px}.filters button{white-space:nowrap;background:#0b120e;border:1px solid #202b24;color:#87938b;padding:9px 14px;border-radius:6px}.filters button.active,.filters button:hover{background:#a9ff35;color:#071007;border-color:#a9ff35}.pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.pick-card{background:#0a100c;border:1px solid #1c2820;border-radius:12px;padding:22px;transition:.2s}.pick-card:hover{transform:translateY(-3px);border-color:#557449}.pick-card .league{font-size:10px;color:#829087}.pick-card h3{margin:14px 0 5px;font-size:18px}.pick-card .vs{color:#647069;font-size:11px}.pick{font-size:15px}.pick-card .bottom{display:flex;justify-content:space-between;margin-top:20px;align-items:end}.pick-card .pct{color:#a9ff35;font-size:21px;font-weight:900}.analysis-card{background:linear-gradient(120deg,#0c150f,#08100b);border:1px solid #223027;border-radius:14px;padding:28px}.league-tag{display:inline-block;background:#17261a;color:#a9ff35;padding:5px 8px;border-radius:4px;font-size:10px;font-weight:bold}.analysis-match h3{font-size:30px;margin:16px 0 3px}.analysis-match h3 small{font-size:12px;color:#637067;margin:0 10px}.analysis-match p,.reason{color:#89958d}.analysis-pick{display:grid;grid-template-columns:1fr auto;gap:3px;margin:25px 0;padding:18px;background:#111b14;border-radius:8px}.analysis-pick span{grid-column:1/-1;color:#78847c;font-size:10px}.analysis-pick strong{font-size:20px}.analysis-pick b{font-size:24px;color:#a9ff35}.analysis-data{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.analysis-data div{padding:15px;background:#0a110d;border-radius:7px}.analysis-data span{display:block;color:#707c74;font-size:10px}.analysis-data b{display:block;margin-top:5px}.confidence-grid,.record-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.confidence-grid div{padding:25px;background:#0a100c;border:1px solid #1c2820;border-radius:10px}.confidence-grid strong{font-size:27px;color:#a9ff35}.confidence-grid h3{margin:5px 0}.confidence-grid p,.about p{color:#89958d}.record-grid{grid-template-columns:repeat(4,1fr)}.record-grid div{background:#0a100c;border:1px solid #1c2820;padding:22px;border-radius:10px}.record-grid span,.record-grid small{display:block;color:#78847c;font-size:11px}.record-grid b{display:block;font-size:25px;margin:7px 0}.table-wrap{overflow:auto;background:#0a100c;border:1px solid #1c2820;border-radius:10px}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:left;padding:17px;border-bottom:1px solid #1b251f;font-size:13px}th{color:#68756d;font-size:10px;letter-spacing:1px}.won{color:#a9ff35;font-weight:bold}.lost{color:#ff6f6f;font-weight:bold}.pro{margin:20px 7% 75px;padding:45px;border-radius:14px;background:linear-gradient(110deg,#132219,#0b130e);border:1px solid #304536;display:flex;align-items:center;justify-content:space-between}.pro h2{font-size:36px;margin:0}.pro h2 span{color:#a9ff35}.pro p{color:#8d9991}.about-box{max-width:750px}.about{border-top:1px solid #17221b}footer{padding:40px 7%;border-top:1px solid #17221b;background:#070b09;display:flex;align-items:center;gap:25px;color:#738078}footer .logo{color:#fff}footer p{flex:1;font-size:12px}footer a{margin-left:15px;font-size:11px} @media(max-width:800px){nav,.auth{display:none}.menu{display:block;margin-left:auto}.hero{grid-template-columns:1fr;padding:55px 6%}.hero-card{height:310px}.stats-strip{grid-template-columns:repeat(2,1fr)}.stats-strip div:nth-child(2){border-right:0}.pick-grid{grid-template-columns:1fr}.section{padding:55px 6%}.analysis-data{grid-template-columns:repeat(2,1fr)}.confidence-grid{grid-template-columns:1fr}.record-grid{grid-template-columns:repeat(2,1fr)}.pro{margin:0 6% 55px;display:block}.pro .primary{margin-top:15px}footer{display:block}footer p{margin:10px 0 20px}footer a{margin:0 14px 0 0}} @media(max-width:450px){.hero h1{font-size:45px}.hero-actions{flex-direction:column}.hero-actions a{justify-content:center}.score-card{width:90%;padding:20px}.teams{font-size:22px}.section h2{font-size:28px}}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="logo"><span class="radar">◉</span> GOAL<span>RADAR</span></div>
+  <button class="menu" id="menuBtn">☰</button>
+  <nav id="nav">
+    <a href="#home">Home</a>
+    <a href="#picks">Today's Picks</a>
+    <a href="#results">Results</a>
+    <a href="#leagues">Leagues</a>
+    <a href="#stats">Statistics</a>
+    <a href="#about">About</a>
+  </nav>
+  <div class="auth"><button class="ghost">Login</button><button class="primary small">Sign Up</button></div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-copy">
+    <div class="eyebrow">FOOTBALL INTELLIGENCE PLATFORM</div>
+    <h1>SEE THE GAME<br><em>DIFFERENTLY.</em></h1>
+    <p>Data-driven football predictions, match analysis and performance tracking — all in one place.</p>
+    <div class="hero-actions">
+      <a class="primary" href="#picks">VIEW TODAY'S PICKS <span>→</span></a>
+      <a class="secondary" href="#results">VIEW RESULTS</a>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="stadium-glow"></div>
+    <div class="score-card">
+      <div class="label">PICK OF THE DAY</div>
+      <div class="teams"><span>ARS</span><b>VS</b><span>CHE</span></div>
+      <div class="pick">ARSENAL TO WIN</div>
+      <div class="confidence"><span>CONFIDENCE</span><strong>86%</strong></div>
+      <div class="bar"><i style="width:86%"></i></div>
+      <small>Strong home form + attacking edge</small>
+    </div>
+  </div>
+</section>
+
+<section class="stats-strip">
+  <div><b>12</b><span>Matches Today</span></div>
+  <div><b>9</b><span>Analyzed</span></div>
+  <div><b>6</b><span>High Confidence</span></div>
+  <div><b>82%</b><span>Model Accuracy</span></div>
+</section>
+
+<section class="section" id="picks">
+  <div class="section-head"><div><div class="eyebrow">DAILY SIGNAL</div><h2>Today's Top Picks</h2></div><span class="date">07 OCT 2026</span></div>
+  <div class="filters" id="filters">
+    <button class="active" data-league="All">All</button>
+    <button data-league="EPL">EPL</button><button data-league="La Liga">La Liga</button>
+    <button data-league="Serie A">Serie A</button><button data-league="Bundesliga">Bundesliga</button>
+    <button data-league="UCL">UCL</button>
+  </div>
+  <div class="pick-grid" id="pickGrid"></div>
+</section>
+
+<section class="analysis section">
+  <div class="section-head"><div><div class="eyebrow">MATCH INTELLIGENCE</div><h2>Featured Analysis</h2></div></div>
+  <div class="analysis-card">
+    <div class="analysis-match"><span class="league-tag">EPL</span><h3>Arsenal <small>vs</small> Chelsea</h3><p>Emirates Stadium · 19:00</p></div>
+    <div class="analysis-pick"><span>GOALRADAR PICK</span><strong>Arsenal Win</strong><b>86%</b></div>
+    <div class="analysis-data">
+      <div><span>Recent Form</span><b>W W D W W</b></div>
+      <div><span>Avg. Goals</span><b>2.4</b></div>
+      <div><span>Home Win Rate</span><b>78%</b></div>
+      <div><span>BTTS</span><b>54%</b></div>
+    </div>
+    <p class="reason"><strong>Why this pick?</strong> Arsenal's recent home performance and attacking numbers give them the statistical edge. Chelsea's away defensive record lowers their probability of taking all three points.</p>
+  </div>
+</section>
+
+<section class="confidence section">
+  <div class="section-head"><div><div class="eyebrow">RISK SIGNAL</div><h2>Confidence Levels</h2></div></div>
+  <div class="confidence-grid">
+    <div><strong>85–100%</strong><h3>Very Strong</h3><p>Highest model conviction.</p></div>
+    <div><strong>75–84%</strong><h3>Strong</h3><p>Good statistical support.</p></div>
+    <div><strong>65–74%</strong><h3>Moderate</h3><p>More uncertainty present.</p></div>
+  </div>
+</section>
+
+<section class="record section" id="stats">
+  <div class="section-head"><div><div class="eyebrow">TRACK THE MODEL</div><h2>GoalRadar Record</h2></div></div>
+  <div class="record-grid">
+    <div><span>Today</span><b>7 / 9</b><small>77.8% hit rate</small></div>
+    <div><span>This Week</span><b>31 / 42</b><small>73.8% hit rate</small></div>
+    <div><span>This Month</span><b>118 / 161</b><small>73.3% hit rate</small></div>
+    <div><span>Overall</span><b>1,248 / 1,687</b><small>74.0% hit rate</small></div>
+  </div>
+</section>
+
+<section class="results section" id="results">
+  <div class="section-head"><div><div class="eyebrow">TRANSPARENT HISTORY</div><h2>Latest Results</h2></div><span class="date">ALL PICKS RECORDED</span></div>
+  <div class="table-wrap">
+  <table><thead><tr><th>Match</th><th>Pick</th><th>Confidence</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>Barcelona vs Sevilla</td><td>Barcelona Win</td><td>82%</td><td><span class="won">WON</span></td></tr>
+    <tr><td>Inter vs Napoli</td><td>Over 1.5 Goals</td><td>79%</td><td><span class="won">WON</span></td></tr>
+    <tr><td>Dortmund vs Leipzig</td><td>BTTS</td><td>71%</td><td><span class="lost">LOST</span></td></tr>
+    <tr><td>Lyon vs Marseille</td><td>Over 2.5 Goals</td><td>68%</td><td><span class="won">WON</span></td></tr>
+  </tbody></table>
+  </div>
+</section>
+
+<section class="pro section">
+  <div><div class="eyebrow">COMING NEXT</div><h2>GoalRadar <span>PRO</span></h2><p>Advanced match breakdowns, deeper statistics, more picks and premium insights.</p></div>
+  <button class="primary">JOIN WAITLIST →</button>
+</section>
+
+<section class="about section" id="about">
+  <div class="about-box"><div class="eyebrow">ABOUT GOALRADAR</div><h2>Predictions with accountability.</h2><p>GoalRadar is designed to make football analysis easier to understand. Picks are model-based opinions, not guarantees. Every recorded result stays in the history so performance can be judged honestly.</p></div>
+</section>
+</main>
+
+<footer><div class="logo">◉ GOAL<span>RADAR</span></div><p>See the game differently.</p><div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Responsible Use</a><a href="#">Contact</a></div></footer>
+<script>
+const picks = [
+ {league:"EPL",home:"Arsenal",away:"Chelsea",pick:"Arsenal Win",type:"1X2",confidence:86},
+ {league:"La Liga",home:"Barcelona",away:"Sevilla",pick:"Barcelona Win",type:"1X2",confidence:82},
+ {league:"Serie A",home:"Inter",away:"Napoli",pick:"Over 1.5 Goals",type:"Goals",confidence:79},
+ {league:"Bundesliga",home:"Bayern",away:"Leverkusen",pick:"Bayern Win",type:"1X2",confidence:77},
+ {league:"EPL",home:"Liverpool",away:"Newcastle",pick:"Over 2.5 Goals",type:"Goals",confidence:74},
+ {league:"UCL",home:"PSG",away:"Milan",pick:"BTTS",type:"Both Teams Score",confidence:71}
+];
+const grid=document.getElementById("pickGrid");
+function render(filter="All"){
+ grid.innerHTML=picks.filter(x=>filter==="All"||x.league===filter).map(x=>`
+ <article class="pick-card">
+   <div class="league">${x.league} · ${x.type}</div>
+   <h3>${x.home} <span class="vs">VS</span> ${x.away}</h3>
+   <div class="pick">${x.pick}</div>
+   <div class="bottom"><span>GoalRadar signal</span><span class="pct">${x.confidence}%</span></div>
+   <div class="bar"><i style="width:${x.confidence}%"></i></div>
+ </article>`).join("");
+}
+document.querySelectorAll("#filters button").forEach(btn=>{
+ btn.addEventListener("click",()=>{document.querySelectorAll("#filters button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");render(btn.dataset.league)})
+});
+document.getElementById("menuBtn").addEventListener("click",()=>{const n=document.getElementById("nav");n.style.display=n.style.display==="flex"?"none":"flex";n.style.position="absolute";n.style.top="72px";n.style.left="0";n.style.right="0";n.style.padding="20px";n.style.background="#060a08";n.style.flexDirection="column"});
+render();
+
+</script>
+</body>
+</html>
