@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-08T03:44:38.021786+00:00",
+  "updated_at": "2026-10-08T06:08:50.647341+00:00",
   "date": "08 OCT 2026",
   "stats": {
     "matches_today": 141,
@@ -82,9 +82,9 @@
       "league": "Copa do Brasil U20",
       "home": "CSA U20",
       "away": "Santa Cruz AC U20",
-      "pick": "Santa Cruz AC U20 Win",
-      "type": "1X2",
-      "confidence": 50,
+      "pick": "Analysis pending",
+      "type": "Match",
+      "confidence": 0,
       "fixture_id": 1639232,
       "kickoff": "2026-10-08T18:00:00+00:00"
     },
@@ -92,9 +92,9 @@
       "league": "Copa do Brasil U20",
       "home": "Grêmio U20",
       "away": "Operário PR U20",
-      "pick": "Grêmio U20 Win",
-      "type": "1X2",
-      "confidence": 45,
+      "pick": "Analysis pending",
+      "type": "Match",
+      "confidence": 0,
       "fixture_id": 1639233,
       "kickoff": "2026-10-08T18:00:00+00:00"
     },
