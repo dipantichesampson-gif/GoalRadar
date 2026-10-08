@@ -126,7 +126,7 @@
 
 <footer><div class="logo">◉ GOAL<span>RADAR</span></div><p>See the game differently.</p><div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Responsible Use</a><a href="#">Contact</a></div></footer>
 <script>
-const picks = [
+const demoPicks = [
  {league:"EPL",home:"Arsenal",away:"Chelsea",pick:"Arsenal Win",type:"1X2",confidence:86},
  {league:"La Liga",home:"Barcelona",away:"Sevilla",pick:"Barcelona Win",type:"1X2",confidence:82},
  {league:"Serie A",home:"Inter",away:"Napoli",pick:"Over 1.5 Goals",type:"Goals",confidence:79},
@@ -135,22 +135,35 @@ const picks = [
  {league:"UCL",home:"PSG",away:"Milan",pick:"BTTS",type:"Both Teams Score",confidence:71}
 ];
 const grid=document.getElementById("pickGrid");
+let picks=demoPicks;
 function render(filter="All"){
  grid.innerHTML=picks.filter(x=>filter==="All"||x.league===filter).map(x=>`
  <article class="pick-card">
-   <div class="league">${x.league} · ${x.type}</div>
+   <div class="league">${x.league} · ${x.type||"Match"}</div>
    <h3>${x.home} <span class="vs">VS</span> ${x.away}</h3>
-   <div class="pick">${x.pick}</div>
-   <div class="bottom"><span>GoalRadar signal</span><span class="pct">${x.confidence}%</span></div>
-   <div class="bar"><i style="width:${x.confidence}%"></i></div>
+   <div class="pick">${x.pick||"Analysis pending"}</div>
+   <div class="bottom"><span>GoalRadar signal</span><span class="pct">${x.confidence||0}%</span></div>
+   <div class="bar"><i style="width:${x.confidence||0}%"></i></div>
  </article>`).join("");
 }
 document.querySelectorAll("#filters button").forEach(btn=>{
  btn.addEventListener("click",()=>{document.querySelectorAll("#filters button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");render(btn.dataset.league)})
 });
 document.getElementById("menuBtn").addEventListener("click",()=>{const n=document.getElementById("nav");n.style.display=n.style.display==="flex"?"none":"flex";n.style.position="absolute";n.style.top="72px";n.style.left="0";n.style.right="0";n.style.padding="20px";n.style.background="#060a08";n.style.flexDirection="column"});
+async function loadGoalRadarData(){
+  try{
+    const r=await fetch("data/goalradar.json?ts="+Date.now(),{cache:"no-store"});
+    if(!r.ok) throw new Error("data unavailable");
+    const d=await r.json();
+    if(Array.isArray(d.picks)&&d.picks.length){picks=d.picks;render();}
+    const dateEl=document.querySelector(".date");
+    if(dateEl&&d.date) dateEl.textContent=d.date;
+    const stat=document.querySelector(".stats-strip");
+    if(stat&&d.stats){const b=stat.querySelectorAll("b");if(b[0])b[0].textContent=d.stats.matches_today;if(b[1])b[1].textContent=d.stats.analyzed;if(b[2])b[2].textContent=d.stats.high_confidence;}
+  }catch(e){console.log("Using demo data until the first automated update.",e);}
+}
 render();
-
+loadGoalRadarData();
 </script>
 </body>
 </html>
