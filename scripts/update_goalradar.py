@@ -1,8 +1,9 @@
 import json
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from urllib.request import Request, urlopen
+from urllib.parse import urlencode
 
 API_KEY = os.environ.get("API_FOOTBALL_KEY")
 
@@ -10,13 +11,31 @@ if not API_KEY:
     print("Missing API_FOOTBALL_KEY secret", file=sys.stderr)
     sys.exit(1)
 
-TODAY = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 BASE = "https://v3.football.api-sports.io"
 
+# --------------------------------------------------
+# DATES
+# --------------------------------------------------
 
-def get(path):
+NOW = datetime.now(timezone.utc)
+TODAY = NOW.strftime("%Y-%m-%d")
+UPCOMING_FROM = TODAY
+UPCOMING_TO = (NOW + timedelta(days=14)).strftime("%Y-%m-%d")
+
+
+# --------------------------------------------------
+# API REQUEST
+# --------------------------------------------------
+
+def get(path, params=None):
+    if params:
+        query = urlencode(params)
+        url = BASE + path + "?" + query
+    else:
+        url = BASE + path
+
     req = Request(
-        BASE + path,
+        url,
         headers={
             "x-apisports-key": API_KEY,
             "Accept": "application/json",
@@ -32,7 +51,23 @@ def get(path):
     return data.get("response", [])
 
 
-# Main leagues get priority.
+# --------------------------------------------------
+# GOALRADAR'S FIVE MAIN LEAGUES
+# --------------------------------------------------
+
+MAIN_LEAGUES = {
+    39: "EPL",
+    140: "La Liga",
+    135: "Serie A",
+    78: "Bundesliga",
+    2: "UCL",
+}
+
+
+# --------------------------------------------------
+# OTHER LEAGUES FOR DAILY PICKS
+# --------------------------------------------------
+
 PRIORITY_LEAGUES = {
     39: "EPL",
     140: "La Liga",
@@ -48,15 +83,33 @@ PRIORITY_LEAGUES = {
     128: "Argentina Liga Profesional",
 }
 
-fixtures = get(f"/fixtures?date={TODAY}")
 
+# --------------------------------------------------
+# GET TODAY'S FIXTURES
+# --------------------------------------------------
+
+fixtures = get(
+    "/fixtures",
+    {
+        "date": TODAY
+    }
+)
+
+
+# --------------------------------------------------
+# SCORE FIXTURES FOR DAILY PICKS
+# --------------------------------------------------
 
 def score_fixture(fixture):
     league_id = fixture.get("league", {}).get("id")
-    league_name = fixture.get("league", {}).get("name", "").lower()
+    league_name = fixture.get("league", {}).get(
+        "name", ""
+    ).lower()
 
     if league_id in PRIORITY_LEAGUES:
-        return 1000 - list(PRIORITY_LEAGUES).index(league_id)
+        return 1000 - list(PRIORITY_LEAGUES).index(
+            league_id
+        )
 
     if any(word in league_name for word in [
         "world cup",
@@ -92,15 +145,24 @@ def score_fixture(fixture):
     return 300
 
 
-# Automatically choose the best available matches.
+# --------------------------------------------------
+# SELECT BEST MATCHES FOR TODAY'S PICKS
+# --------------------------------------------------
+
 selected = sorted(
     fixtures,
     key=lambda fixture: (
         -score_fixture(fixture),
-        fixture.get("fixture", {}).get("timestamp", 0)
+        fixture.get("fixture", {}).get(
+            "timestamp", 0
+        )
     )
 )[:12]
 
+
+# --------------------------------------------------
+# GENERATE PREDICTIONS
+# --------------------------------------------------
 
 picks = []
 
@@ -112,9 +174,13 @@ for fixture in selected:
     away = fixture["teams"]["away"]["name"]
 
     league_id = fixture["league"]["id"]
+
     league = PRIORITY_LEAGUES.get(
         league_id,
-        fixture["league"].get("name", "Football")
+        fixture["league"].get(
+            "name",
+            "Football"
+        )
     )
 
     pick = "Analysis pending"
@@ -124,7 +190,10 @@ for fixture in selected:
     try:
 
         prediction = get(
-            f"/predictions?fixture={fixture_id}"
+            "/predictions",
+            {
+                "fixture": fixture_id
+            }
         )
 
         if prediction:
@@ -159,11 +228,16 @@ for fixture in selected:
                     key = "draw"
 
                 raw = str(
-                    probabilities.get(key, "0")
+                    probabilities.get(
+                        key,
+                        "0"
+                    )
                 ).replace("%", "")
 
                 try:
-                    confidence = int(float(raw))
+                    confidence = int(
+                        float(raw)
+                    )
                 except:
                     confidence = 0
 
@@ -190,6 +264,162 @@ for fixture in selected:
     })
 
 
+# --------------------------------------------------
+# GET UPCOMING MATCHES FOR THE FIVE MAIN LEAGUES
+# --------------------------------------------------
+
+upcoming = {}
+
+for league_id, league_name in MAIN_LEAGUES.items():
+
+    print(
+        f"Getting upcoming {league_name} fixtures..."
+    )
+
+    try:
+
+        league_fixtures = get(
+            "/fixtures",
+            {
+                "league": league_id,
+                "season": 2026,
+                "from": UPCOMING_FROM,
+                "to": UPCOMING_TO,
+                "timezone": "Africa/Accra"
+            }
+        )
+
+        league_matches = []
+
+        for fixture in league_fixtures:
+
+            fixture_info = fixture.get(
+                "fixture",
+                {}
+            )
+
+            status = fixture_info.get(
+                "status",
+                {}
+            ).get(
+                "short",
+                ""
+            )
+
+            # Only upcoming/not-started fixtures
+            if status not in [
+                "NS",
+                "TBD"
+            ]:
+                continue
+
+            timestamp = fixture_info.get(
+                "timestamp",
+                0
+            )
+
+            # Don't include matches already in the past
+            if timestamp and timestamp < NOW.timestamp():
+                continue
+
+            teams = fixture.get(
+                "teams",
+                {}
+            )
+
+            home_team = teams.get(
+                "home",
+                {}
+            ).get(
+                "name",
+                "Home"
+            )
+
+            away_team = teams.get(
+                "away",
+                {}
+            ).get(
+                "name",
+                "Away"
+            )
+
+            venue = fixture.get(
+                "fixture",
+                {}
+            ).get(
+                "venue",
+                {}
+            )
+
+            league_info = fixture.get(
+                "league",
+                {}
+            )
+
+            league_matches.append({
+                "fixture_id": fixture_info.get(
+                    "id"
+                ),
+
+                "home": home_team,
+
+                "away": away_team,
+
+                "kickoff": fixture_info.get(
+                    "date"
+                ),
+
+                "timestamp": timestamp,
+
+                "venue": venue.get(
+                    "name"
+                ) or "Venue TBC",
+
+                "city": venue.get(
+                    "city"
+                ),
+
+                "round": league_info.get(
+                    "round"
+                ),
+
+                "league": league_name,
+
+                "league_id": league_id
+            })
+
+        # Sort by kickoff
+        league_matches.sort(
+            key=lambda x: x.get(
+                "timestamp",
+                0
+            )
+        )
+
+        # Keep the next 20 matches per league
+        upcoming[league_name] = league_matches[:20]
+
+        print(
+            f"{league_name}: "
+            f"{len(upcoming[league_name])} "
+            f"upcoming matches"
+        )
+
+    except Exception as error:
+
+        print(
+            f"Failed to get {league_name}: "
+            f"{error}",
+            file=sys.stderr
+        )
+
+        upcoming[league_name] = []
+
+
+# --------------------------------------------------
+# HIGH-CONFIDENCE COUNT
+# --------------------------------------------------
+
 high_confidence = sum(
     1
     for item in picks
@@ -197,26 +427,60 @@ high_confidence = sum(
 )
 
 
+# --------------------------------------------------
+# FINAL GOALRADAR DATA
+# --------------------------------------------------
+
 output = {
+
     "updated_at":
-        datetime.now(timezone.utc).isoformat(),
+        datetime.now(
+            timezone.utc
+        ).isoformat(),
 
     "date":
-        datetime.now(timezone.utc).strftime(
+        datetime.now(
+            timezone.utc
+        ).strftime(
             "%d %b %Y"
         ).upper(),
 
     "stats": {
-        "matches_today": len(fixtures),
-        "analyzed": len(picks),
-        "high_confidence": high_confidence
+
+        "matches_today":
+            len(fixtures),
+
+        "analyzed":
+            len(picks),
+
+        "high_confidence":
+            high_confidence,
+
+        "upcoming_leagues":
+            len([
+                league
+                for league, matches
+                in upcoming.items()
+                if matches
+            ])
     },
 
-    "picks": picks
+    # Today's predictions
+    "picks": picks,
+
+    # Upcoming fixtures for league buttons
+    "upcoming": upcoming
 }
 
 
-os.makedirs("data", exist_ok=True)
+# --------------------------------------------------
+# SAVE JSON
+# --------------------------------------------------
+
+os.makedirs(
+    "data",
+    exist_ok=True
+)
 
 with open(
     "data/goalradar.json",
@@ -232,8 +496,28 @@ with open(
     )
 
 
+# --------------------------------------------------
+# SUCCESS MESSAGE
+# --------------------------------------------------
+
+total_upcoming = sum(
+    len(matches)
+    for matches in upcoming.values()
+)
+
 print(
-    f"Updated GoalRadar for {TODAY}: "
-    f"{len(fixtures)} fixtures, "
-    f"{len(picks)} analyzed."
+    f"GoalRadar updated for {TODAY}"
+)
+
+print(
+    f"Today's fixtures: {len(fixtures)}"
+)
+
+print(
+    f"Today's analyzed picks: {len(picks)}"
+)
+
+print(
+    f"Upcoming main-league matches: "
+    f"{total_upcoming}"
 )
