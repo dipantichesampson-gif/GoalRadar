@@ -284,8 +284,6 @@ for league_id, league_name in MAIN_LEAGUES.items():
             {
                 "league": league_id,
                 "season": 2026,
-                "from": UPCOMING_FROM,
-                "to": UPCOMING_TO,
                 "timezone": "Africa/Accra"
             }
         )
