@@ -126,43 +126,223 @@
 
 <footer><div class="logo">◉ GOAL<span>RADAR</span></div><p>See the game differently.</p><div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Responsible Use</a><a href="#">Contact</a></div></footer>
 <script>
-const demoPicks = [
- {league:"EPL",home:"Arsenal",away:"Chelsea",pick:"Arsenal Win",type:"1X2",confidence:86},
- {league:"La Liga",home:"Barcelona",away:"Sevilla",pick:"Barcelona Win",type:"1X2",confidence:82},
- {league:"Serie A",home:"Inter",away:"Napoli",pick:"Over 1.5 Goals",type:"Goals",confidence:79},
- {league:"Bundesliga",home:"Bayern",away:"Leverkusen",pick:"Bayern Win",type:"1X2",confidence:77},
- {league:"EPL",home:"Liverpool",away:"Newcastle",pick:"Over 2.5 Goals",type:"Goals",confidence:74},
- {league:"UCL",home:"PSG",away:"Milan",pick:"BTTS",type:"Both Teams Score",confidence:71}
-];
-const grid=document.getElementById("pickGrid");
-let picks=demoPicks;
-function render(filter="All"){
- grid.innerHTML=picks.filter(x=>filter==="All"||x.league===filter).map(x=>`
- <article class="pick-card">
-   <div class="league">${x.league} · ${x.type||"Match"}</div>
-   <h3>${x.home} <span class="vs">VS</span> ${x.away}</h3>
-   <div class="pick">${x.pick||"Analysis pending"}</div>
-   <div class="bottom"><span>GoalRadar signal</span><span class="pct">${x.confidence||0}%</span></div>
-   <div class="bar"><i style="width:${x.confidence||0}%"></i></div>
- </article>`).join("");
+const grid = document.getElementById("pickGrid");
+let picks = [];
+
+function render(filter = "All") {
+  const filtered = picks.filter(x =>
+    filter === "All" || x.league === filter
+  );
+
+  if (!filtered.length) {
+    grid.innerHTML = `
+      <div class="pick-card">
+        <h3>No picks available</h3>
+        <p class="vs">GoalRadar has no analyzed matches for this selection yet.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(x => `
+    <article class="pick-card">
+      <div class="league">${x.league || "Football"} · ${x.type || "Match"}</div>
+      <h3>${x.home || "Home"} <span class="vs">VS</span> ${x.away || "Away"}</h3>
+      <div class="pick">${x.pick || "Analysis pending"}</div>
+      <div class="bottom">
+        <span>GoalRadar signal</span>
+        <span class="pct">${x.confidence || 0}%</span>
+      </div>
+      <div class="bar">
+        <i style="width:${x.confidence || 0}%"></i>
+      </div>
+    </article>
+  `).join("");
 }
-document.querySelectorAll("#filters button").forEach(btn=>{
- btn.addEventListener("click",()=>{document.querySelectorAll("#filters button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");render(btn.dataset.league)})
+
+function updateFeaturedPick(pick) {
+  if (!pick) return;
+
+  // Pick of the Day
+  const teams = document.querySelector(".score-card .teams");
+  const heroPick = document.querySelector(".score-card .pick");
+  const heroConfidence = document.querySelector(".score-card .confidence strong");
+  const heroBar = document.querySelector(".score-card .bar i");
+  const heroNote = document.querySelector(".score-card small");
+
+  if (teams) {
+    teams.innerHTML = `
+      <span>${pick.home || "HOME"}</span>
+      <b>VS</b>
+      <span>${pick.away || "AWAY"}</span>
+    `;
+  }
+
+  if (heroPick) heroPick.textContent = pick.pick || "Analysis pending";
+
+  if (heroConfidence)
+    heroConfidence.textContent = `${pick.confidence || 0}%`;
+
+  if (heroBar)
+    heroBar.style.width = `${pick.confidence || 0}%`;
+
+  if (heroNote)
+    heroNote.textContent =
+      `${pick.league || "Football"} · ${pick.type || "Match"} · Live GoalRadar prediction`;
+
+  // Featured Analysis
+  const tag = document.querySelector(".analysis-card .league-tag");
+  const match = document.querySelector(".analysis-card .analysis-match h3");
+  const matchInfo = document.querySelector(".analysis-card .analysis-match p");
+  const analysisPick = document.querySelector(".analysis-card .analysis-pick strong");
+  const analysisConfidence = document.querySelector(".analysis-card .analysis-pick b");
+  const reason = document.querySelector(".analysis-card .reason");
+
+  if (tag) tag.textContent = pick.league || "Football";
+
+  if (match) {
+    match.innerHTML = `
+      ${pick.home || "Home"}
+      <small>vs</small>
+      ${pick.away || "Away"}
+    `;
+  }
+
+  if (matchInfo) {
+    if (pick.kickoff) {
+      const date = new Date(pick.kickoff);
+      matchInfo.textContent =
+        date.toLocaleString([], {
+          dateStyle: "medium",
+          timeStyle: "short"
+        });
+    } else {
+      matchInfo.textContent = "Today's fixture";
+    }
+  }
+
+  if (analysisPick)
+    analysisPick.textContent = pick.pick || "Analysis pending";
+
+  if (analysisConfidence)
+    analysisConfidence.textContent = `${pick.confidence || 0}%`;
+
+  if (reason) {
+    reason.innerHTML = `
+      <strong>GoalRadar signal:</strong>
+      ${pick.type || "Match"} prediction generated from the latest available
+      football data and prediction model.
+    `;
+  }
+
+  // Remove fake/demo statistics
+  const dataBoxes = document.querySelectorAll(".analysis-data div");
+
+  if (dataBoxes[0])
+    dataBoxes[0].innerHTML = "<span>Prediction Type</span><b>" +
+      (pick.type || "Match") + "</b>";
+
+  if (dataBoxes[1])
+    dataBoxes[1].innerHTML = "<span>Confidence</span><b>" +
+      (pick.confidence || 0) + "%</b>";
+
+  if (dataBoxes[2])
+    dataBoxes[2].innerHTML = "<span>League</span><b>" +
+      (pick.league || "Football") + "</b>";
+
+  if (dataBoxes[3])
+    dataBoxes[3].innerHTML = "<span>Fixture ID</span><b>" +
+      (pick.fixture_id || "—") + "</b>";
+}
+
+document.querySelectorAll("#filters button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("#filters button")
+      .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+    render(btn.dataset.league);
+  });
 });
-document.getElementById("menuBtn").addEventListener("click",()=>{const n=document.getElementById("nav");n.style.display=n.style.display==="flex"?"none":"flex";n.style.position="absolute";n.style.top="72px";n.style.left="0";n.style.right="0";n.style.padding="20px";n.style.background="#060a08";n.style.flexDirection="column"});
-async function loadGoalRadarData(){
-  try{
-    const r=await fetch("data/goalradar.json?ts="+Date.now(),{cache:"no-store"});
-    if(!r.ok) throw new Error("data unavailable");
-    const d=await r.json();
-    if(Array.isArray(d.picks)&&d.picks.length){picks=d.picks;render();}
-    const dateEl=document.querySelector(".date");
-    if(dateEl&&d.date) dateEl.textContent=d.date;
-    const stat=document.querySelector(".stats-strip");
-    if(stat&&d.stats){const b=stat.querySelectorAll("b");if(b[0])b[0].textContent=d.stats.matches_today;if(b[1])b[1].textContent=d.stats.analyzed;if(b[2])b[2].textContent=d.stats.high_confidence;}
-  }catch(e){console.log("Using demo data until the first automated update.",e);}
+
+document.getElementById("menuBtn").addEventListener("click", () => {
+  const n = document.getElementById("nav");
+
+  n.style.display =
+    n.style.display === "flex" ? "none" : "flex";
+
+  n.style.position = "absolute";
+  n.style.top = "72px";
+  n.style.left = "0";
+  n.style.right = "0";
+  n.style.padding = "20px";
+  n.style.background = "#060a08";
+  n.style.flexDirection = "column";
+});
+
+async function loadGoalRadarData() {
+  try {
+    const r = await fetch(
+      "data/goalradar.json?ts=" + Date.now(),
+      { cache: "no-store" }
+    );
+
+    if (!r.ok)
+      throw new Error("GoalRadar data unavailable");
+
+    const d = await r.json();
+
+    if (Array.isArray(d.picks)) {
+      picks = d.picks;
+      render();
+
+      // Use the strongest/current first pick
+      updateFeaturedPick(picks[0]);
+    }
+
+    const dates = document.querySelectorAll(".date");
+
+    dates.forEach(dateEl => {
+      if (d.date) dateEl.textContent = d.date;
+    });
+
+    const stat = document.querySelector(".stats-strip");
+
+    if (stat && d.stats) {
+      const b = stat.querySelectorAll("b");
+
+      if (b[0])
+        b[0].textContent = d.stats.matches_today ?? 0;
+
+      if (b[1])
+        b[1].textContent = d.stats.analyzed ?? 0;
+
+      if (b[2])
+        b[2].textContent = d.stats.high_confidence ?? 0;
+
+      if (b[3])
+        b[3].textContent = "—";
+    }
+
+  } catch (e) {
+    console.error("GoalRadar live data failed:", e);
+
+    picks = [];
+
+    render();
+
+    const heroPick = document.querySelector(".score-card .pick");
+    if (heroPick)
+      heroPick.textContent = "Live data unavailable";
+
+    const analysisPick =
+      document.querySelector(".analysis-card .analysis-pick strong");
+
+    if (analysisPick)
+      analysisPick.textContent = "No live prediction";
+  }
 }
-render();
+
 loadGoalRadarData();
 </script>
 </body>
