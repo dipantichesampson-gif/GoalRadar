@@ -1,435 +1,500 @@
 import json
 import os
-import sys
+import time
 from datetime import datetime, timezone
+
 from urllib.request import Request, urlopen
-from urllib.parse import urlencode
+from urllib.error import HTTPError, URLError
+
+
+# ============================================================
+# GOALRADAR CONFIGURATION
+# ============================================================
 
 API_KEY = os.environ.get("API_FOOTBALL_KEY")
 
-if not API_KEY:
-    print("Missing API_FOOTBALL_KEY secret", file=sys.stderr)
-    sys.exit(1)
+BASE_URL = "https://v3.football.api-sports.io"
 
-BASE = "https://v3.football.api-sports.io"
+DATA_FILE = "data/goalradar.json"
 
-NOW = datetime.now(timezone.utc)
-TODAY = NOW.strftime("%Y-%m-%d")
-NOW_TS = NOW.timestamp()
+# API-Football Free plan:
+# Keep requests well below the 10 requests/minute limit.
+REQUEST_DELAY = 7
+
+# Maximum number of matches for which we request predictions.
+MAX_PREDICTIONS = 8
+
+# Main leagues displayed on GoalRadar.
+UPCOMING_LEAGUES = {
+    "EPL": 39,
+    "La Liga": 140,
+    "Serie A": 135,
+    "Bundesliga": 78,
+    "Ligue 1": 61,
+    "UCL": 2,
+}
+
+# 2026 is the active season for the leagues we are using.
+SEASON = 2026
+
+last_request_time = 0
 
 
-# ==================================================
-# API REQUEST
-# ==================================================
+# ============================================================
+# BASIC HELPERS
+# ============================================================
 
-def get(path, params=None):
+def now_iso():
+    return datetime.now(timezone.utc).isoformat()
 
-    if params:
-        query = urlencode(params)
-        url = BASE + path + "?" + query
-    else:
-        url = BASE + path
 
-    req = Request(
-        url,
-        headers={
-            "x-apisports-key": API_KEY,
-            "Accept": "application/json",
+def load_existing_data():
+    """Load the previous JSON so temporary API failures don't
+    destroy the website's existing data."""
+
+    try:
+        if os.path.exists(DATA_FILE):
+            with open(DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception as e:
+        print("Could not load existing data:", e)
+
+    return {
+        "updated_at": None,
+        "date": None,
+        "stats": {
+            "matches_today": 0,
+            "analyzed": 0,
+            "high_confidence": 0,
+            "upcoming_leagues": 0,
         },
-    )
-
-    with urlopen(req, timeout=30) as response:
-        data = json.load(response)
-
-    if data.get("errors"):
-        raise RuntimeError(str(data["errors"]))
-
-    return data.get("response", [])
+        "picks": [],
+        "upcoming": {
+            key: [] for key in UPCOMING_LEAGUES
+        },
+    }
 
 
-# ==================================================
-# GOALRADAR MAIN LEAGUES
-# ==================================================
+# ============================================================
+# API REQUEST FUNCTION
+# ============================================================
 
-MAIN_LEAGUES = {
-    39: "EPL",
-    140: "La Liga",
-    135: "Serie A",
-    78: "Bundesliga",
-    61: "Ligue 1",
-    2: "UCL",
-}
+def get(endpoint, params=None, retries=2):
+    global last_request_time
 
-
-# ==================================================
-# OTHER LEAGUES FOR DAILY PICKS
-# ==================================================
-
-PRIORITY_LEAGUES = {
-    39: "EPL",
-    140: "La Liga",
-    135: "Serie A",
-    78: "Bundesliga",
-    2: "UCL",
-    61: "Ligue 1",
-    88: "Eredivisie",
-    94: "Primeira Liga",
-    203: "Turkish Super Lig",
-    144: "Belgian Pro League",
-    71: "Brazil Serie A",
-    128: "Argentina Liga Profesional",
-}
-
-
-# ==================================================
-# FIND CURRENT SEASON FOR A LEAGUE
-# ==================================================
-
-def get_current_season(league_id):
-
-    seasons = get(
-        "/leagues",
-        {
-            "id": league_id
-        }
-    )
-
-    if not seasons:
+    if not API_KEY:
         raise RuntimeError(
-            f"No league information returned for {league_id}"
+            "API_FOOTBALL_KEY is missing. "
+            "Check your GitHub repository secret."
         )
 
-    league_data = seasons[0]
+    url = BASE_URL + endpoint
 
-    season_list = league_data.get(
-        "seasons",
+    if params:
+        query = "&".join(
+            f"{key}={value}"
+            for key, value in params.items()
+        )
+        url += "?" + query
+
+    headers = {
+        "x-apisports-key": API_KEY,
+        "User-Agent": "GoalRadar/1.0",
+    }
+
+    for attempt in range(retries + 1):
+
+        # ----------------------------------------------------
+        # Rate-limit protection
+        # ----------------------------------------------------
+        elapsed = time.time() - last_request_time
+
+        if elapsed < REQUEST_DELAY:
+            wait = REQUEST_DELAY - elapsed
+            print(
+                f"Waiting {wait:.1f}s before next API request..."
+            )
+            time.sleep(wait)
+
+        request = Request(
+            url,
+            headers=headers,
+            method="GET"
+        )
+
+        try:
+
+            print("API request:", endpoint)
+
+            with urlopen(request, timeout=30) as response:
+                raw = response.read().decode("utf-8")
+
+            last_request_time = time.time()
+
+            data = json.loads(raw)
+
+            # ------------------------------------------------
+            # API-Football can report errors inside JSON.
+            # ------------------------------------------------
+            if data.get("errors"):
+                errors = data["errors"]
+
+                print("API returned errors:", errors)
+
+                # Daily quota reached.
+                error_text = str(errors).lower()
+
+                if (
+                    "request limit" in error_text
+                    or "too many requests" in error_text
+                    or "rate limit" in error_text
+                ):
+                    print(
+                        "API request limit reached."
+                    )
+                    return None
+
+            return data
+
+        except HTTPError as e:
+
+            last_request_time = time.time()
+
+            if e.code == 429:
+
+                if attempt < retries:
+
+                    wait = 30 * (attempt + 1)
+
+                    print(
+                        f"HTTP 429 rate limit. "
+                        f"Waiting {wait}s before retry..."
+                    )
+
+                    time.sleep(wait)
+                    continue
+
+                print(
+                    "HTTP 429: API request limit reached."
+                )
+
+                return None
+
+            if e.code == 403:
+
+                print(
+                    "HTTP 403: API access denied."
+                )
+
+                return None
+
+            print(
+                f"HTTP error {e.code}: {e.reason}"
+            )
+
+            return None
+
+        except URLError as e:
+
+            print(
+                "Network error:",
+                e
+            )
+
+            if attempt < retries:
+                time.sleep(15)
+                continue
+
+            return None
+
+        except Exception as e:
+
+            print(
+                "Unexpected API error:",
+                e
+            )
+
+            return None
+
+    return None
+
+
+# ============================================================
+# FIXTURE FILTERING
+# ============================================================
+
+def is_good_fixture(fixture):
+    """
+    Keep serious men's senior football matches.
+    Avoid youth, women, friendlies and obviously unsuitable
+    competitions.
+    """
+
+    league = fixture.get("league", {})
+
+    name = str(
+        league.get("name", "")
+    ).lower()
+
+    league_type = str(
+        league.get("type", "")
+    ).lower()
+
+    home = str(
+        fixture.get("teams", {})
+        .get("home", {})
+        .get("name", "")
+    ).lower()
+
+    away = str(
+        fixture.get("teams", {})
+        .get("away", {})
+        .get("name", "")
+    ).lower()
+
+    text = f"{name} {home} {away}"
+
+    blocked_words = [
+        "women",
+        "woman",
+        "female",
+        "u19",
+        "u20",
+        "u21",
+        "u23",
+        "youth",
+        "reserve",
+        "reserves",
+        "friendly",
+        "club friendly",
+    ]
+
+    for word in blocked_words:
+        if word in text:
+            return False
+
+    # Some APIs label competitions as "League" or "Cup".
+    if league_type not in ("league", "cup"):
+        return False
+
+    return True
+
+
+def fixture_priority(fixture):
+    """
+    Give important competitions higher priority.
+    """
+
+    league = fixture.get("league", {})
+
+    league_id = league.get("id")
+    name = str(
+        league.get("name", "")
+    ).lower()
+
+    score = 0
+
+    # Highest priority competitions.
+    priority_ids = {
+        39: 100,    # EPL
+        140: 98,    # La Liga
+        135: 96,    # Serie A
+        78: 94,     # Bundesliga
+        61: 92,     # Ligue 1
+        2: 100,     # UEFA Champions League
+        88: 85,     # Eredivisie
+        94: 85,     # Primeira Liga
+        203: 82,    # Turkey
+        144: 82,    # Belgium
+        71: 80,     # Brazil Serie A
+        128: 80,    # Argentina
+    }
+
+    score += priority_ids.get(
+        league_id,
+        10
+    )
+
+    important_words = [
+        "champions",
+        "premier",
+        "la liga",
+        "serie a",
+        "bundesliga",
+        "ligue 1",
+    ]
+
+    for word in important_words:
+        if word in name:
+            score += 15
+
+    return score
+
+
+# ============================================================
+# PREDICTION PROCESSING
+# ============================================================
+
+def extract_prediction(data):
+
+    if not data:
+        return {
+            "pick": "Analysis pending",
+            "type": "Match",
+            "confidence": 0,
+        }
+
+    response = data.get(
+        "response",
         []
     )
 
-    # Prefer season marked current
-    for season in season_list:
-        if season.get("current") is True:
-            return season.get("year")
+    if not response:
+        return {
+            "pick": "Analysis pending",
+            "type": "Match",
+            "confidence": 0,
+        }
 
-    # Fallback: choose latest season
-    valid_years = [
-        season.get("year")
-        for season in season_list
-        if season.get("year")
+    prediction = response[0].get(
+        "predictions",
+        {}
+    )
+
+    winner = prediction.get(
+        "winner"
+    ) or {}
+
+    winner_name = winner.get(
+        "name"
+    )
+
+    percent = prediction.get(
+        "percent"
+    ) or {}
+
+    def number(value):
+
+        try:
+            return int(
+                str(value)
+                .replace("%", "")
+                .strip()
+            )
+        except Exception:
+            return 0
+
+    home_percent = number(
+        percent.get("home")
+    )
+
+    draw_percent = number(
+        percent.get("draw")
+    )
+
+    away_percent = number(
+        percent.get("away")
+    )
+
+    percentages = [
+        ("home", home_percent),
+        ("draw", draw_percent),
+        ("away", away_percent),
     ]
 
-    if valid_years:
-        return max(valid_years)
-
-    raise RuntimeError(
-        f"No season found for league {league_id}"
+    percentages.sort(
+        key=lambda x: x[1],
+        reverse=True
     )
 
+    highest = percentages[0][1]
 
-# ==================================================
-# GET TODAY'S FIXTURES
-# ==================================================
+    if winner_name:
+        return {
+            "pick": f"{winner_name} Win",
+            "type": "1X2",
+            "confidence": highest or 60,
+        }
 
-fixtures = get(
-    "/fixtures",
-    {
-        "date": TODAY
+    # Sometimes API-Football doesn't provide a winner.
+    if highest >= 50:
+
+        label = {
+            "home": "Home Win",
+            "draw": "Draw",
+            "away": "Away Win",
+        }
+
+        return {
+            "pick": label[percentages[0][0]],
+            "type": "1X2",
+            "confidence": highest,
+        }
+
+    return {
+        "pick": "Analysis pending",
+        "type": "Match",
+        "confidence": 0,
     }
-)
 
 
-# ==================================================
-# SCORE FIXTURES
-# ==================================================
-
-def score_fixture(fixture):
-
-    league_id = fixture.get(
-        "league",
-        {}
-    ).get("id")
-
-    league_name = fixture.get(
-        "league",
-        {}
-    ).get(
-        "name",
-        ""
-    ).lower()
-
-    # Main priority leagues
-    if league_id in PRIORITY_LEAGUES:
-
-        return (
-            1000
-            - list(PRIORITY_LEAGUES).index(
-                league_id
-            )
-        )
-
-    # Major international competitions
-    if any(
-        word in league_name
-        for word in [
-            "world cup",
-            "euro",
-            "nations league",
-            "africa cup",
-            "copa"
-        ]
-    ):
-        return 800
-
-    # General professional competitions
-    if any(
-        word in league_name
-        for word in [
-            "premier",
-            "division",
-            "liga",
-            "serie",
-            "super league",
-            "championship"
-        ]
-    ):
-        return 600
-
-    # Avoid youth/women/friendly games
-    if any(
-        word in league_name
-        for word in [
-            "women",
-            "u19",
-            "u20",
-            "u21",
-            "u23",
-            "youth",
-            "reserve",
-            "friendly"
-        ]
-    ):
-        return 100
-
-    return 300
-
-
-# ==================================================
-# SELECT TODAY'S BEST FIXTURES
-# ==================================================
-
-selected = sorted(
-    fixtures,
-    key=lambda fixture: (
-        -score_fixture(fixture),
-        fixture.get(
-            "fixture",
-            {}
-        ).get(
-            "timestamp",
-            0
-        )
-    )
-)[:12]
-
-
-# ==================================================
-# GENERATE DAILY PREDICTIONS
-# ==================================================
-
-picks = []
-
-for fixture in selected:
-
-    fixture_id = fixture["fixture"]["id"]
-
-    home = fixture["teams"]["home"]["name"]
-    away = fixture["teams"]["away"]["name"]
-
-    league_id = fixture["league"]["id"]
-
-    league = PRIORITY_LEAGUES.get(
-        league_id,
-        fixture["league"].get(
-            "name",
-            "Football"
-        )
-    )
-
-    pick = "Analysis pending"
-    confidence = 0
-    prediction_type = "Match"
-
-    try:
-
-        prediction = get(
-            "/predictions",
-            {
-                "fixture": fixture_id
-            }
-        )
-
-        if prediction:
-
-            prediction_data = prediction[0].get(
-                "predictions",
-                {}
-            )
-
-            winner = prediction_data.get(
-                "winner"
-            ) or {}
-
-            winner_name = winner.get(
-                "name"
-            )
-
-            probabilities = prediction_data.get(
-                "percent"
-            ) or {}
-
-            if winner_name:
-
-                pick = winner_name + " Win"
-                prediction_type = "1X2"
-
-                if winner_name == home:
-                    key = "home"
-
-                elif winner_name == away:
-                    key = "away"
-
-                else:
-                    key = "draw"
-
-                raw = str(
-                    probabilities.get(
-                        key,
-                        "0"
-                    )
-                ).replace(
-                    "%",
-                    ""
-                )
-
-                try:
-
-                    confidence = int(
-                        float(raw)
-                    )
-
-                except:
-
-                    confidence = 0
-
-            if not confidence:
-                confidence = 60
-
-    except Exception as error:
-
-        print(
-            f"Prediction failed for fixture "
-            f"{fixture_id}: {error}",
-            file=sys.stderr
-        )
-
-    picks.append({
-
-        "league": league,
-
-        "home": home,
-
-        "away": away,
-
-        "pick": pick,
-
-        "type": prediction_type,
-
-        "confidence": confidence,
-
-        "fixture_id": fixture_id,
-
-        "kickoff": fixture["fixture"]["date"]
-    })
-
-
-# ==================================================
+# ============================================================
 # UPCOMING FIXTURES
-# ==================================================
+# ============================================================
 
-upcoming = {}
+def get_upcoming():
 
-for league_id, league_name in MAIN_LEAGUES.items():
+    upcoming = {
+        key: []
+        for key in UPCOMING_LEAGUES
+    }
 
-    print(
-        f"Getting upcoming {league_name} fixtures..."
-    )
+    successful = 0
 
-    upcoming[league_name] = []
-
-    try:
-
-        # ------------------------------------------
-        # Find the active season automatically
-        # ------------------------------------------
-
-        season = get_current_season(
-            league_id
-        )
+    for display_name, league_id in UPCOMING_LEAGUES.items():
 
         print(
-            f"{league_name} current season: "
-            f"{season}"
+            f"\nGetting upcoming {display_name}..."
         )
 
-        # ------------------------------------------
-        # Get fixtures for that season
-        # ------------------------------------------
-
-        league_fixtures = get(
+        data = get(
             "/fixtures",
             {
                 "league": league_id,
-                "season": season,
-                "timezone": "Africa/Accra"
+                "season": SEASON,
+                "next": 10,
+                "timezone": "Africa/Accra",
             }
         )
 
-        future_matches = []
-
-        for fixture in league_fixtures:
-
-            fixture_info = fixture.get(
-                "fixture",
-                {}
+        if not data:
+            print(
+                f"Could not get {display_name}."
             )
+            continue
 
-            timestamp = fixture_info.get(
-                "timestamp",
-                0
-            )
+        fixtures = data.get(
+            "response",
+            []
+        )
 
-            # Must have a valid future timestamp
-            if not timestamp:
+        clean = []
+
+        for fixture in fixtures:
+
+            if not is_good_fixture(fixture):
                 continue
 
-            if timestamp <= NOW_TS:
-                continue
-
-            # --------------------------------------
-            # Only not-started matches
-            # --------------------------------------
-
-            status = fixture_info.get(
-                "status",
-                {}
-            ).get(
-                "short",
-                ""
+            status = (
+                fixture.get("fixture", {})
+                .get("status", {})
+                .get("short", "")
             )
 
+            # Only future scheduled matches.
             if status not in [
                 "NS",
-                "TBD"
+                "TBD",
             ]:
                 continue
 
@@ -438,217 +503,360 @@ for league_id, league_name in MAIN_LEAGUES.items():
                 {}
             )
 
-            home_team = teams.get(
+            home = teams.get(
                 "home",
                 {}
             ).get(
-                "name",
-                "Home"
+                "name"
             )
 
-            away_team = teams.get(
+            away = teams.get(
                 "away",
                 {}
             ).get(
-                "name",
-                "Away"
+                "name"
             )
 
-            venue = fixture_info.get(
-                "venue",
+            fixture_info = fixture.get(
+                "fixture",
                 {}
             )
 
-            league_info = fixture.get(
-                "league",
-                {}
+            venue = (
+                fixture_info
+                .get("venue") or {}
             )
 
-            future_matches.append({
+            city = (
+                venue.get("city")
+            )
 
-                "league": league_name,
+            clean.append({
+                "fixture_id":
+                    fixture_info.get("id"),
 
-                "home": home_team,
+                "league":
+                    fixture.get(
+                        "league",
+                        {}
+                    ).get(
+                        "name",
+                        display_name
+                    ),
 
-                "away": away_team,
+                "home":
+                    home,
 
-                "fixture_id": fixture_info.get(
-                    "id"
-                ),
+                "away":
+                    away,
 
-                "kickoff": fixture_info.get(
-                    "date"
-                ),
+                "kickoff":
+                    fixture_info.get(
+                        "date"
+                    ),
 
-                "timestamp": timestamp,
+                "venue":
+                    venue.get(
+                        "name"
+                    ) or "Venue TBC",
 
-                "venue": venue.get(
-                    "name"
-                ) or "Venue TBC",
+                "city":
+                    city,
 
-                "city": venue.get(
-                    "city"
-                ),
-
-                "round": league_info.get(
-                    "round"
-                ),
-
-                "league_id": league_id
+                "round":
+                    fixture.get(
+                        "league",
+                        {}
+                    ).get(
+                        "round"
+                    ),
             })
 
-        # ------------------------------------------
-        # Sort chronologically
-        # ------------------------------------------
+        upcoming[display_name] = clean[:10]
 
-        future_matches.sort(
-            key=lambda match:
-            match.get(
-                "timestamp",
-                0
-            )
-        )
-
-        # ------------------------------------------
-        # Keep next 10
-        # ------------------------------------------
-
-        upcoming[league_name] = (
-            future_matches[:10]
-        )
+        if clean:
+            successful += 1
 
         print(
-            f"{league_name}: "
-            f"{len(upcoming[league_name])} "
-            f"upcoming matches"
+            f"{display_name}: "
+            f"{len(clean)} upcoming matches"
         )
 
-    except Exception as error:
-
-        print(
-            f"Failed to get {league_name}: "
-            f"{error}",
-            file=sys.stderr
-        )
-
-        upcoming[league_name] = []
+    return upcoming, successful
 
 
-# ==================================================
-# HIGH CONFIDENCE
-# ==================================================
+# ============================================================
+# MAIN PROGRAM
+# ============================================================
 
-high_confidence = sum(
+def main():
 
-    1
+    print("=" * 60)
+    print("GOALRADAR UPDATE START")
+    print("=" * 60)
 
-    for item in picks
+    existing = load_existing_data()
 
-    if item["confidence"] >= 75
-)
+    today = datetime.now(
+        timezone.utc
+    ).strftime("%Y-%m-%d")
 
+    display_date = datetime.now(
+        timezone.utc
+    ).strftime("%d %b %Y").upper()
 
-# ==================================================
-# UPCOMING LEAGUE COUNT
-# ==================================================
+    # --------------------------------------------------------
+    # 1. GET TODAY'S FIXTURES
+    # --------------------------------------------------------
 
-upcoming_league_count = sum(
+    print("\nFetching today's fixtures...")
 
-    1
-
-    for matches in upcoming.values()
-
-    if matches
-)
-
-
-# ==================================================
-# FINAL GOALRADAR DATA
-# ==================================================
-
-output = {
-
-    "updated_at":
-        datetime.now(
-            timezone.utc
-        ).isoformat(),
-
-    "date":
-        datetime.now(
-            timezone.utc
-        ).strftime(
-            "%d %b %Y"
-        ).upper(),
-
-    "stats": {
-
-        "matches_today":
-            len(fixtures),
-
-        "analyzed":
-            len(picks),
-
-        "high_confidence":
-            high_confidence,
-
-        "upcoming_leagues":
-            upcoming_league_count
-    },
-
-    "picks":
-        picks,
-
-    "upcoming":
-        upcoming
-}
-
-
-# ==================================================
-# SAVE JSON
-# ==================================================
-
-os.makedirs(
-    "data",
-    exist_ok=True
-)
-
-with open(
-    "data/goalradar.json",
-    "w",
-    encoding="utf-8"
-) as file:
-
-    json.dump(
-        output,
-        file,
-        ensure_ascii=False,
-        indent=2
+    fixtures_data = get(
+        "/fixtures",
+        {
+            "date": today,
+            "timezone": "Africa/Accra",
+        }
     )
 
+    # If daily API quota has been exhausted, don't destroy
+    # the website's existing data.
+    if fixtures_data is None:
 
-# ==================================================
-# SUCCESS MESSAGE
-# ==================================================
+        print(
+            "\nAPI unavailable or daily quota reached."
+        )
 
-total_upcoming = sum(
-    len(matches)
-    for matches in upcoming.values()
-)
+        print(
+            "Keeping existing GoalRadar data."
+        )
 
-print("")
-print("======================================")
-print("GOALRADAR UPDATE COMPLETE")
-print("======================================")
-print(
-    f"Today's fixtures: {len(fixtures)}"
-)
-print(
-    f"Today's analyzed picks: {len(picks)}"
-)
-print(
-    f"Upcoming leagues: {upcoming_league_count}"
-)
-print(
-    f"Upcoming matches: {total_upcoming}"
-)
-print("======================================")
+        print(
+            "Workflow will finish safely."
+        )
+
+        return
+
+    fixtures = fixtures_data.get(
+        "response",
+        []
+    )
+
+    print(
+        f"Today's total fixtures: {len(fixtures)}"
+    )
+
+    # --------------------------------------------------------
+    # 2. FILTER TODAY'S MATCHES
+    # --------------------------------------------------------
+
+    good_fixtures = [
+        fixture
+        for fixture in fixtures
+        if is_good_fixture(fixture)
+    ]
+
+    good_fixtures.sort(
+        key=fixture_priority,
+        reverse=True
+    )
+
+    # Select only the best matches.
+    selected = good_fixtures[
+        :MAX_PREDICTIONS
+    ]
+
+    print(
+        f"Selected for analysis: "
+        f"{len(selected)}"
+    )
+
+    # --------------------------------------------------------
+    # 3. GET PREDICTIONS
+    # --------------------------------------------------------
+
+    picks = []
+
+    for index, fixture in enumerate(
+        selected,
+        start=1
+    ):
+
+        fixture_id = (
+            fixture
+            .get("fixture", {})
+            .get("id")
+        )
+
+        league = (
+            fixture
+            .get("league", {})
+        )
+
+        teams = (
+            fixture
+            .get("teams", {})
+        )
+
+        home = (
+            teams
+            .get("home", {})
+            .get("name")
+        )
+
+        away = (
+            teams
+            .get("away", {})
+            .get("name")
+        )
+
+        print(
+            f"\nPrediction {index}/"
+            f"{len(selected)}:"
+        )
+
+        print(
+            f"{home} vs {away}"
+        )
+
+        prediction_data = get(
+            "/predictions",
+            {
+                "fixture": fixture_id
+            }
+        )
+
+        prediction = extract_prediction(
+            prediction_data
+        )
+
+        picks.append({
+            "league":
+                league.get(
+                    "name",
+                    "Football"
+                ),
+
+            "home":
+                home,
+
+            "away":
+                away,
+
+            "pick":
+                prediction["pick"],
+
+            "type":
+                prediction["type"],
+
+            "confidence":
+                prediction["confidence"],
+
+            "fixture_id":
+                fixture_id,
+
+            "kickoff":
+                fixture
+                .get("fixture", {})
+                .get("date"),
+        })
+
+    # --------------------------------------------------------
+    # 4. UPCOMING FIXTURES
+    # --------------------------------------------------------
+
+    print("\nFetching upcoming league fixtures...")
+
+    upcoming, upcoming_count = get_upcoming()
+
+    # --------------------------------------------------------
+    # 5. CALCULATE STATS
+    # --------------------------------------------------------
+
+    analyzed = sum(
+        1
+        for pick in picks
+        if pick.get("confidence", 0) > 0
+    )
+
+    high_confidence = sum(
+        1
+        for pick in picks
+        if pick.get("confidence", 0) >= 75
+    )
+
+    # --------------------------------------------------------
+    # 6. BUILD FINAL DATA
+    # --------------------------------------------------------
+
+    output = {
+        "updated_at": now_iso(),
+
+        "date": display_date,
+
+        "stats": {
+            "matches_today": len(fixtures),
+
+            "analyzed": analyzed,
+
+            "high_confidence":
+                high_confidence,
+
+            "upcoming_leagues":
+                upcoming_count,
+        },
+
+        "picks": picks,
+
+        "upcoming": upcoming,
+    }
+
+    # --------------------------------------------------------
+    # 7. SAVE JSON
+    # --------------------------------------------------------
+
+    os.makedirs(
+        os.path.dirname(DATA_FILE),
+        exist_ok=True
+    )
+
+    with open(
+        DATA_FILE,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        json.dump(
+            output,
+            f,
+            indent=2,
+            ensure_ascii=False
+        )
+
+    print("\n" + "=" * 60)
+    print("GOALRADAR UPDATE COMPLETE")
+    print("=" * 60)
+
+    print(
+        f"Today's fixtures: {len(fixtures)}"
+    )
+
+    print(
+        f"Today's analyzed picks: {analyzed}"
+    )
+
+    print(
+        f"High confidence picks: "
+        f"{high_confidence}"
+    )
+
+    print(
+        f"Upcoming leagues: "
+        f"{upcoming_count}"
+    )
+
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()
