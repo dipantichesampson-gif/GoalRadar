@@ -1,10 +1,11 @@
 {
-  "updated_at": "2026-10-08T02:11:15.087612+00:00",
+  "updated_at": "2026-10-08T02:33:05.904474+00:00",
   "date": "08 OCT 2026",
   "stats": {
     "matches_today": 141,
     "analyzed": 12,
-    "high_confidence": 0
+    "high_confidence": 0,
+    "upcoming_leagues": 0
   },
   "picks": [
     {
@@ -127,5 +128,12 @@
       "fixture_id": 1640287,
       "kickoff": "2026-10-08T20:30:00+00:00"
     }
-  ]
+  ],
+  "upcoming": {
+    "EPL": [],
+    "La Liga": [],
+    "Serie A": [],
+    "Bundesliga": [],
+    "UCL": []
+  }
 }
