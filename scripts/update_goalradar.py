@@ -418,7 +418,58 @@ for league_id, league_name in MAIN_LEAGUES.items():
 # --------------------------------------------------
 # HIGH-CONFIDENCE COUNT
 # --------------------------------------------------
+# Build upcoming matches for the main leagues
+upcoming = {
+    "EPL": [],
+    "La Liga": [],
+    "Serie A": [],
+    "Bundesliga": [],
+    "Ligue 1": [],
+    "UCL": []
+}
 
+NOW_TS = datetime.now(timezone.utc).timestamp()
+
+for league_id, league_name in {
+    39: "EPL",
+    140: "La Liga",
+    135: "Serie A",
+    78: "Bundesliga",
+    61: "Ligue 1",
+    2: "UCL"
+}.items():
+
+    try:
+        league_fixtures = get(
+            f"/fixtures?league={league_id}&season=2026&timezone=Africa/Accra"
+        )
+
+        future_matches = [
+            match for match in league_fixtures
+            if match.get("fixture", {}).get("timestamp", 0) > NOW_TS
+        ]
+
+        future_matches.sort(
+            key=lambda match: match.get("fixture", {}).get("timestamp", 0)
+        )
+
+        for match in future_matches[:10]:
+            upcoming[league_name].append({
+                "league": league_name,
+                "home": match["teams"]["home"]["name"],
+                "away": match["teams"]["away"]["name"],
+                "fixture_id": match["fixture"]["id"],
+                "kickoff": match["fixture"]["date"],
+                "venue": match.get("fixture", {}).get("venue", {}).get("name"),
+                "city": match.get("fixture", {}).get("venue", {}).get("city"),
+                "round": match.get("league", {}).get("round")
+            })
+
+    except Exception as error:
+        print(
+            f"Upcoming fixtures failed for {league_name}: {error}",
+            file=sys.stderr
+        )
 high_confidence = sum(
     1
     for item in picks
