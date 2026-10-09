@@ -6,23 +6,21 @@
 <meta name="theme-color" content="#07100c">
 <meta name="description" content="GoalRadar — data-driven football predictions, match analysis and performance tracking.">
 <title>GoalRadar — See the game differently</title>
-
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:#050908;color:#f3f7f4;font-family:Inter,Arial,sans-serif;line-height:1.5}
 a{text-decoration:none;color:inherit}
 button{font:inherit;cursor:pointer}
-.topbar{height:72px;display:flex;align-items:center;gap:30px;padding:0 5%;border-bottom:1px solid #17201b;background:#060a08dd;backdrop-filter:blur(12px);position:sticky;top:0;z-index:10}
+.topbar{min-height:72px;display:flex;align-items:center;gap:30px;padding:0 5%;border-bottom:1px solid #17201b;background:#060a08dd;backdrop-filter:blur(12px);position:sticky;top:0;z-index:10}
 .logo{display:flex;align-items:center;font-weight:900;letter-spacing:1px;font-size:20px}
 .logo img{width:150px;height:auto;display:block}
 .logo span,.radar{color:#a9ff35}
-.radar{margin-right:5px}
 nav{display:flex;gap:22px;font-size:13px;color:#9ca79f;flex:1}
 nav a:hover{color:#a9ff35}
 .auth{display:flex;gap:8px}
 .ghost,.secondary{background:transparent;color:#dce4df;border:1px solid #29332d;padding:10px 15px;border-radius:7px}
-.primary{display:inline-flex;align-items:center;gap:12px;background:#a9ff35;color:#061006;border:0;padding:13px 18px;border-radius:7px;font-weight:900;box-shadow:0 0 25px #8ee62c22}
+.primary{display:inline-flex;align-items:center;gap:12px;background:#a9ff35;color:#061006;border:0;padding:13px 18px;border-radius:7px;font-weight:900}
 .primary.small{padding:9px 14px}
 .menu{display:none;background:none;color:white;border:0;font-size:22px}
 .hero{min-height:590px;padding:80px 7%;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:50px;background:radial-gradient(circle at 75% 45%,#193b20 0,#08100c 35%,#050908 68%)}
@@ -101,640 +99,446 @@ footer{padding:40px 7%;border-top:1px solid #17221b;background:#070b09;display:f
 footer .logo{color:#fff}
 footer p{flex:1;font-size:12px}
 footer a{margin-left:15px;font-size:11px}
-.status-message{padding:14px;color:#89958d;font-size:13px}
 @media(max-width:800px){
-  nav,.auth{display:none}
-  .menu{display:block;margin-left:auto}
-  .hero{grid-template-columns:1fr;padding:55px 6%}
-  .hero-card{min-height:310px}
-  .stats-strip{grid-template-columns:repeat(2,1fr)}
-  .stats-strip div:nth-child(2){border-right:0}
-  .pick-grid{grid-template-columns:1fr}
-  .section{padding:55px 6%}
-  .analysis-data{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .confidence-grid{grid-template-columns:1fr}
-  .record-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .pro{margin:0 6% 55px;display:block;padding:30px}
-  .pro .primary{margin-top:15px}
-  footer{display:block}
-  footer p{margin:10px 0 20px}
-  footer a{margin:0 14px 0 0}
-  .logo img{width:115px}
+ nav,.auth{display:none}
+ .menu{display:block;margin-left:auto}
+ .hero{grid-template-columns:1fr;padding:55px 6%}
+ .hero-card{min-height:310px}
+ .stats-strip{grid-template-columns:repeat(2,1fr)}
+ .stats-strip div:nth-child(2){border-right:0}
+ .pick-grid{grid-template-columns:1fr}
+ .section{padding:55px 6%}
+ .analysis-data{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .confidence-grid{grid-template-columns:1fr}
+ .record-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .pro{margin:0 6% 55px;display:block;padding:30px}
+ .pro .primary{margin-top:15px}
+ footer{display:block}
+ footer p{margin:10px 0 20px}
+ footer a{margin:0 14px 0 0}
+ .logo img{width:115px}
 }
 @media(max-width:450px){
-  .hero h1{font-size:45px}
-  .hero-actions{flex-direction:column}
-  .hero-actions a{justify-content:center}
-  .score-card{width:90%;padding:20px}
-  .section h2{font-size:28px}
-  .logo img{width:105px}
-  .analysis-card{padding:20px}
-  .analysis-match h3{font-size:23px}
+ .hero h1{font-size:45px}
+ .hero-actions{flex-direction:column}
+ .hero-actions a{justify-content:center}
+ .score-card{width:90%;padding:20px}
+ .section h2{font-size:28px}
+ .logo img{width:105px}
+ .analysis-card{padding:20px}
+ .analysis-match h3{font-size:23px}
 }
 </style>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-
 <body>
 <header class="topbar">
-  <a href="#home" class="logo">
-    <img src="goalradar-logo.png" alt="GoalRadar">
-  </a>
-
-  <button class="menu" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-
-  <nav id="nav">
-    <a href="#home">Home</a>
-    <a href="#picks">Today's Picks</a>
-    <a href="#results">Results</a>
-    <a href="#leagues">Leagues</a>
-    <a href="#stats">Statistics</a>
-    <a href="#about">About</a>
-  </nav>
-
-  <div class="auth">
-    <a class="ghost" href="#about">About</a>
-    <a class="primary small" href="#picks">View Picks</a>
-  </div>
+ <a href="#home" class="logo"><img src="goalradar-logo.png" alt="GoalRadar"></a>
+ <button class="menu" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+ <nav id="nav">
+  <a href="#home">Home</a><a href="#picks">Today's Picks</a>
+  <a href="#results">Results</a><a href="#leagues">Leagues</a>
+  <a href="#stats">Statistics</a><a href="#about">About</a>
+ </nav>
+ <div class="auth"><a class="ghost" href="#about">About</a><a class="primary small" href="#picks">View Picks</a></div>
 </header>
 
 <main>
 <section class="hero" id="home">
-  <div class="hero-copy">
-    <div class="eyebrow">FOOTBALL INTELLIGENCE PLATFORM</div>
-    <h1>SEE THE GAME<br><em>DIFFERENTLY.</em></h1>
-    <p>Data-driven football predictions, match analysis and performance tracking — all in one place.</p>
-    <div class="hero-actions">
-      <a class="primary" href="#picks">VIEW TODAY'S PICKS <span>→</span></a>
-      <a class="secondary" href="#results">VIEW RESULTS</a>
-    </div>
-  </div>
-
-  <div class="hero-card">
-    <div class="stadium-glow"></div>
-    <div class="score-card">
-      <div class="label">PICK OF THE DAY</div>
-      <div class="teams">
-        <span>GOAL</span><b>VS</b><span>RADAR</span>
-      </div>
-      <div class="pick">Loading predictions...</div>
-      <div class="confidence">
-        <span>CONFIDENCE</span><strong>—</strong>
-      </div>
-      <div class="bar"><i style="width:0%"></i></div>
-      <small>Connecting to GoalRadar data...</small>
-    </div>
-  </div>
+ <div class="hero-copy">
+  <div class="eyebrow">FOOTBALL INTELLIGENCE PLATFORM</div>
+  <h1>SEE THE GAME<br><em>DIFFERENTLY.</em></h1>
+  <p>Data-driven football predictions, match analysis and performance tracking — all in one place.</p>
+  <div class="hero-actions"><a class="primary" href="#picks">VIEW TODAY'S PICKS <span>→</span></a><a class="secondary" href="#results">VIEW RESULTS</a></div>
+ </div>
+ <div class="hero-card"><div class="stadium-glow"></div><div class="score-card">
+  <div class="label">PICK OF THE DAY</div><div class="teams"><span>GOAL</span><b>VS</b><span>RADAR</span></div>
+  <div class="pick">Loading predictions...</div>
+  <div class="confidence"><span>CONFIDENCE</span><strong>—</strong></div>
+  <div class="bar"><i style="width:0%"></i></div><small>Connecting to GoalRadar data...</small>
+ </div></div>
 </section>
 
 <section class="stats-strip">
-  <div><b>—</b><span>Upcoming Picks</span></div>
-  <div><b>—</b><span>Predictions Published</span></div>
-  <div><b>—</b><span>High Confidence</span></div>
-  <div><b>—</b><span>Model Accuracy</span></div>
+ <div><b>—</b><span>Upcoming Picks</span></div>
+ <div><b>—</b><span>Predictions Published</span></div>
+ <div><b>—</b><span>High Confidence</span></div>
+ <div><b>—</b><span>Model Accuracy</span></div>
 </section>
 
 <section class="section" id="picks">
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">DAILY SIGNAL</div>
-      <h2>Today's Top Picks</h2>
-    </div>
-    <span class="date">Loading...</span>
-  </div>
-
-  <div class="filters" id="filters">
-    <button class="active" data-league="All">All</button>
-    <button data-league="EPL">EPL</button>
-    <button data-league="La Liga">La Liga</button>
-    <button data-league="Serie A">Serie A</button>
-    <button data-league="Bundesliga">Bundesliga</button>
-    <button data-league="Ligue 1">Ligue 1</button>
-    <button data-league="UCL">UCL</button>
-  </div>
-
-  <div class="pick-grid" id="pickGrid">
-    <div class="pick-card"><h3>Loading predictions...</h3><p class="vs">Connecting to GoalRadar.</p></div>
-  </div>
+ <div class="section-head"><div><div class="eyebrow">DAILY SIGNAL</div><h2>Today's Top Picks</h2></div><span class="date">Loading...</span></div>
+ <div class="filters" id="filters">
+  <button class="active" data-league="All">All</button>
+  <button data-league="EPL">EPL</button><button data-league="La Liga">La Liga</button>
+  <button data-league="Serie A">Serie A</button><button data-league="Bundesliga">Bundesliga</button>
+  <button data-league="Ligue 1">Ligue 1</button><button data-league="UCL">UCL</button>
+ </div>
+ <div class="pick-grid" id="pickGrid"><div class="pick-card"><h3>Loading predictions...</h3><p class="vs">Connecting to GoalRadar.</p></div></div>
 </section>
 
 <section class="analysis section">
-  <div class="section-head">
-    <div><div class="eyebrow">MATCH INTELLIGENCE</div><h2>Featured Analysis</h2></div>
+ <div class="section-head"><div><div class="eyebrow">MATCH INTELLIGENCE</div><h2>Featured Analysis</h2></div></div>
+ <div class="analysis-card">
+  <div class="analysis-match"><span class="league-tag">GOALRADAR</span><h3>Loading <small>vs</small> Match</h3><p>Waiting for the latest prediction...</p></div>
+  <div class="analysis-pick"><span>GOALRADAR PICK</span><strong>Loading...</strong><b>—</b></div>
+  <div class="analysis-data">
+   <div><span>Prediction Type</span><b>—</b></div><div><span>Confidence</span><b>—</b></div>
+   <div><span>League</span><b>—</b></div><div><span>Prediction ID</span><b>—</b></div>
   </div>
-
-  <div class="analysis-card">
-    <div class="analysis-match">
-      <span class="league-tag">GOALRADAR</span>
-      <h3>Loading <small>vs</small> Match</h3>
-      <p>Waiting for the latest prediction...</p>
-    </div>
-
-    <div class="analysis-pick">
-      <span>GOALRADAR PICK</span>
-      <strong>Loading...</strong>
-      <b>—</b>
-    </div>
-
-    <div class="analysis-data">
-      <div><span>Prediction Type</span><b>—</b></div>
-      <div><span>Confidence</span><b>—</b></div>
-      <div><span>League</span><b>—</b></div>
-      <div><span>Prediction ID</span><b>—</b></div>
-    </div>
-
-    <p class="reason"><strong>GoalRadar signal:</strong> Waiting for the latest available prediction.</p>
-  </div>
+  <p class="reason"><strong>GoalRadar signal:</strong> Waiting for the latest available prediction.</p>
+ </div>
 </section>
 
 <section class="confidence section">
-  <div class="section-head">
-    <div><div class="eyebrow">RISK SIGNAL</div><h2>Confidence Levels</h2></div>
-  </div>
-
-  <div class="confidence-grid">
-    <div><strong>85–100%</strong><h3>Very Strong</h3><p>Highest model conviction. Confidence is an estimate, not a guarantee.</p></div>
-    <div><strong>75–84%</strong><h3>Strong</h3><p>Good statistical support, with uncertainty still present.</p></div>
-    <div><strong>65–74%</strong><h3>Moderate</h3><p>More uncertainty is present in the prediction.</p></div>
-  </div>
+ <div class="section-head"><div><div class="eyebrow">RISK SIGNAL</div><h2>Confidence Levels</h2></div></div>
+ <div class="confidence-grid">
+  <div><strong>85–100%</strong><h3>Very Strong</h3><p>Highest model conviction. Confidence is an estimate, not a guarantee.</p></div>
+  <div><strong>75–84%</strong><h3>Strong</h3><p>Good statistical support, with uncertainty still present.</p></div>
+  <div><strong>65–74%</strong><h3>Moderate</h3><p>More uncertainty is present in the prediction.</p></div>
+ </div>
 </section>
 
 <section class="record section" id="stats">
-  <div class="section-head">
-    <div><div class="eyebrow">TRACK THE MODEL</div><h2>GoalRadar Record</h2></div>
-  </div>
-
-  <div class="record-grid">
-    <div><span>Today</span><b>—</b><small>Settled predictions</small></div>
-    <div><span>This Week</span><b>—</b><small>Settled predictions</small></div>
-    <div><span>This Month</span><b>—</b><small>Settled predictions</small></div>
-    <div><span>Overall</span><b>—</b><small>Settled predictions</small></div>
-  </div>
+ <div class="section-head"><div><div class="eyebrow">TRACK THE MODEL</div><h2>GoalRadar Record</h2></div></div>
+ <div class="record-grid">
+  <div><span>Today</span><b>—</b><small>Settled predictions</small></div>
+  <div><span>This Week</span><b>—</b><small>Settled predictions</small></div>
+  <div><span>This Month</span><b>—</b><small>Settled predictions</small></div>
+  <div><span>Overall</span><b>—</b><small>Settled predictions</small></div>
+ </div>
 </section>
 
 <section class="results section" id="results">
-  <div class="section-head">
-    <div><div class="eyebrow">TRANSPARENT HISTORY</div><h2>Latest Results</h2></div>
-    <span class="date">Saved results</span>
-  </div>
-
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr><th>Match</th><th>Pick</th><th>Confidence</th><th>Result</th></tr>
-      </thead>
-      <tbody>
-        <tr><td colspan="4">Loading results...</td></tr>
-      </tbody>
-    </table>
-  </div>
+ <div class="section-head"><div><div class="eyebrow">TRANSPARENT HISTORY</div><h2>Latest Results</h2></div><span class="date">Saved results</span></div>
+ <div class="table-wrap"><table>
+  <thead><tr><th>Match</th><th>Pick</th><th>Confidence</th><th>Result</th></tr></thead>
+  <tbody><tr><td colspan="4">Loading results...</td></tr></tbody>
+ </table></div>
 </section>
 
-<section class="pro section">
-  <div>
-    <div class="eyebrow">COMING NEXT</div>
-    <h2>GoalRadar <span>PRO</span></h2>
-    <p>Advanced match breakdowns, deeper statistics, more picks and premium insights.</p>
-  </div>
-  <a class="primary" href="#about">LEARN MORE →</a>
-</section>
-
-<section class="about section" id="about">
-  <div class="about-box">
-    <div class="eyebrow">ABOUT GOALRADAR</div>
-    <h2>Predictions with accountability.</h2>
-    <p>GoalRadar is designed to make football analysis easier to understand. Picks are model-based opinions, not guarantees. Every recorded result stays in the history so performance can be judged honestly.</p>
-  </div>
-</section>
+<section class="pro section"><div><div class="eyebrow">COMING NEXT</div><h2>GoalRadar <span>PRO</span></h2><p>Advanced match breakdowns, deeper statistics, more picks and premium insights.</p></div><a class="primary" href="#about">LEARN MORE →</a></section>
+<section class="about section" id="about"><div class="about-box"><div class="eyebrow">ABOUT GOALRADAR</div><h2>Predictions with accountability.</h2><p>GoalRadar is designed to make football analysis easier to understand. Picks are model-based opinions, not guarantees. Every recorded result stays in the history so performance can be judged honestly.</p></div></section>
 </main>
 
-<footer>
-  <a href="#home" class="logo"><img src="goalradar-logo.png" alt="GoalRadar"></a>
-  <p>See the game differently.</p>
-  <div>
-    <a href="#about">Privacy</a>
-    <a href="#about">Terms</a>
-    <a href="#about">Responsible Use</a>
-    <a href="mailto:dipantichesampson@gmail.com">Contact</a>
-  </div>
-</footer>
+<footer><a href="#home" class="logo"><img src="goalradar-logo.png" alt="GoalRadar"></a><p>See the game differently.</p><div><a href="#about">Privacy</a><a href="#about">Terms</a><a href="#about">Responsible Use</a><a href="mailto:dipantichesampson@gmail.com">Contact</a></div></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+"use strict";
+
 const SUPABASE_URL = "https://mydtxdtwhgajgrqaedvg.supabase.co";
 const SUPABASE_KEY = "sb_publishable_GQ_EHwYD3FSP7dxcNPq_yA_-Tfsi3xc";
 
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const grid = document.getElementById("pickGrid");
-
+let db = null;
 let picks = [];
 let upcoming = {};
 let currentFilter = "All";
 let jsonStats = null;
 
-const $ = (selector) => document.querySelector(selector);
-const safe = (value) => String(value ?? "").replace(/[&<>"']/g, c => ({
-  "&": "&amp;", "<": "&lt;", ">": "&gt;",
-  '"': "&quot;", "'": "&#39;"
+const $ = selector => document.querySelector(selector);
+
+const safe = value => String(value ?? "").replace(/[&<>"']/g, c => ({
+ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
 }[c]));
 
 function confidenceValue(value) {
-  const n = Number(value);
-  return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : 0;
+ const n = Number(value);
+ return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : 0;
 }
 
 function normalizeLeague(value) {
-  const v = String(value || "").toLowerCase().trim();
-  if (["epl", "premier league", "english premier league"].includes(v)) return "EPL";
-  if (["la liga", "laliga", "spanish la liga"].includes(v)) return "La Liga";
-  if (["serie a", "italian serie a"].includes(v)) return "Serie A";
-  if (["bundesliga", "german bundesliga"].includes(v)) return "Bundesliga";
-  if (["ligue 1", "ligue1", "french ligue 1"].includes(v)) return "Ligue 1";
-  if (["ucl", "champions league", "uefa champions league"].includes(v)) return "UCL";
-  return value || "Football";
+ const v = String(value || "").toLowerCase().trim();
+ if (["epl","premier league","english premier league"].includes(v)) return "EPL";
+ if (["la liga","laliga","spanish la liga"].includes(v)) return "La Liga";
+ if (["serie a","italian serie a"].includes(v)) return "Serie A";
+ if (["bundesliga","german bundesliga"].includes(v)) return "Bundesliga";
+ if (["ligue 1","ligue1","french ligue 1"].includes(v)) return "Ligue 1";
+ if (["ucl","champions league","uefa champions league"].includes(v)) return "UCL";
+ return value || "Football";
 }
 
 function formatKickoff(value) {
-  if (!value) return "Kickoff time TBC";
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return "Kickoff time TBC";
-  return d.toLocaleString([], {
-    day: "numeric", month: "short",
-    hour: "2-digit", minute: "2-digit"
-  });
+ if (!value) return "Kickoff time TBC";
+ const d = new Date(value);
+ if (Number.isNaN(d.getTime())) return "Kickoff time TBC";
+ return d.toLocaleString([], {
+  day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"
+ });
 }
 
 function isUpcoming(p) {
-  return !p.status || String(p.status).toLowerCase() === "upcoming";
+ return !p.status || String(p.status).toLowerCase() === "upcoming";
 }
 
+function render(filter = currentFilter) {
+ currentFilter = filter;
 
-function render(filter = "All") {
-  currentFilter = filter;
+ const saved = picks.filter(p =>
+  (filter === "All" || normalizeLeague(p.league) === filter) &&
+  isUpcoming(p)
+ );
 
-  // Saved predictions from Supabase
-  const saved = picks.filter(p =>
-    filter === "All" || normalizeLeague(p.league) === filter
-  );
+ const allFixtures = Object.entries(upcoming).flatMap(([league, matches]) =>
+  (Array.isArray(matches) ? matches : []).map(match => ({
+   ...match,
+   league: normalizeLeague(match.league || league),
+   home: match.home || match.home_team || match.homeTeam || "",
+   away: match.away || match.away_team || match.awayTeam || "",
+   kickoff: match.kickoff || match.utcDate || match.date || match.match_date || ""
+  }))
+ );
 
-  // API fixtures from data/goalradar.json
-  const allFixtures = Object.entries(upcoming).flatMap(
-    ([league, matches]) =>
-      (Array.isArray(matches) ? matches : []).map(match => ({
-        ...match,
-        league: match.league || league
-      }))
-  );
+ let fixtures = allFixtures.filter(match =>
+  filter === "All" || normalizeLeague(match.league) === filter
+ );
 
-  let fixtures = allFixtures.filter(match =>
-    filter === "All" || normalizeLeague(match.league) === filter
-  );
+ const todayKey = new Date().toLocaleDateString();
+ fixtures.sort((a, b) => {
+  const da = a.kickoff ? new Date(a.kickoff) : null;
+  const dbDate = b.kickoff ? new Date(b.kickoff) : null;
+  const aToday = da && !Number.isNaN(da.getTime()) && da.toLocaleDateString() === todayKey;
+  const bToday = dbDate && !Number.isNaN(dbDate.getTime()) && dbDate.toLocaleDateString() === todayKey;
+  if (aToday && !bToday) return -1;
+  if (!aToday && bToday) return 1;
+  return (da?.getTime() ?? Infinity) - (dbDate?.getTime() ?? Infinity);
+ });
 
-  // Show today's fixtures first when kickoff dates are available.
-  const today = new Date().toLocaleDateString();
+ const keyFor = m => `${String(m.home || "").trim().toLowerCase()}|${String(m.away || "").trim().toLowerCase()}`;
+ const savedKeys = new Set(saved.map(keyFor));
+ fixtures = fixtures.filter(match => !savedKeys.has(keyFor(match)));
 
-  fixtures.sort((a, b) => {
-    const da = a.kickoff ? new Date(a.kickoff) : null;
-    const db = b.kickoff ? new Date(b.kickoff) : null;
+ const predictionCards = saved.map(p => {
+  const pct = confidenceValue(p.confidence);
+  return `<article class="pick-card">
+   <div class="league">${safe(p.league)} · ${safe(p.type || "Match")}${p.isPickOfDay ? " · ★ PICK OF THE DAY" : ""}</div>
+   <h3>${safe(p.home)} <span class="vs"> VS </span> ${safe(p.away)}</h3>
+   <div class="pick">${safe(p.pick || "Prediction pending")}</div>
+   <div class="vs">${safe(formatKickoff(p.kickoff))}</div>
+   ${p.analysis ? `<p class="vs">${safe(p.analysis)}</p>` : ""}
+   <div class="bottom"><span>GoalRadar prediction</span><span class="pct">${pct}%</span></div>
+   <div class="bar"><i style="width:${pct}%"></i></div>
+  </article>`;
+ });
 
-    const aToday = da && !isNaN(da) &&
-      da.toLocaleDateString() === today;
-    const bToday = db && !isNaN(db) &&
-      db.toLocaleDateString() === today;
+ const fixtureCards = fixtures.map(match => `<article class="pick-card">
+  <div class="league">${safe(match.league || filter)} · API FIXTURE</div>
+  <h3>${safe(match.home || "Home")} <span class="vs"> VS </span> ${safe(match.away || "Away")}</h3>
+  <div class="pick">${safe(formatKickoff(match.kickoff))}</div>
+  <div class="bottom"><span>${safe(match.venue || "Upcoming match")}</span><span class="pct">FIXTURE</span></div>
+  <div class="vs">${safe(match.round || "No prediction published")}</div>
+ </article>`);
 
-    if (aToday && !bToday) return -1;
-    if (!aToday && bToday) return 1;
-
-    return (da?.getTime() || Infinity) -
-           (db?.getTime() || Infinity);
-  });
-
-  // Avoid displaying the same match twice.
-  const savedKeys = new Set(saved.map(p =>
-    `${p.home}|${p.away}`.toLowerCase()
-  ));
-
-  fixtures = fixtures.filter(match =>
-    !savedKeys.has(
-      `${match.home || ""}|${match.away || ""}`.toLowerCase()
-    )
-  );
-
-  const predictionCards = saved.map(p => {
-    const pct = confidenceValue(p.confidence);
-
-    return `
-      <article class="pick-card">
-        <div class="league">
-          ${safe(p.league)} · ${safe(p.type || "Match")}
-          ${p.isPickOfDay ? " · ★ PICK OF THE DAY" : ""}
-        </div>
-        <h3>${safe(p.home)}
-          <span class="vs"> VS </span>
-          ${safe(p.away)}
-        </h3>
-        <div class="pick">${safe(p.pick || "Prediction pending")}</div>
-        <div class="vs">${safe(formatKickoff(p.kickoff))}</div>
-        <div class="bottom">
-          <span>GoalRadar prediction</span>
-          <span class="pct">${pct}%</span>
-        </div>
-        <div class="bar"><i style="width:${pct}%"></i></div>
-      </article>`;
-  });
-
-  const fixtureCards = fixtures.map(match => `
-    <article class="pick-card">
-      <div class="league">
-        ${safe(match.league || filter)} · API FIXTURE
-      </div>
-      <h3>${safe(match.home || "Home")}
-        <span class="vs"> VS </span>
-        ${safe(match.away || "Away")}
-      </h3>
-      <div class="pick">${safe(formatKickoff(match.kickoff))}</div>
-      <div class="bottom">
-        <span>${safe(match.venue || "Upcoming match")}</span>
-        <span class="pct">FIXTURE</span>
-      </div>
-      <div class="vs">${safe(match.round || "No prediction published")}</div>
-    </article>
-  `);
-
-  const cards = [...predictionCards, ...fixtureCards];
-
-  grid.innerHTML = cards.length
-    ? cards.join("")
-    : `<article class="pick-card">
-         <h3>No matches available</h3>
-         <p class="vs">No saved predictions or API fixtures were found for this selection.</p>
-       </article>`;
-}
-
-
-  if (!list.length) {
-    grid.innerHTML = `
-      <article class="pick-card">
-        <h3>No predictions available</h3>
-        <p class="vs">No saved GoalRadar predictions were found for this selection.</p>
-      </article>`;
-    return;
-  }
-
-  grid.innerHTML = list.map(p => {
-    const pct = confidenceValue(p.confidence);
-    return `
-      <article class="pick-card">
-        <div class="league">
-          ${safe(p.league)} · ${safe(p.type || "Match")}
-          ${p.isPickOfDay ? " · ★ PICK OF THE DAY" : ""}
-        </div>
-        <h3>${safe(p.home)}
-          <span class="vs"> VS </span>
-          ${safe(p.away)}
-        </h3>
-        <div class="pick">${safe(p.pick || "Prediction pending")}</div>
-        <div class="vs">${safe(formatKickoff(p.kickoff))}</div>
-        ${p.analysis ? `<p class="vs">${safe(p.analysis)}</p>` : ""}
-        <div class="bottom">
-          <span>GoalRadar signal</span>
-          <span class="pct">${pct}%</span>
-        </div>
-        <div class="bar"><i style="width:${pct}%"></i></div>
-      </article>`;
-  }).join("");
+ const cards = [...predictionCards, ...fixtureCards];
+ grid.innerHTML = cards.length ? cards.join("") : `<article class="pick-card">
+  <h3>No matches available</h3>
+  <p class="vs">No saved predictions or API fixtures were found for this selection.</p>
+ </article>`;
 }
 
 function updateFeaturedPick(pick) {
-  if (!pick) return;
+ if (!pick) return;
+ const pct = confidenceValue(pick.confidence);
+ const teams = $(".score-card .teams");
+ if (teams) teams.innerHTML = `<span>${safe(pick.home)}</span><b>VS</b><span>${safe(pick.away)}</span>`;
 
-  const pct = confidenceValue(pick.confidence);
-  const teams = $(".score-card .teams");
+ const heroPick = $(".score-card .pick");
+ if (heroPick) heroPick.textContent = pick.pick || "Prediction pending";
+ const heroConfidence = $(".score-card .confidence strong");
+ if (heroConfidence) heroConfidence.textContent = pct + "%";
+ const heroBar = $(".score-card .bar i");
+ if (heroBar) heroBar.style.width = pct + "%";
+ const heroNote = $(".score-card small");
+ if (heroNote) heroNote.textContent = `${pick.league} · ${pick.type || "Match"} · Saved GoalRadar prediction`;
 
-  if (teams) {
-    teams.innerHTML = `
-      <span>${safe(pick.home)}</span>
-      <b>VS</b>
-      <span>${safe(pick.away)}</span>`;
-  }
+ const tag = $(".analysis-card .league-tag");
+ if (tag) tag.textContent = pick.league || "Football";
+ const match = $(".analysis-card .analysis-match h3");
+ if (match) match.innerHTML = `${safe(pick.home)} <small>vs</small> ${safe(pick.away)}`;
+ const info = $(".analysis-card .analysis-match p");
+ if (info) info.textContent = formatKickoff(pick.kickoff);
+ const analysisPick = $(".analysis-card .analysis-pick strong");
+ if (analysisPick) analysisPick.textContent = pick.pick || "Prediction pending";
+ const analysisConfidence = $(".analysis-card .analysis-pick b");
+ if (analysisConfidence) analysisConfidence.textContent = pct + "%";
 
-  const heroPick = $(".score-card .pick");
-  if (heroPick) heroPick.textContent = pick.pick || "Prediction pending";
+ const boxes = document.querySelectorAll(".analysis-data div");
+ const values = [
+  ["Prediction Type",pick.type || "Match"],
+  ["Confidence",pct + "%"],
+  ["League",pick.league || "Football"],
+  ["Prediction ID",pick.fixture_id || "—"]
+ ];
+ boxes.forEach((box,i) => {
+  if (values[i]) box.innerHTML = `<span>${safe(values[i][0])}</span><b>${safe(values[i][1])}</b>`;
+ });
 
-  const heroConfidence = $(".score-card .confidence strong");
-  if (heroConfidence) heroConfidence.textContent = pct + "%";
-
-  const heroBar = $(".score-card .bar i");
-  if (heroBar) heroBar.style.width = pct + "%";
-
-  const heroNote = $(".score-card small");
-  if (heroNote) heroNote.textContent =
-    `${pick.league} · ${pick.type || "Match"} · Saved GoalRadar prediction`;
-
-  const tag = $(".analysis-card .league-tag");
-  if (tag) tag.textContent = pick.league || "Football";
-
-  const match = $(".analysis-card .analysis-match h3");
-  if (match) {
-    match.innerHTML = `${safe(pick.home)} <small>vs</small> ${safe(pick.away)}`;
-  }
-
-  const matchInfo = $(".analysis-card .analysis-match p");
-  if (matchInfo) matchInfo.textContent = formatKickoff(pick.kickoff);
-
-  const analysisPick = $(".analysis-card .analysis-pick strong");
-  if (analysisPick) analysisPick.textContent = pick.pick || "Prediction pending";
-
-  const analysisConfidence = $(".analysis-card .analysis-pick b");
-  if (analysisConfidence) analysisConfidence.textContent = pct + "%";
-
-  const boxes = document.querySelectorAll(".analysis-data div");
-  const values = [
-    ["Prediction Type", pick.type || "Match"],
-    ["Confidence", pct + "%"],
-    ["League", pick.league || "Football"],
-    ["Fixture ID", pick.fixture_id || "—"]
-  ];
-
-  boxes.forEach((box, i) => {
-    if (values[i]) {
-      box.innerHTML = `<span>${safe(values[i][0])}</span><b>${safe(values[i][1])}</b>`;
-    }
-  });
-
-  const reason = $(".analysis-card .reason");
-  if (reason) {
-    reason.innerHTML = `<strong>GoalRadar signal:</strong> ${safe(
-      pick.analysis || "This prediction was published from the GoalRadar dashboard."
-    )}`;
-  }
+ const reason = $(".analysis-card .reason");
+ if (reason) reason.innerHTML = `<strong>GoalRadar signal:</strong> ${safe(pick.analysis || "Published from the GoalRadar dashboard.")}`;
 }
 
 function updateStats() {
-  const stats = document.querySelectorAll(".stats-strip b");
-  const active = picks.filter(isUpcoming);
-  const high = active.filter(p => confidenceValue(p.confidence) >= 75).length;
+ const stats = document.querySelectorAll(".stats-strip b");
+ const active = picks.filter(isUpcoming);
+ const high = active.filter(p => confidenceValue(p.confidence) >= 75).length;
+ if (stats[0]) stats[0].textContent = jsonStats?.matches_today ?? upcomingCount();
+ if (stats[1]) stats[1].textContent = jsonStats?.analyzed ?? picks.length;
+ if (stats[2]) stats[2].textContent = jsonStats?.high_confidence ?? high;
+ if (stats[3]) stats[3].textContent = "—";
+}
 
-  if (stats[0]) stats[0].textContent =
-    jsonStats?.matches_today ?? active.length;
-  if (stats[1]) stats[1].textContent =
-    jsonStats?.analyzed ?? picks.length;
-  if (stats[2]) stats[2].textContent =
-    jsonStats?.high_confidence ?? high;
-  // Accuracy stays unknown until actual results are tracked.
-  if (stats[3]) stats[3].textContent = "—";
+function upcomingCount() {
+ return Object.values(upcoming).reduce((total, matches) =>
+  total + (Array.isArray(matches) ? matches.length : 0), 0);
 }
 
 function updateResults() {
-  const tbody = $(".table-wrap tbody");
-  if (!tbody) return;
+ const tbody = $(".table-wrap tbody");
+ if (!tbody) return;
 
-  // The table uses existing fields only; no "result" column is required.
-  const settled = picks.filter(p =>
-    p.status && !["upcoming", "pending"].includes(String(p.status).toLowerCase())
-  );
+ const settled = picks.filter(p =>
+  p.status && !["upcoming","pending"].includes(String(p.status).toLowerCase())
+ );
 
-  if (!settled.length) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="4">No settled predictions recorded yet.</td>
-      </tr>`;
-    return;
-  }
+ if (!settled.length) {
+  tbody.innerHTML = `<tr><td colspan="4">No settled predictions recorded yet.</td></tr>`;
+  return;
+ }
 
-  tbody.innerHTML = settled.slice().reverse().map(p => {
-    const status = String(p.status || "Recorded");
-    const cls = status.toLowerCase() === "won" ? "won" :
-                status.toLowerCase() === "lost" ? "lost" : "";
-    return `
-      <tr>
-        <td>${safe(p.home)} vs ${safe(p.away)}</td>
-        <td>${safe(p.pick)}</td>
-        <td>${confidenceValue(p.confidence)}%</td>
-        <td class="${cls}">${safe(status)}</td>
-      </tr>`;
-  }).join("");
+ tbody.innerHTML = settled.slice().reverse().map(p => {
+  const status = String(p.status || "Recorded");
+  const cls = status.toLowerCase() === "won" ? "won" :
+              status.toLowerCase() === "lost" ? "lost" : "";
+  return `<tr>
+   <td>${safe(p.home)} vs ${safe(p.away)}</td>
+   <td>${safe(p.pick)}</td>
+   <td>${confidenceValue(p.confidence)}%</td>
+   <td class="${cls}">${safe(status)}</td>
+  </tr>`;
+ }).join("");
 }
 
 async function loadSupabasePredictions() {
-  const { data, error } = await db
-    .from("predictions")
-    .select("id, league, home_team, away_team, prediction, prediction_type, confidence, kickoff, analysis, is_pick_of_day, status, created_at")
-    .order("created_at", { ascending: false });
+ if (!db) throw new Error("Supabase client is unavailable");
 
-  if (error) {
-    console.error("Supabase predictions error:", error);
-    grid.innerHTML = `
-      <article class="pick-card">
-        <h3>Could not load saved predictions</h3>
-        <p class="vs">Check the browser console and Supabase public SELECT permissions.</p>
-      </article>`;
-    return;
-  }
+ const {data,error} = await db.from("predictions")
+  .select("id, league, home_team, away_team, prediction, prediction_type, confidence, kickoff, analysis, is_pick_of_day, status, created_at")
+  .order("created_at",{ascending:false});
 
-  picks = (data || []).map(row => ({
-    fixture_id: row.id,
-    league: normalizeLeague(row.league),
-    home: row.home_team,
-    away: row.away_team,
-    pick: row.prediction,
-    type: row.prediction_type,
-    confidence: confidenceValue(row.confidence),
-    kickoff: row.kickoff,
-    analysis: row.analysis || "",
-    isPickOfDay: row.is_pick_of_day === true,
-    status: row.status || "upcoming",
-    created_at: row.created_at
-  }));
+ if (error) throw error;
 
-  const current = picks.find(p => p.isPickOfDay && isUpcoming(p))
-              || picks.find(isUpcoming)
-              || picks[0];
+ picks = (data || []).map(row => ({
+  fixture_id:row.id,
+  league:normalizeLeague(row.league),
+  home:row.home_team,
+  away:row.away_team,
+  pick:row.prediction,
+  type:row.prediction_type,
+  confidence:confidenceValue(row.confidence),
+  kickoff:row.kickoff,
+  analysis:row.analysis || "",
+  isPickOfDay:row.is_pick_of_day === true,
+  status:row.status || "upcoming",
+  created_at:row.created_at
+ }));
 
-  if (current) updateFeaturedPick(current);
-  else {
-    const heroPick = $(".score-card .pick");
-    if (heroPick) heroPick.textContent = "No saved predictions yet";
-  }
+ const current = picks.find(p => p.isPickOfDay && isUpcoming(p))
+  || picks.find(isUpcoming) || picks[0];
 
-  render(currentFilter);
-  updateStats();
-  updateResults();
+ if (current) updateFeaturedPick(current);
+ else {
+  const heroPick = $(".score-card .pick");
+  if (heroPick) heroPick.textContent = "No saved predictions yet";
+ }
+
+ render(currentFilter);
+ updateStats();
+ updateResults();
 }
 
 async function loadFixtureFeed() {
-  try {
-    const response = await fetch("data/goalradar.json?ts=" + Date.now(), {
-      cache: "no-store"
-    });
-    if (!response.ok) throw new Error("Fixture feed unavailable");
+ const response = await fetch("./data/goalradar.json?ts=" + Date.now(),{cache:"no-store"});
+ if (!response.ok) throw new Error("Fixture feed returned HTTP " + response.status);
 
-    const d = await response.json();
-    if (d.upcoming && typeof d.upcoming === "object") {
-      upcoming = d.upcoming;
-    }
-    if (d.stats && typeof d.stats === "object") {
-      jsonStats = d.stats;
-    }
-    if (d.date) {
-      document.querySelectorAll(".date").forEach(el => {
-        el.textContent = d.date;
-      });
-    }
+ const d = await response.json();
+ upcoming = d.upcoming && typeof d.upcoming === "object" ? d.upcoming : {};
+ jsonStats = d.stats && typeof d.stats === "object" ? d.stats : null;
 
-    render(currentFilter);
-    updateStats();
-  } catch (error) {
-    // Supabase predictions can still load if the fixture feed is unavailable.
-    console.warn("Fixture feed unavailable:", error);
-  }
+ if (d.date) {
+  document.querySelectorAll(".date").forEach(el => el.textContent = d.date);
+ } else {
+  document.querySelectorAll(".date").forEach(el =>
+   el.textContent = new Date().toLocaleDateString()
+  );
+ }
+
+ render(currentFilter);
+ updateStats();
+}
+
+function showError(message) {
+ grid.innerHTML = `<article class="pick-card">
+  <h3>Some data could not load</h3><p class="vs">${safe(message)}</p>
+  <p class="vs">Please refresh the page. Saved predictions and fixtures may load independently.</p>
+ </article>`;
 }
 
 document.querySelectorAll("#filters button").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll("#filters button").forEach(b => b.classList.remove("active"));
-    button.classList.add("active");
-    render(button.dataset.league || "All");
-  });
+ button.addEventListener("click",() => {
+  document.querySelectorAll("#filters button").forEach(b => b.classList.remove("active"));
+  button.classList.add("active");
+  render(button.dataset.league || "All");
+ });
 });
 
-document.getElementById("menuBtn").addEventListener("click", () => {
-  const nav = document.getElementById("nav");
-  const isOpen = nav.style.display === "flex";
-  nav.style.display = isOpen ? "none" : "flex";
-  if (!isOpen) {
-    Object.assign(nav.style, {
-      position: "absolute",
-      top: "72px",
-      left: "0",
-      right: "0",
-      padding: "20px",
-      background: "#060a08",
-      flexDirection: "column"
-    });
-  }
+document.getElementById("menuBtn").addEventListener("click",() => {
+ const nav = document.getElementById("nav");
+ const btn = document.getElementById("menuBtn");
+ const isOpen = nav.style.display === "flex";
+ nav.style.display = isOpen ? "none" : "flex";
+ btn.setAttribute("aria-expanded",String(!isOpen));
+ if (!isOpen) Object.assign(nav.style,{
+  position:"absolute",top:"72px",left:"0",right:"0",
+  padding:"20px",background:"#060a08",flexDirection:"column"
+ });
 });
 
 document.querySelectorAll("#nav a").forEach(link => {
-  link.addEventListener("click", () => {
-    if (window.innerWidth <= 800) {
-      document.getElementById("nav").style.display = "none";
-    }
-  });
+ link.addEventListener("click",() => {
+  if (window.innerWidth <= 800) {
+   document.getElementById("nav").style.display = "none";
+   document.getElementById("menuBtn").setAttribute("aria-expanded","false");
+  }
+ });
 });
 
 async function startGoalRadar() {
-  await Promise.allSettled([
-    loadFixtureFeed(),
-    loadSupabasePredictions()
-  ]);
+ const tasks = [];
+
+ // Initialize Supabase separately so a fixture feed error cannot block it.
+ try {
+  if (!window.supabase) throw new Error("Supabase library did not load");
+  db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+  tasks.push(loadSupabasePredictions().catch(error => {
+   console.error("Supabase predictions error:",error);
+   if (!picks.length) showError("Could not load saved predictions. Check Supabase connection and SELECT permissions.");
+  }));
+ } catch(error) {
+  console.error("Supabase initialization error:",error);
+  showError("The Supabase library could not start. Check your internet connection and try again.");
+ }
+
+ tasks.push(loadFixtureFeed().catch(error => {
+  console.error("Fixture feed error:",error);
+  document.querySelectorAll(".date").forEach(el => el.textContent = "Fixture feed unavailable");
+  render(currentFilter);
+  updateStats();
+ }));
+
+ await Promise.allSettled(tasks);
 }
 
 startGoalRadar();
 </script>
-
-
-
 </body>
 </html>
