@@ -4,2336 +4,868 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07100c">
-
+<meta name="description" content="GoalRadar — data-driven football predictions, match analysis and performance tracking.">
 <title>GoalRadar — See the game differently</title>
 
 <style>
-
-*{
-  box-sizing:border-box
-}
-
-html{
-  scroll-behavior:smooth
-}
-
-body{
-  margin:0;
-  background:#050908;
-  color:#f3f7f4;
-  font-family:Inter,Arial,sans-serif;
-  line-height:1.5
-}
-
-a{
-  text-decoration:none;
-  color:inherit
-}
-
-button{
-  font:inherit;
-  cursor:pointer
-}
-
-/* =========================
-   TOP NAVIGATION
-========================= */
-
-.topbar{
-  height:72px;
-  display:flex;
-  align-items:center;
-  gap:30px;
-  padding:0 5%;
-  border-bottom:1px solid #17201b;
-  background:#060a08dd;
-  backdrop-filter:blur(12px);
-  position:sticky;
-  top:0;
-  z-index:10
-}
-
-/* GoalRadar logo */
-
-.logo{
-  display:flex;
-  align-items:center;
-  font-weight:900;
-  letter-spacing:1px;
-  font-size:20px
-}
-
-.logo img{
-  width:150px;
-  height:auto;
-  display:block
-}
-
-.logo span{
-  color:#a9ff35
-}
-
-.radar{
-  color:#a9ff35;
-  margin-right:5px
-}
-
-nav{
-  display:flex;
-  gap:22px;
-  font-size:13px;
-  color:#9ca79f;
-  flex:1
-}
-
-nav a:hover{
-  color:#a9ff35
-}
-
-.auth{
-  display:flex;
-  gap:8px
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-.ghost,
-.secondary{
-  background:transparent;
-  color:#dce4df;
-  border:1px solid #29332d;
-  padding:10px 15px;
-  border-radius:7px
-}
-
-.primary{
-  display:inline-flex;
-  align-items:center;
-  gap:12px;
-  background:#a9ff35;
-  color:#061006;
-  border:0;
-  padding:13px 18px;
-  border-radius:7px;
-  font-weight:900;
-  box-shadow:0 0 25px #8ee62c22
-}
-
-.primary.small{
-  padding:9px 14px
-}
-
-.menu{
-  display:none;
-  background:none;
-  color:white;
-  border:0;
-  font-size:22px
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-  min-height:590px;
-  padding:80px 7%;
-  display:grid;
-  grid-template-columns:1.05fr .95fr;
-  align-items:center;
-  gap:50px;
-  background:
-    radial-gradient(
-      circle at 75% 45%,
-      #193b20 0,
-      #08100c 35%,
-      #050908 68%
-    )
-}
-
-.eyebrow{
-  color:#a9ff35;
-  font-size:11px;
-  letter-spacing:2px;
-  font-weight:900;
-  margin-bottom:10px
-}
-
-.hero h1{
-  font-size:clamp(45px,7vw,82px);
-  line-height:.94;
-  margin:0 0 22px;
-  letter-spacing:-3px
-}
-
-.hero h1 em{
-  font-style:normal;
-  color:#a9ff35
-}
-
-.hero p{
-  max-width:550px;
-  color:#aab5ae;
-  font-size:17px
-}
-
-.hero-actions{
-  display:flex;
-  gap:12px;
-  margin-top:28px
-}
-
-/* =========================
-   HERO MATCH CARD
-========================= */
-
-.hero-card{
-  height:360px;
-  position:relative;
-  border:1px solid #243128;
-  border-radius:18px;
-  overflow:hidden;
-  background:linear-gradient(145deg,#102017,#050907);
-  display:flex;
-  align-items:center;
-  justify-content:center
-}
-
-.stadium-glow{
-  position:absolute;
-  width:330px;
-  height:330px;
-  border-radius:50%;
-  background:#a9ff3520;
-  filter:blur(45px)
-}
-
-.score-card{
-  position:relative;
-  width:78%;
-  background:#0a110dE8;
-  border:1px solid #304138;
-  border-radius:14px;
-  padding:28px;
-  box-shadow:0 25px 80px #000
-}
-
-.label,
-.confidence span{
-  font-size:10px;
-  letter-spacing:1.5px;
-  color:#7f8b84;
-  font-weight:bold
-}
-
-.teams{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:35px 0 20px;
-  font-size:27px;
-  font-weight:900
-}
-
-.teams b{
-  font-size:10px;
-  color:#637067
-}
-
-.pick{
-  font-size:20px;
-  font-weight:900;
-  color:#a9ff35
-}
-
-.confidence{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  margin-top:22px
-}
-
-.confidence strong{
-  font-size:25px
-}
-
-.bar{
-  height:5px;
-  background:#1c281f;
-  margin:8px 0 12px;
-  border-radius:5px
-}
-
-.bar i{
-  display:block;
-  height:100%;
-  background:#a9ff35;
-  border-radius:5px
-}
-
-.score-card small{
-  color:#849087
-}
-
-/* =========================
-   STATS
-========================= */
-
-.stats-strip{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  background:#0a100c;
-  border-top:1px solid #17221b;
-  border-bottom:1px solid #17221b
-}
-
-.stats-strip div{
-  padding:25px;
-  text-align:center;
-  border-right:1px solid #17221b
-}
-
-.stats-strip b{
-  display:block;
-  font-size:28px
-}
-
-.stats-strip span{
-  color:#7f8b84;
-  font-size:12px
-}
-
-/* =========================
-   GENERAL SECTIONS
-========================= */
-
-.section{
-  padding:75px 7%
-}
-
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  margin-bottom:28px
-}
-
-.section h2{
-  font-size:34px;
-  margin:0;
-  letter-spacing:-1px
-}
-
-.date{
-  font-size:11px;
-  color:#77827b
-}
-
-/* =========================
-   FILTERS
-========================= */
-
-.filters{
-  display:flex;
-  gap:8px;
-  overflow:auto;
-  padding-bottom:20px
-}
-
-.filters button{
-  white-space:nowrap;
-  background:#0b120e;
-  border:1px solid #202b24;
-  color:#87938b;
-  padding:9px 14px;
-  border-radius:6px
-}
-
-.filters button.active,
-.filters button:hover{
-  background:#a9ff35;
-  color:#071007;
-  border-color:#a9ff35
-}
-
-/* =========================
-   PICK CARDS
-========================= */
-
-.pick-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px
-}
-
-.pick-card{
-  background:#0a100c;
-  border:1px solid #1c2820;
-  border-radius:12px;
-  padding:22px;
-  transition:.2s
-}
-
-.pick-card:hover{
-  transform:translateY(-3px);
-  border-color:#557449
-}
-
-.pick-card .league{
-  font-size:10px;
-  color:#829087
-}
-
-.pick-card h3{
-  margin:14px 0 5px;
-  font-size:18px
-}
-
-.pick-card .vs{
-  color:#647069;
-  font-size:11px
-}
-
-.pick{
-  font-size:15px
-}
-
-.pick-card .bottom{
-  display:flex;
-  justify-content:space-between;
-  margin-top:20px;
-  align-items:end
-}
-
-.pick-card .pct{
-  color:#a9ff35;
-  font-size:21px;
-  font-weight:900
-}
-
-/* =========================
-   ANALYSIS
-========================= */
-
-.analysis-card{
-  background:linear-gradient(120deg,#0c150f,#08100b);
-  border:1px solid #223027;
-  border-radius:14px;
-  padding:28px
-}
-
-.league-tag{
-  display:inline-block;
-  background:#17261a;
-  color:#a9ff35;
-  padding:5px 8px;
-  border-radius:4px;
-  font-size:10px;
-  font-weight:bold
-}
-
-.analysis-match h3{
-  font-size:30px;
-  margin:16px 0 3px
-}
-
-.analysis-match h3 small{
-  font-size:12px;
-  color:#637067;
-  margin:0 10px
-}
-
-.analysis-match p,
-.reason{
-  color:#89958d
-}
-
-.analysis-pick{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:3px;
-  margin:25px 0;
-  padding:18px;
-  background:#111b14;
-  border-radius:8px
-}
-
-.analysis-pick span{
-  grid-column:1/-1;
-  color:#78847c;
-  font-size:10px
-}
-
-.analysis-pick strong{
-  font-size:20px
-}
-
-.analysis-pick b{
-  font-size:24px;
-  color:#a9ff35
-}
-
-.analysis-data{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px
-}
-
-.analysis-data div{
-  padding:15px;
-  background:#0a110d;
-  border-radius:7px
-}
-
-.analysis-data span{
-  display:block;
-  color:#707c74;
-  font-size:10px
-}
-
-.analysis-data b{
-  display:block;
-  margin-top:5px
-}
-
-/* =========================
-   CONFIDENCE
-========================= */
-
-.confidence-grid,
-.record-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px
-}
-
-.confidence-grid div{
-  padding:25px;
-  background:#0a100c;
-  border:1px solid #1c2820;
-  border-radius:10px
-}
-
-.confidence-grid strong{
-  font-size:27px;
-  color:#a9ff35
-}
-
-.confidence-grid h3{
-  margin:5px 0
-}
-
-.confidence-grid p,
-.about p{
-  color:#89958d
-}
-
-/* =========================
-   RECORD
-========================= */
-
-.record-grid{
-  grid-template-columns:repeat(4,1fr)
-}
-
-.record-grid div{
-  background:#0a100c;
-  border:1px solid #1c2820;
-  padding:22px;
-  border-radius:10px
-}
-
-.record-grid span,
-.record-grid small{
-  display:block;
-  color:#78847c;
-  font-size:11px
-}
-
-.record-grid b{
-  display:block;
-  font-size:25px;
-  margin:7px 0
-}
-
-/* =========================
-   RESULTS
-========================= */
-
-.table-wrap{
-  overflow:auto;
-  background:#0a100c;
-  border:1px solid #1c2820;
-  border-radius:10px
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:650px
-}
-
-th,
-td{
-  text-align:left;
-  padding:17px;
-  border-bottom:1px solid #1b251f;
-  font-size:13px
-}
-
-th{
-  color:#68756d;
-  font-size:10px;
-  letter-spacing:1px
-}
-
-.won{
-  color:#a9ff35;
-  font-weight:bold
-}
-
-.lost{
-  color:#ff6f6f;
-  font-weight:bold
-}
-
-/* =========================
-   PRO
-========================= */
-
-.pro{
-  margin:20px 7% 75px;
-  padding:45px;
-  border-radius:14px;
-  background:linear-gradient(110deg,#132219,#0b130e);
-  border:1px solid #304536;
-  display:flex;
-  align-items:center;
-  justify-content:space-between
-}
-
-.pro h2{
-  font-size:36px;
-  margin:0
-}
-
-.pro h2 span{
-  color:#a9ff35
-}
-
-.pro p{
-  color:#8d9991
-}
-
-/* =========================
-   ABOUT
-========================= */
-
-.about-box{
-  max-width:750px
-}
-
-.about{
-  border-top:1px solid #17221b
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-  padding:40px 7%;
-  border-top:1px solid #17221b;
-  background:#070b09;
-  display:flex;
-  align-items:center;
-  gap:25px;
-  color:#738078
-}
-
-footer .logo{
-  color:#fff
-}
-
-footer p{
-  flex:1;
-  font-size:12px
-}
-
-footer a{
-  margin-left:15px;
-  font-size:11px
-}
-
-/* =========================
-   TABLET / MOBILE
-========================= */
-
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#050908;color:#f3f7f4;font-family:Inter,Arial,sans-serif;line-height:1.5}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+.topbar{height:72px;display:flex;align-items:center;gap:30px;padding:0 5%;border-bottom:1px solid #17201b;background:#060a08dd;backdrop-filter:blur(12px);position:sticky;top:0;z-index:10}
+.logo{display:flex;align-items:center;font-weight:900;letter-spacing:1px;font-size:20px}
+.logo img{width:150px;height:auto;display:block}
+.logo span,.radar{color:#a9ff35}
+.radar{margin-right:5px}
+nav{display:flex;gap:22px;font-size:13px;color:#9ca79f;flex:1}
+nav a:hover{color:#a9ff35}
+.auth{display:flex;gap:8px}
+.ghost,.secondary{background:transparent;color:#dce4df;border:1px solid #29332d;padding:10px 15px;border-radius:7px}
+.primary{display:inline-flex;align-items:center;gap:12px;background:#a9ff35;color:#061006;border:0;padding:13px 18px;border-radius:7px;font-weight:900;box-shadow:0 0 25px #8ee62c22}
+.primary.small{padding:9px 14px}
+.menu{display:none;background:none;color:white;border:0;font-size:22px}
+.hero{min-height:590px;padding:80px 7%;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:50px;background:radial-gradient(circle at 75% 45%,#193b20 0,#08100c 35%,#050908 68%)}
+.eyebrow{color:#a9ff35;font-size:11px;letter-spacing:2px;font-weight:900;margin-bottom:10px}
+.hero h1{font-size:clamp(45px,7vw,82px);line-height:.94;margin:0 0 22px;letter-spacing:-3px}
+.hero h1 em{font-style:normal;color:#a9ff35}
+.hero p{max-width:550px;color:#aab5ae;font-size:17px}
+.hero-actions{display:flex;gap:12px;margin-top:28px}
+.hero-card{min-height:360px;position:relative;border:1px solid #243128;border-radius:18px;overflow:hidden;background:linear-gradient(145deg,#102017,#050907);display:flex;align-items:center;justify-content:center}
+.stadium-glow{position:absolute;width:330px;height:330px;border-radius:50%;background:#a9ff3520;filter:blur(45px)}
+.score-card{position:relative;width:78%;background:#0a110de8;border:1px solid #304138;border-radius:14px;padding:28px;box-shadow:0 25px 80px #000}
+.label,.confidence span{font-size:10px;letter-spacing:1.5px;color:#7f8b84;font-weight:bold}
+.teams{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:35px 0 20px;font-size:clamp(15px,2vw,27px);font-weight:900;overflow-wrap:anywhere}
+.teams b{font-size:10px;color:#637067;flex-shrink:0}
+.pick{font-size:20px;font-weight:900;color:#a9ff35;overflow-wrap:anywhere}
+.confidence{display:flex;justify-content:space-between;align-items:end;margin-top:22px}
+.confidence strong{font-size:25px}
+.bar{height:5px;background:#1c281f;margin:8px 0 12px;border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:#a9ff35;border-radius:5px}
+.score-card small{color:#849087}
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);background:#0a100c;border-top:1px solid #17221b;border-bottom:1px solid #17221b}
+.stats-strip div{padding:25px;text-align:center;border-right:1px solid #17221b}
+.stats-strip b{display:block;font-size:28px}
+.stats-strip span{color:#7f8b84;font-size:12px}
+.section{padding:75px 7%}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:28px}
+.section h2{font-size:34px;margin:0;letter-spacing:-1px}
+.date{font-size:11px;color:#77827b}
+.filters{display:flex;gap:8px;overflow:auto;padding-bottom:20px}
+.filters button{white-space:nowrap;background:#0b120e;border:1px solid #202b24;color:#87938b;padding:9px 14px;border-radius:6px}
+.filters button.active,.filters button:hover{background:#a9ff35;color:#071007;border-color:#a9ff35}
+.pick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.pick-card{min-width:0;background:#0a100c;border:1px solid #1c2820;border-radius:12px;padding:22px;transition:.2s;overflow-wrap:anywhere}
+.pick-card:hover{transform:translateY(-3px);border-color:#557449}
+.pick-card .league{font-size:10px;color:#829087}
+.pick-card h3{margin:14px 0 5px;font-size:18px;overflow-wrap:anywhere}
+.pick-card .vs{color:#89958d;font-size:11px}
+.pick-card .pick{font-size:15px;margin-top:12px}
+.pick-card .bottom{display:flex;justify-content:space-between;gap:10px;margin-top:20px;align-items:end;font-size:12px}
+.pick-card .pct{color:#a9ff35;font-size:21px;font-weight:900}
+.analysis-card{background:linear-gradient(120deg,#0c150f,#08100b);border:1px solid #223027;border-radius:14px;padding:28px}
+.league-tag{display:inline-block;background:#17261a;color:#a9ff35;padding:5px 8px;border-radius:4px;font-size:10px;font-weight:bold}
+.analysis-match h3{font-size:30px;margin:16px 0 3px;overflow-wrap:anywhere}
+.analysis-match h3 small{font-size:12px;color:#637067;margin:0 10px}
+.analysis-match p,.reason{color:#89958d}
+.analysis-pick{display:grid;grid-template-columns:1fr auto;gap:3px;margin:25px 0;padding:18px;background:#111b14;border-radius:8px}
+.analysis-pick span{grid-column:1/-1;color:#78847c;font-size:10px}
+.analysis-pick strong{font-size:20px;overflow-wrap:anywhere}
+.analysis-pick b{font-size:24px;color:#a9ff35}
+.analysis-data{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.analysis-data div{min-width:0;padding:15px;background:#0a110d;border-radius:7px;overflow-wrap:anywhere}
+.analysis-data span{display:block;color:#707c74;font-size:10px}
+.analysis-data b{display:block;margin-top:5px}
+.confidence-grid,.record-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.confidence-grid div{padding:25px;background:#0a100c;border:1px solid #1c2820;border-radius:10px}
+.confidence-grid strong{font-size:27px;color:#a9ff35}
+.confidence-grid h3{margin:5px 0}
+.confidence-grid p,.about p{color:#89958d}
+.record-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.record-grid div{min-width:0;background:#0a100c;border:1px solid #1c2820;padding:22px;border-radius:10px}
+.record-grid span,.record-grid small{display:block;color:#78847c;font-size:11px}
+.record-grid b{display:block;font-size:25px;margin:7px 0}
+.table-wrap{overflow:auto;background:#0a100c;border:1px solid #1c2820;border-radius:10px}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th,td{text-align:left;padding:17px;border-bottom:1px solid #1b251f;font-size:13px}
+th{color:#68756d;font-size:10px;letter-spacing:1px}
+.won{color:#a9ff35;font-weight:bold}
+.lost{color:#ff6f6f;font-weight:bold}
+.pro{margin:20px 7% 75px;padding:45px;border-radius:14px;background:linear-gradient(110deg,#132219,#0b130e);border:1px solid #304536;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.pro h2{font-size:36px;margin:0}
+.pro h2 span{color:#a9ff35}
+.pro p{color:#8d9991}
+.about-box{max-width:750px}
+.about{border-top:1px solid #17221b}
+footer{padding:40px 7%;border-top:1px solid #17221b;background:#070b09;display:flex;align-items:center;gap:25px;color:#738078}
+footer .logo{color:#fff}
+footer p{flex:1;font-size:12px}
+footer a{margin-left:15px;font-size:11px}
+.status-message{padding:14px;color:#89958d;font-size:13px}
 @media(max-width:800px){
-
-  nav,
-  .auth{
-    display:none
-  }
-
-  .menu{
-    display:block;
-    margin-left:auto
-  }
-
-  .hero{
-    grid-template-columns:1fr;
-    padding:55px 6%
-  }
-
-  .hero-card{
-    height:310px
-  }
-
-  .stats-strip{
-    grid-template-columns:repeat(2,1fr)
-  }
-
-  .stats-strip div:nth-child(2){
-    border-right:0
-  }
-
-  .pick-grid{
-    grid-template-columns:1fr
-  }
-
-  .section{
-    padding:55px 6%
-  }
-
-  .analysis-data{
-    grid-template-columns:repeat(2,1fr)
-  }
-
-  .confidence-grid{
-    grid-template-columns:1fr
-  }
-
-  .record-grid{
-    grid-template-columns:repeat(2,1fr)
-  }
-
-  .pro{
-    margin:0 6% 55px;
-    display:block
-  }
-
-  .pro .primary{
-    margin-top:15px
-  }
-
-  footer{
-    display:block
-  }
-
-  footer p{
-    margin:10px 0 20px
-  }
-
-  footer a{
-    margin:0 14px 0 0
-  }
-
-  .logo img{
-    width:115px
-  }
+  nav,.auth{display:none}
+  .menu{display:block;margin-left:auto}
+  .hero{grid-template-columns:1fr;padding:55px 6%}
+  .hero-card{min-height:310px}
+  .stats-strip{grid-template-columns:repeat(2,1fr)}
+  .stats-strip div:nth-child(2){border-right:0}
+  .pick-grid{grid-template-columns:1fr}
+  .section{padding:55px 6%}
+  .analysis-data{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .confidence-grid{grid-template-columns:1fr}
+  .record-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pro{margin:0 6% 55px;display:block;padding:30px}
+  .pro .primary{margin-top:15px}
+  footer{display:block}
+  footer p{margin:10px 0 20px}
+  footer a{margin:0 14px 0 0}
+  .logo img{width:115px}
 }
-
-/* =========================
-   SMALL PHONES
-========================= */
-
 @media(max-width:450px){
-
-  .hero h1{
-    font-size:45px
-  }
-
-  .hero-actions{
-    flex-direction:column
-  }
-
-  .hero-actions a{
-    justify-content:center
-  }
-
-  .score-card{
-    width:90%;
-    padding:20px
-  }
-
-  .teams{
-    font-size:22px
-  }
-
-  .section h2{
-    font-size:28px
-  }
-
-  .logo img{
-    width:105px
-  }
+  .hero h1{font-size:45px}
+  .hero-actions{flex-direction:column}
+  .hero-actions a{justify-content:center}
+  .score-card{width:90%;padding:20px}
+  .section h2{font-size:28px}
+  .logo img{width:105px}
+  .analysis-card{padding:20px}
+  .analysis-match h3{font-size:23px}
 }
-
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
-
-<!-- =========================
-     HEADER
-========================= -->
-
 <header class="topbar">
-
   <a href="#home" class="logo">
     <img src="goalradar-logo.png" alt="GoalRadar">
   </a>
 
-  <button class="menu" id="menuBtn">☰</button>
+  <button class="menu" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
   <nav id="nav">
-
     <a href="#home">Home</a>
-
     <a href="#picks">Today's Picks</a>
-
     <a href="#results">Results</a>
-
     <a href="#leagues">Leagues</a>
-
     <a href="#stats">Statistics</a>
-
     <a href="#about">About</a>
-
   </nav>
 
   <div class="auth">
-
-    <button class="ghost">Login</button>
-
-    <button class="primary small">Sign Up</button>
-
+    <a class="ghost" href="#about">About</a>
+    <a class="primary small" href="#picks">View Picks</a>
   </div>
-
 </header>
 
-
 <main>
-
-<!-- =========================
-     HERO
-========================= -->
-
 <section class="hero" id="home">
-
   <div class="hero-copy">
-
-    <div class="eyebrow">
-      FOOTBALL INTELLIGENCE PLATFORM
-    </div>
-
-    <h1>
-      SEE THE GAME<br>
-      <em>DIFFERENTLY.</em>
-    </h1>
-
-    <p>
-      Data-driven football predictions, match analysis and
-      performance tracking — all in one place.
-    </p>
-
+    <div class="eyebrow">FOOTBALL INTELLIGENCE PLATFORM</div>
+    <h1>SEE THE GAME<br><em>DIFFERENTLY.</em></h1>
+    <p>Data-driven football predictions, match analysis and performance tracking — all in one place.</p>
     <div class="hero-actions">
-
-      <a class="primary" href="#picks">
-        VIEW TODAY'S PICKS
-        <span>→</span>
-      </a>
-
-      <a class="secondary" href="#results">
-        VIEW RESULTS
-      </a>
-
+      <a class="primary" href="#picks">VIEW TODAY'S PICKS <span>→</span></a>
+      <a class="secondary" href="#results">VIEW RESULTS</a>
     </div>
-
   </div>
-
 
   <div class="hero-card">
-
     <div class="stadium-glow"></div>
-
     <div class="score-card">
-
-      <div class="label">
-        PICK OF THE DAY
-      </div>
-
+      <div class="label">PICK OF THE DAY</div>
       <div class="teams">
-
-        <span>LIVE</span>
-
-        <b>VS</b>
-
-        <span>DATA</span>
-
+        <span>GOAL</span><b>VS</b><span>RADAR</span>
       </div>
-
-      <div class="pick">
-        Loading prediction...
-      </div>
-
+      <div class="pick">Loading predictions...</div>
       <div class="confidence">
-
-        <span>CONFIDENCE</span>
-
-        <strong>—</strong>
-
+        <span>CONFIDENCE</span><strong>—</strong>
       </div>
-
-      <div class="bar">
-        <i style="width:0%"></i>
-      </div>
-
-      <small>
-        Loading latest GoalRadar data...
-      </small>
-
+      <div class="bar"><i style="width:0%"></i></div>
+      <small>Connecting to GoalRadar data...</small>
     </div>
-
   </div>
-
 </section>
-
-
-<!-- =========================
-     LIVE STATS
-========================= -->
 
 <section class="stats-strip">
-
-  <div>
-    <b>—</b>
-    <span>Matches Today</span>
-  </div>
-
-  <div>
-    <b>—</b>
-    <span>Analyzed</span>
-  </div>
-
-  <div>
-    <b>—</b>
-    <span>High Confidence</span>
-  </div>
-
-  <div>
-    <b>—</b>
-    <span>Model Accuracy</span>
-  </div>
-
+  <div><b>—</b><span>Upcoming Picks</span></div>
+  <div><b>—</b><span>Predictions Published</span></div>
+  <div><b>—</b><span>High Confidence</span></div>
+  <div><b>—</b><span>Model Accuracy</span></div>
 </section>
-
-
-<!-- =========================
-     TODAY'S PICKS
-========================= -->
 
 <section class="section" id="picks">
-
   <div class="section-head">
-
     <div>
-
-      <div class="eyebrow">
-        DAILY SIGNAL
-      </div>
-
-      <h2>
-        Today's Top Picks
-      </h2>
-
+      <div class="eyebrow">DAILY SIGNAL</div>
+      <h2>Today's Top Picks</h2>
     </div>
-
-    <span class="date">
-      LOADING...
-    </span>
-
+    <span class="date">Loading...</span>
   </div>
-
 
   <div class="filters" id="filters">
-
-    <button
-      class="active"
-      data-league="All">
-      All
-    </button>
-
-    <button data-league="EPL">
-      EPL
-    </button>
-
-    <button data-league="La Liga">
-      La Liga
-    </button>
-
-    <button data-league="Serie A">
-      Serie A
-    </button>
-
-    <button data-league="Bundesliga">
-      Bundesliga
-    </button>
-
-    <button data-league="Ligue 1">
-      Ligue 1
-    </button>
-
-    <button data-league="UCL">
-      UCL
-    </button>
-
+    <button class="active" data-league="All">All</button>
+    <button data-league="EPL">EPL</button>
+    <button data-league="La Liga">La Liga</button>
+    <button data-league="Serie A">Serie A</button>
+    <button data-league="Bundesliga">Bundesliga</button>
+    <button data-league="Ligue 1">Ligue 1</button>
+    <button data-league="UCL">UCL</button>
   </div>
 
-
-  <div
-    class="pick-grid"
-    id="pickGrid">
+  <div class="pick-grid" id="pickGrid">
+    <div class="pick-card"><h3>Loading predictions...</h3><p class="vs">Connecting to GoalRadar.</p></div>
   </div>
-
 </section>
-
-
-<!-- =========================
-     FEATURED ANALYSIS
-========================= -->
 
 <section class="analysis section">
-
   <div class="section-head">
-
-    <div>
-
-      <div class="eyebrow">
-        MATCH INTELLIGENCE
-      </div>
-
-      <h2>
-        Featured Analysis
-      </h2>
-
-    </div>
-
+    <div><div class="eyebrow">MATCH INTELLIGENCE</div><h2>Featured Analysis</h2></div>
   </div>
-
 
   <div class="analysis-card">
-
     <div class="analysis-match">
-
-      <span class="league-tag">
-        LIVE DATA
-      </span>
-
-      <h3>
-        Loading
-        <small>vs</small>
-        Match
-      </h3>
-
-      <p>
-        Waiting for the latest fixture...
-      </p>
-
+      <span class="league-tag">GOALRADAR</span>
+      <h3>Loading <small>vs</small> Match</h3>
+      <p>Waiting for the latest prediction...</p>
     </div>
-
 
     <div class="analysis-pick">
-
-      <span>
-        GOALRADAR PICK
-      </span>
-
-      <strong>
-        Loading...
-      </strong>
-
-      <b>
-        —
-      </b>
-
+      <span>GOALRADAR PICK</span>
+      <strong>Loading...</strong>
+      <b>—</b>
     </div>
-
 
     <div class="analysis-data">
-
-      <div>
-        <span>Prediction Type</span>
-        <b>—</b>
-      </div>
-
-      <div>
-        <span>Confidence</span>
-        <b>—</b>
-      </div>
-
-      <div>
-        <span>League</span>
-        <b>—</b>
-      </div>
-
-      <div>
-        <span>Fixture ID</span>
-        <b>—</b>
-      </div>
-
+      <div><span>Prediction Type</span><b>—</b></div>
+      <div><span>Confidence</span><b>—</b></div>
+      <div><span>League</span><b>—</b></div>
+      <div><span>Prediction ID</span><b>—</b></div>
     </div>
 
-
-    <p class="reason">
-
-      <strong>
-        GoalRadar signal:
-      </strong>
-
-      Waiting for the latest available football data
-      and prediction model.
-
-    </p>
-
+    <p class="reason"><strong>GoalRadar signal:</strong> Waiting for the latest available prediction.</p>
   </div>
-
 </section>
-
-
-<!-- =========================
-     CONFIDENCE LEVELS
-========================= -->
 
 <section class="confidence section">
-
   <div class="section-head">
-
-    <div>
-
-      <div class="eyebrow">
-        RISK SIGNAL
-      </div>
-
-      <h2>
-        Confidence Levels
-      </h2>
-
-    </div>
-
+    <div><div class="eyebrow">RISK SIGNAL</div><h2>Confidence Levels</h2></div>
   </div>
-
 
   <div class="confidence-grid">
-
-    <div>
-
-      <strong>
-        85–100%
-      </strong>
-
-      <h3>
-        Very Strong
-      </h3>
-
-      <p>
-        Highest model conviction.
-      </p>
-
-    </div>
-
-
-    <div>
-
-      <strong>
-        75–84%
-      </strong>
-
-      <h3>
-        Strong
-      </h3>
-
-      <p>
-        Good statistical support.
-      </p>
-
-    </div>
-
-
-    <div>
-
-      <strong>
-        65–74%
-      </strong>
-
-      <h3>
-        Moderate
-      </h3>
-
-      <p>
-        More uncertainty present.
-      </p>
-
-    </div>
-
+    <div><strong>85–100%</strong><h3>Very Strong</h3><p>Highest model conviction. Confidence is an estimate, not a guarantee.</p></div>
+    <div><strong>75–84%</strong><h3>Strong</h3><p>Good statistical support, with uncertainty still present.</p></div>
+    <div><strong>65–74%</strong><h3>Moderate</h3><p>More uncertainty is present in the prediction.</p></div>
   </div>
-
 </section>
 
-
-<!-- =========================
-     GOALRADAR RECORD
-========================= -->
-
-<section
-  class="record section"
-  id="stats">
-
+<section class="record section" id="stats">
   <div class="section-head">
-
-    <div>
-
-      <div class="eyebrow">
-        TRACK THE MODEL
-      </div>
-
-      <h2>
-        GoalRadar Record
-      </h2>
-
-    </div>
-
+    <div><div class="eyebrow">TRACK THE MODEL</div><h2>GoalRadar Record</h2></div>
   </div>
-
 
   <div class="record-grid">
-
-    <div>
-
-      <span>
-        Today
-      </span>
-
-      <b>
-        —
-      </b>
-
-      <small>
-        Live results coming soon
-      </small>
-
-    </div>
-
-
-    <div>
-
-      <span>
-        This Week
-      </span>
-
-      <b>
-        —
-      </b>
-
-      <small>
-        Live results coming soon
-      </small>
-
-    </div>
-
-
-    <div>
-
-      <span>
-        This Month
-      </span>
-
-      <b>
-        —
-      </b>
-
-      <small>
-        Live results coming soon
-      </small>
-
-    </div>
-
-
-    <div>
-
-      <span>
-        Overall
-      </span>
-
-      <b>
-        —
-      </b>
-
-      <small>
-        Live results coming soon
-      </small>
-
-    </div>
-
+    <div><span>Today</span><b>—</b><small>Settled predictions</small></div>
+    <div><span>This Week</span><b>—</b><small>Settled predictions</small></div>
+    <div><span>This Month</span><b>—</b><small>Settled predictions</small></div>
+    <div><span>Overall</span><b>—</b><small>Settled predictions</small></div>
   </div>
-
 </section>
 
-
-<!-- =========================
-     RESULTS
-========================= -->
-
-<section
-  class="results section"
-  id="results">
-
+<section class="results section" id="results">
   <div class="section-head">
-
-    <div>
-
-      <div class="eyebrow">
-        TRANSPARENT HISTORY
-      </div>
-
-      <h2>
-        Latest Results
-      </h2>
-
-    </div>
-
-    <span class="date">
-      ALL PICKS RECORDED
-    </span>
-
+    <div><div class="eyebrow">TRANSPARENT HISTORY</div><h2>Latest Results</h2></div>
+    <span class="date">Saved results</span>
   </div>
-
 
   <div class="table-wrap">
-
     <table>
-
       <thead>
-
-        <tr>
-
-          <th>
-            Match
-          </th>
-
-          <th>
-            Pick
-          </th>
-
-          <th>
-            Confidence
-          </th>
-
-          <th>
-            Result
-          </th>
-
-        </tr>
-
+        <tr><th>Match</th><th>Pick</th><th>Confidence</th><th>Result</th></tr>
       </thead>
-
-
       <tbody>
-
-        <tr>
-
-          <td>
-            Live results integration
-          </td>
-
-          <td>
-            Coming soon
-          </td>
-
-          <td>
-            —
-          </td>
-
-          <td>
-            —
-          </td>
-
-        </tr>
-
+        <tr><td colspan="4">Loading results...</td></tr>
       </tbody>
-
     </table>
-
   </div>
-
 </section>
-
-
-<!-- =========================
-     GOALRADAR PRO
-========================= -->
 
 <section class="pro section">
-
   <div>
-
-    <div class="eyebrow">
-      COMING NEXT
-    </div>
-
-    <h2>
-      GoalRadar
-      <span>PRO</span>
-    </h2>
-
-    <p>
-      Advanced match breakdowns, deeper statistics,
-      more picks and premium insights.
-    </p>
-
+    <div class="eyebrow">COMING NEXT</div>
+    <h2>GoalRadar <span>PRO</span></h2>
+    <p>Advanced match breakdowns, deeper statistics, more picks and premium insights.</p>
   </div>
-
-
-  <button class="primary">
-    JOIN WAITLIST →
-  </button>
-
+  <a class="primary" href="#about">LEARN MORE →</a>
 </section>
 
-
-<!-- =========================
-     ABOUT
-========================= -->
-
-<section
-  class="about section"
-  id="about">
-
+<section class="about section" id="about">
   <div class="about-box">
-
-    <div class="eyebrow">
-      ABOUT GOALRADAR
-    </div>
-
-    <h2>
-      Predictions with accountability.
-    </h2>
-
-    <p>
-      GoalRadar is designed to make football analysis
-      easier to understand. Picks are model-based opinions,
-      not guarantees. Every recorded result stays in the
-      history so performance can be judged honestly.
-    </p>
-
+    <div class="eyebrow">ABOUT GOALRADAR</div>
+    <h2>Predictions with accountability.</h2>
+    <p>GoalRadar is designed to make football analysis easier to understand. Picks are model-based opinions, not guarantees. Every recorded result stays in the history so performance can be judged honestly.</p>
   </div>
-
 </section>
-
 </main>
 
-
-<!-- =========================
-     FOOTER
-========================= -->
-
 <footer>
-
-  <a href="#home" class="logo">
-
-    <img
-      src="goalradar-logo.png"
-      alt="GoalRadar">
-
-  </a>
-
-
-  <p>
-    See the game differently.
-  </p>
-
-
+  <a href="#home" class="logo"><img src="goalradar-logo.png" alt="GoalRadar"></a>
+  <p>See the game differently.</p>
   <div>
-
-    <a href="#">
-      Privacy
-    </a>
-
-    <a href="#">
-      Terms
-    </a>
-
-    <a href="#">
-      Responsible Use
-    </a>
-
-    <a href="#">
-      Contact
-    </a>
-
+    <a href="#about">Privacy</a>
+    <a href="#about">Terms</a>
+    <a href="#about">Responsible Use</a>
+    <a href="mailto:dipantichesampson@gmail.com">Contact</a>
   </div>
-
 </footer>
 
-
-<!-- =========================
-     JAVASCRIPT
-========================= -->
-
 <script>
+"use strict";
 
-const grid =
-  document.getElementById("pickGrid");
+/* ==========================================
+   SUPABASE CONFIGURATION
+========================================== */
+
+const SUPABASE_URL = "https://mydtxdtwhgajgrqaedvg.supabase.co";
+const SUPABASE_KEY = "sb_publishable_GQ_EHwYD3FSP7dxcNPq_yA_-Tfsi3xc";
+
+const grid = document.getElementById("pickGrid");
+const db = window.supabase
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+  : null;
 
 let picks = [];
-
 let upcoming = {};
+let currentFilter = "All";
+let jsonStats = null;
 
+/* ==========================================
+   HELPERS
+========================================== */
 
-/* =========================
-   RENDER PICKS
-========================= */
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
 
-function render(filter = "All") {
+function confidenceValue(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? Math.max(0, Math.min(100, number)) : 0;
+}
 
+function formatDate(value) {
+  if (!value) return "Time TBC";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Time TBC";
 
-  /* -------------------------
-     ALL PICKS
-  ------------------------- */
+  return date.toLocaleString([], {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
 
-  if(filter === "All"){
+function normalizeLeague(value) {
+  const name = String(value || "").trim().toLowerCase();
 
-    if(!picks.length){
+  const aliases = {
+    "epl": "premier league",
+    "english premier league": "premier league",
+    "premier league": "premier league",
+    "laliga": "la liga",
+    "la liga": "la liga",
+    "serie a": "serie a",
+    "bundesliga": "bundesliga",
+    "ligue 1": "ligue 1",
+    "ucl": "champions league",
+    "uefa champions league": "champions league",
+    "champions league": "champions league"
+  };
 
-      grid.innerHTML = `
+  return aliases[name] || name;
+}
 
-        <div class="pick-card">
+function matchesLeague(item, filter) {
+  return filter === "All" ||
+    normalizeLeague(item.league) === normalizeLeague(filter);
+}
 
-          <h3>
-            No picks available
-          </h3>
+function isUpcoming(item) {
+  const status = String(item.status || "upcoming").toLowerCase();
+  return status === "upcoming" || status === "pending";
+}
 
-          <p class="vs">
-            GoalRadar has no analyzed
-            matches for today yet.
-          </p>
+function isSettled(item) {
+  const status = String(item.status || "").toLowerCase();
+  const result = String(item.result || "").trim().toLowerCase();
 
-        </div>
+  return ["won", "lost", "void", "settled"].includes(status) ||
+    (result !== "" && result !== "pending");
+}
 
-      `;
+/* ==========================================
+   RENDER PICK CARDS
+========================================== */
 
-      return;
+function render(filter = currentFilter) {
+  currentFilter = filter;
+  if (!grid) return;
 
-    }
+  let matches;
 
+  if (filter === "All") {
+    matches = picks.filter(isUpcoming);
+  } else {
+    const databasePicks = picks.filter(item =>
+      isUpcoming(item) && matchesLeague(item, filter)
+    );
 
-    grid.innerHTML =
-      picks.map(x => `
-
-        <article class="pick-card">
-
-          <div class="league">
-
-            ${x.league || "Football"}
-            ·
-            ${x.type || "Match"}
-
-          </div>
-
-
-          <h3>
-
-            ${x.home || "Home"}
-
-            <span class="vs">
-              VS
-            </span>
-
-            ${x.away || "Away"}
-
-          </h3>
-
-
-          <div class="pick">
-
-            ${x.pick || "Analysis pending"}
-
-          </div>
-
-
-          <div class="bottom">
-
-            <span>
-              GoalRadar signal
-            </span>
-
-            <span class="pct">
-
-              ${x.confidence || 0}%
-
-            </span>
-
-          </div>
-
-
-          <div class="bar">
-
-            <i
-              style="
-                width:${x.confidence || 0}%
-              ">
-            </i>
-
-          </div>
-
-        </article>
-
-      `).join("");
-
-    return;
-
+    matches = databasePicks.length
+      ? databasePicks
+      : (Array.isArray(upcoming[filter]) ? upcoming[filter] : []);
   }
 
-
-  /* -------------------------
-     UPCOMING LEAGUE FIXTURES
-  ------------------------- */
-
-  const matches =
-    upcoming[filter] || [];
-
-
-  if(!matches.length){
-
+  if (!matches.length) {
     grid.innerHTML = `
-
-      <div class="pick-card">
-
-        <div class="league">
-          ${filter}
-        </div>
-
-        <h3>
-          No upcoming matches
-        </h3>
-
+      <article class="pick-card">
+        <h3>No predictions available</h3>
         <p class="vs">
-
-          No upcoming ${filter}
-          fixtures are currently available.
-
+          No saved predictions or upcoming fixtures are available for this selection yet.
         </p>
-
-      </div>
-
-    `;
-
+      </article>`;
     return;
-
   }
 
+  grid.innerHTML = matches.map(item => {
+    const home = escapeHTML(item.home || "Home");
+    const away = escapeHTML(item.away || "Away");
+    const league = escapeHTML(item.league || filter || "Football");
+    const pick = String(item.pick || "").trim();
+    const type = escapeHTML(item.type || "Match");
+    const confidence = confidenceValue(item.confidence);
 
-  grid.innerHTML =
-    matches.map(match => {
-
-      const date =
-        match.kickoff
-          ? new Date(match.kickoff)
-          : null;
-
-
-      const kickoff =
-        date
-          ? date.toLocaleString([], {
-
-              weekday:"short",
-
-              day:"numeric",
-
-              month:"short",
-
-              hour:"2-digit",
-
-              minute:"2-digit"
-
-            })
-
-          : "Time TBC";
-
-
+    // Fixtures without a saved prediction remain fixtures, not betting tips.
+    if (!pick) {
       return `
-
         <article class="pick-card">
-
-
-          <div class="league">
-
-            ${match.league || filter}
-
-          </div>
-
-
-          <h3>
-
-            ${match.home || "Home"}
-
-            <span class="vs">
-              VS
-            </span>
-
-            ${match.away || "Away"}
-
-          </h3>
-
-
-          <div class="pick">
-
-            ${kickoff}
-
-          </div>
-
-
+          <div class="league">${league} · Upcoming fixture</div>
+          <h3>${home} <span class="vs">VS</span> ${away}</h3>
+          <div class="pick">${escapeHTML(formatDate(item.kickoff))}</div>
           <div class="bottom">
-
-            <span>
-
-              ${match.venue || "Venue TBC"}
-
-            </span>
-
-
-            <span class="pct">
-
-              →
-
-            </span>
-
+            <span>Prediction not published</span>
+            <span class="pct">—</span>
           </div>
+        </article>`;
+    }
 
-
-          <div class="vs">
-
-            ${match.round || "Upcoming fixture"}
-
-            ${
-              match.city
-                ? " · " + match.city
-                : ""
-            }
-
-          </div>
-
-
-        </article>
-
-      `;
-
-    }).join("");
-
+    return `
+      <article class="pick-card">
+        <div class="league">
+          ${league} · ${type}
+          ${item.isPickOfDay ? " · ⭐ PICK OF THE DAY" : ""}
+        </div>
+        <h3>${home} <span class="vs">VS</span> ${away}</h3>
+        <div class="pick">${escapeHTML(pick)}</div>
+        <div class="vs">${escapeHTML(formatDate(item.kickoff))}</div>
+        <div class="bottom">
+          <span>GoalRadar signal</span>
+          <span class="pct">${confidence}%</span>
+        </div>
+        <div class="bar"><i style="width:${confidence}%"></i></div>
+        ${item.analysis ? `<p class="vs">${escapeHTML(item.analysis)}</p>` : ""}
+      </article>`;
+  }).join("");
 }
 
+/* ==========================================
+   FEATURED PICK AND ANALYSIS
+========================================== */
 
-/* =========================
-   FEATURED PICK
-========================= */
+function updateFeaturedPick(item) {
+  if (!item) return;
 
-function updateFeaturedPick(pick){
+  const home = item.home || "Home";
+  const away = item.away || "Away";
+  const pick = item.pick || "Analysis pending";
+  const league = item.league || "Football";
+  const type = item.type || "Match";
+  const confidence = confidenceValue(item.confidence);
 
-  if(!pick)
-    return;
-
-
-  /* HERO PICK */
-
-  const teams =
-    document.querySelector(
-      ".score-card .teams"
-    );
-
-
-  const heroPick =
-    document.querySelector(
-      ".score-card .pick"
-    );
-
-
-  const heroConfidence =
-    document.querySelector(
-      ".score-card .confidence strong"
-    );
-
-
-  const heroBar =
-    document.querySelector(
-      ".score-card .bar i"
-    );
-
-
-  const heroNote =
-    document.querySelector(
-      ".score-card small"
-    );
-
-
-  if(teams){
-
+  const teams = document.querySelector(".score-card .teams");
+  if (teams) {
     teams.innerHTML = `
-
-      <span>
-        ${pick.home || "HOME"}
-      </span>
-
-      <b>
-        VS
-      </b>
-
-      <span>
-        ${pick.away || "AWAY"}
-      </span>
-
-    `;
-
+      <span>${escapeHTML(home)}</span>
+      <b>VS</b>
+      <span>${escapeHTML(away)}</span>`;
   }
 
+  const heroPick = document.querySelector(".score-card .pick");
+  if (heroPick) heroPick.textContent = pick;
 
-  if(heroPick){
+  const heroConfidence = document.querySelector(".score-card .confidence strong");
+  if (heroConfidence) heroConfidence.textContent = `${confidence}%`;
 
-    heroPick.textContent =
-      pick.pick ||
-      "Analysis pending";
+  const heroBar = document.querySelector(".score-card .bar i");
+  if (heroBar) heroBar.style.width = `${confidence}%`;
 
+  const heroNote = document.querySelector(".score-card small");
+  if (heroNote) {
+    heroNote.textContent = `${league} · ${type} · GoalRadar prediction`;
   }
 
+  const tag = document.querySelector(".analysis-card .league-tag");
+  if (tag) tag.textContent = league;
 
-  if(heroConfidence){
-
-    heroConfidence.textContent =
-      `${pick.confidence || 0}%`;
-
+  const matchTitle = document.querySelector(".analysis-card .analysis-match h3");
+  if (matchTitle) {
+    matchTitle.innerHTML = `
+      ${escapeHTML(home)} <small>vs</small> ${escapeHTML(away)}`;
   }
 
-
-  if(heroBar){
-
-    heroBar.style.width =
-      `${pick.confidence || 0}%`;
-
+  const matchInfo = document.querySelector(".analysis-card .analysis-match p");
+  if (matchInfo) {
+    matchInfo.textContent = item.kickoff
+      ? formatDate(item.kickoff)
+      : "Fixture time to be confirmed";
   }
 
-
-  if(heroNote){
-
-    heroNote.textContent =
-
-      `${pick.league || "Football"} · ` +
-      `${pick.type || "Match"} · ` +
-      `Live GoalRadar prediction`;
-
-  }
-
-
-  /* FEATURED ANALYSIS */
-
-  const tag =
-    document.querySelector(
-      ".analysis-card .league-tag"
-    );
-
-
-  const match =
-    document.querySelector(
-      ".analysis-card .analysis-match h3"
-    );
-
-
-  const matchInfo =
-    document.querySelector(
-      ".analysis-card .analysis-match p"
-    );
-
-
-  const analysisPick =
-    document.querySelector(
-      ".analysis-card .analysis-pick strong"
-    );
-
-
-  const analysisConfidence =
-    document.querySelector(
-      ".analysis-card .analysis-pick b"
-    );
-
-
-  const reason =
-    document.querySelector(
-      ".analysis-card .reason"
-    );
-
-
-  if(tag){
-
-    tag.textContent =
-      pick.league ||
-      "Football";
-
-  }
-
-
-  if(match){
-
-    match.innerHTML = `
-
-      ${pick.home || "Home"}
-
-      <small>
-        vs
-      </small>
-
-      ${pick.away || "Away"}
-
-    `;
-
-  }
-
-
-  if(matchInfo){
-
-    if(pick.kickoff){
-
-      const date =
-        new Date(pick.kickoff);
-
-
-      matchInfo.textContent =
-        date.toLocaleString([], {
-
-          dateStyle:"medium",
-
-          timeStyle:"short"
-
-        });
-
-    }
-
-    else{
-
-      matchInfo.textContent =
-        "Today's fixture";
-
-    }
-
-  }
-
-
-  if(analysisPick){
-
-    analysisPick.textContent =
-      pick.pick ||
-      "Analysis pending";
-
-  }
-
-
-  if(analysisConfidence){
-
-    analysisConfidence.textContent =
-      `${pick.confidence || 0}%`;
-
-  }
-
-
-  if(reason){
-
-    reason.innerHTML = `
-
-      <strong>
-        GoalRadar signal:
-      </strong>
-
-      ${pick.type || "Match"}
-      prediction generated from
-      the latest available football data
-      and prediction model.
-
-    `;
-
-  }
-
-
-  /* ANALYSIS DATA */
-
-  const dataBoxes =
-    document.querySelectorAll(
-      ".analysis-data div"
-    );
-
-
-  if(dataBoxes[0]){
-
-    dataBoxes[0].innerHTML =
-
-      "<span>Prediction Type</span>" +
-      "<b>" +
-      (pick.type || "Match") +
-      "</b>";
-
-  }
-
-
-  if(dataBoxes[1]){
-
-    dataBoxes[1].innerHTML =
-
-      "<span>Confidence</span>" +
-      "<b>" +
-      (pick.confidence || 0) +
-      "%</b>";
-
-  }
-
-
-  if(dataBoxes[2]){
-
-    dataBoxes[2].innerHTML =
-
-      "<span>League</span>" +
-      "<b>" +
-      (pick.league || "Football") +
-      "</b>";
-
-  }
-
-
-  if(dataBoxes[3]){
-
-    dataBoxes[3].innerHTML =
-
-      "<span>Fixture ID</span>" +
-      "<b>" +
-      (pick.fixture_id || "—") +
-      "</b>";
-
-  }
-
-}
-
-
-/* =========================
-   LEAGUE FILTER BUTTONS
-========================= */
-
-document
-  .querySelectorAll("#filters button")
-  .forEach(btn => {
-
-    btn.addEventListener(
-      "click",
-      () => {
-
-        document
-          .querySelectorAll(
-            "#filters button"
-          )
-          .forEach(b => {
-
-            b.classList.remove(
-              "active"
-            );
-
-          });
-
-
-        btn.classList.add(
-          "active"
-        );
-
-
-        const league =
-          btn.dataset.league;
-
-
-        render(league);
-
-      }
-    );
-
+  const analysisPick = document.querySelector(".analysis-card .analysis-pick strong");
+  if (analysisPick) analysisPick.textContent = pick;
+
+  const analysisConfidence = document.querySelector(".analysis-card .analysis-pick b");
+  if (analysisConfidence) analysisConfidence.textContent = `${confidence}%`;
+
+  const details = [
+    ["Prediction Type", type],
+    ["Confidence", `${confidence}%`],
+    ["League", league],
+    ["Prediction ID", item.fixture_id || item.id || "—"]
+  ];
+
+  document.querySelectorAll(".analysis-data div").forEach((box, index) => {
+    if (!details[index]) return;
+    box.innerHTML = `
+      <span>${escapeHTML(details[index][0])}</span>
+      <b>${escapeHTML(details[index][1])}</b>`;
   });
 
-
-/* =========================
-   MOBILE MENU
-========================= */
-
-document
-  .getElementById("menuBtn")
-  .addEventListener(
-    "click",
-    () => {
-
-      const n =
-        document.getElementById(
-          "nav"
-        );
-
-
-      n.style.display =
-        n.style.display === "flex"
-          ? "none"
-          : "flex";
-
-
-      n.style.position =
-        "absolute";
-
-
-      n.style.top =
-        "72px";
-
-
-      n.style.left =
-        "0";
-
-
-      n.style.right =
-        "0";
-
-
-      n.style.padding =
-        "20px";
-
-
-      n.style.background =
-        "#060a08";
-
-
-      n.style.flexDirection =
-        "column";
-
-    }
-  );
-
-
-/* =========================
-   LOAD GOALRADAR DATA
-========================= */
-
-async function loadGoalRadarData(){
-
-  try{
-
-    const r =
-      await fetch(
-
-        "data/goalradar.json?ts=" +
-        Date.now(),
-
-        {
-          cache:"no-store"
-        }
-
-      );
-
-
-    if(!r.ok){
-
-      throw new Error(
-        "GoalRadar data unavailable"
-      );
-
-    }
-
-
-    const d =
-      await r.json();
-
-
-    /* TODAY'S PICKS */
-
-    if(
-      Array.isArray(
-        d.picks
-      )
-    ){
-
-      picks =
-        d.picks;
-
-
-      render(
-        "All"
-      );
-
-
-      updateFeaturedPick(
-        picks[0]
-      );
-
-    }
-
-
-    /* UPCOMING FIXTURES */
-
-    if(
-      d.upcoming &&
-      typeof d.upcoming ===
-      "object"
-    ){
-
-      upcoming =
-        d.upcoming;
-
-    }
-
-
-    /* UPDATE DATES */
-
-    const dates =
-      document.querySelectorAll(
-        ".date"
-      );
-
-
-    dates.forEach(
-      dateEl => {
-
-        if(d.date){
-
-          dateEl.textContent =
-            d.date;
-
-        }
-
-      }
-    );
-
-
-    /* UPDATE TOP STATS */
-
-    const stat =
-      document.querySelector(
-        ".stats-strip"
-      );
-
-
-    if(
-      stat &&
-      d.stats
-    ){
-
-      const b =
-        stat.querySelectorAll(
-          "b"
-        );
-
-
-      if(b[0]){
-
-        b[0].textContent =
-          d.stats.matches_today ??
-          0;
-
-      }
-
-
-      if(b[1]){
-
-        b[1].textContent =
-          d.stats.analyzed ??
-          0;
-
-      }
-
-
-      if(b[2]){
-
-        b[2].textContent =
-          d.stats.high_confidence ??
-          0;
-
-      }
-
-
-      if(b[3]){
-
-        b[3].textContent =
-          "—";
-
-      }
-
-    }
-
+  const reason = document.querySelector(".analysis-card .reason");
+  if (reason) {
+    reason.innerHTML = `
+      <strong>GoalRadar signal:</strong>
+      ${escapeHTML(item.analysis ||
+        `${type} prediction published by GoalRadar. Predictions are opinions, not guarantees.`)}`;
   }
-
-
-  catch(e){
-
-    console.error(
-      "GoalRadar live data failed:",
-      e
-    );
-
-
-    picks = [];
-
-    upcoming = {};
-
-
-    render(
-      "All"
-    );
-
-
-    const heroPick =
-      document.querySelector(
-        ".score-card .pick"
-      );
-
-
-    if(heroPick){
-
-      heroPick.textContent =
-        "Live data unavailable";
-
-    }
-
-
-    const analysisPick =
-      document.querySelector(
-        ".analysis-card .analysis-pick strong"
-      );
-
-
-    if(analysisPick){
-
-      analysisPick.textContent =
-        "No live prediction";
-
-    }
-
-  }
-
 }
 
+/* ==========================================
+   TOP STATS
+========================================== */
 
-/* =========================
-   START GOALRADAR
-========================= */
+function updateStats() {
+  const values = document.querySelectorAll(".stats-strip b");
+  if (values.length < 4) return;
 
-loadGoalRadarData();
+  const upcomingPicks = picks.filter(isUpcoming);
+  const highConfidence = upcomingPicks.filter(
+    item => confidenceValue(item.confidence) >= 75
+  ).length;
 
+  values[0].textContent = jsonStats?.matches_today ?? upcomingPicks.length;
+  values[1].textContent = jsonStats?.analyzed ?? picks.length;
+  values[2].textContent = jsonStats?.high_confidence ?? highConfidence;
+
+  // Accuracy is only shown if a real value is supplied by the data feed.
+  values[3].textContent = jsonStats?.accuracy ?? "—";
+}
+
+/* ==========================================
+   LATEST RESULTS
+========================================== */
+
+function renderResults() {
+  const tbody = document.querySelector(".table-wrap tbody");
+  if (!tbody) return;
+
+  const results = picks.filter(isSettled).sort((a, b) => {
+    const first = new Date(a.kickoff || a.created_at || 0).getTime();
+    const second = new Date(b.kickoff || b.created_at || 0).getTime();
+    return second - first;
+  });
+
+  if (!results.length) {
+    tbody.innerHTML = `
+      <tr><td colspan="4">No completed predictions have been recorded yet.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = results.map(item => {
+    const status = String(item.status || "").toLowerCase();
+    const outcome = String(item.result || item.status || "Recorded");
+    const className = status === "won" ? "won" : status === "lost" ? "lost" : "";
+
+    return `
+      <tr>
+        <td>
+          ${escapeHTML(item.home || "Home")} vs ${escapeHTML(item.away || "Away")}
+          <br><small>${escapeHTML(item.league || "Football")}</small>
+        </td>
+        <td>${escapeHTML(item.pick || "—")}</td>
+        <td>${confidenceValue(item.confidence)}%</td>
+        <td class="${className}">${escapeHTML(outcome)}</td>
+      </tr>`;
+  }).join("");
+}
+
+/* ==========================================
+   RECORD SUMMARY
+========================================== */
+
+function updateRecordSummary() {
+  const boxes = document.querySelectorAll(".record-grid div");
+  if (boxes.length < 4) return;
+
+  const settled = picks.filter(isSettled);
+  const now = new Date();
+
+  function sameDay(value) {
+    const date = new Date(value);
+    return !Number.isNaN(date.getTime()) &&
+      date.getFullYear() === now.getFullYear() &&
+      date.getMonth() === now.getMonth() &&
+      date.getDate() === now.getDate();
+  }
+
+  function sameMonth(value) {
+    const date = new Date(value);
+    return !Number.isNaN(date.getTime()) &&
+      date.getFullYear() === now.getFullYear() &&
+      date.getMonth() === now.getMonth();
+  }
+
+  function sameWeek(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return false;
+
+    const start = new Date(now);
+    start.setHours(0, 0, 0, 0);
+    start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+
+    return date >= start && date <= now;
+  }
+
+  const dateFor = item => item.kickoff || item.created_at || "";
+  const counts = [
+    settled.filter(item => sameDay(dateFor(item))).length,
+    settled.filter(item => sameWeek(dateFor(item))).length,
+    settled.filter(item => sameMonth(dateFor(item))).length,
+    settled.length
+  ];
+
+  boxes.forEach((box, index) => {
+    const number = box.querySelector("b");
+    const note = box.querySelector("small");
+    if (number) number.textContent = counts[index] ?? 0;
+    if (note) note.textContent = "Settled predictions";
+  });
+}
+
+/* ==========================================
+   FILTER BUTTONS
+========================================== */
+
+document.querySelectorAll("#filters button").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll("#filters button").forEach(item => {
+      item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+    render(button.dataset.league || "All");
+  });
+});
+
+/* ==========================================
+   MOBILE MENU
+========================================== */
+
+const menuButton = document.getElementById("menuBtn");
+const nav = document.getElementById("nav");
+
+if (menuButton && nav) {
+  menuButton.addEventListener("click", () => {
+    const open = nav.style.display === "flex";
+    nav.style.display = open ? "none" : "flex";
+    menuButton.setAttribute("aria-expanded", String(!open));
+
+    if (!open) {
+      Object.assign(nav.style, {
+        position: "absolute",
+        top: "72px",
+        left: "0",
+        right: "0",
+        padding: "20px",
+        background: "#060a08",
+        flexDirection: "column"
+      });
+    }
+  });
+
+  nav.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth <= 800) {
+        nav.style.display = "none";
+        menuButton.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
+}
+
+/* ==========================================
+   EXISTING JSON FIXTURE FEED
+========================================== */
+
+async function loadFixtureData() {
+  try {
+    const response = await fetch(
+      "data/goalradar.json?ts=" + Date.now(),
+      { cache: "no-store" }
+    );
+
+    if (!response.ok) throw new Error("Fixture feed unavailable");
+
+    const data = await response.json();
+
+    if (data.upcoming && typeof data.upcoming === "object") {
+      upcoming = data.upcoming;
+    }
+
+    jsonStats = data.stats || null;
+
+    if (data.date) {
+      document.querySelectorAll(".date").forEach(element => {
+        element.textContent = data.date;
+      });
+    }
+
+    render(currentFilter);
+    updateStats();
+  } catch (error) {
+    // Supabase predictions still load if the JSON feed is unavailable.
+    console.warn("GoalRadar fixture feed:", error.message);
+  }
+}
+
+/* ==========================================
+   SUPABASE PREDICTIONS
+========================================== */
+
+async function loadSupabasePredictions() {
+  const heroPick = document.querySelector(".score-card .pick");
+
+  if (!db) {
+    if (heroPick) heroPick.textContent = "Supabase library unavailable";
+    console.error("Supabase JavaScript library did not load.");
+    return;
+  }
+
+  if (heroPick) heroPick.textContent = "Loading predictions...";
+
+  try {
+    const { data, error } = await db
+      .from("predictions")
+      .select(`
+        id,
+        league,
+        home_team,
+        away_team,
+        prediction,
+        prediction_type,
+        confidence,
+        kickoff,
+        analysis,
+        is_pick_of_day,
+        status,
+        result,
+        created_at
+      `)
+      .order("kickoff", { ascending: true, nullsFirst: false });
+
+    if (error) throw error;
+
+    picks = (data || []).map(row => ({
+      id: row.id,
+      fixture_id: row.id,
+      league: row.league || "Football",
+      home: row.home_team || "Home",
+      away: row.away_team || "Away",
+      pick: row.prediction || "",
+      type: row.prediction_type || "Match",
+      confidence: confidenceValue(row.confidence),
+      kickoff: row.kickoff || "",
+      analysis: row.analysis || "",
+      isPickOfDay: row.is_pick_of_day === true,
+      status: row.status || "upcoming",
+      result: row.result || "",
+      created_at: row.created_at || ""
+    }));
+
+    const activePicks = picks.filter(isUpcoming);
+    const featured =
+      activePicks.find(item => item.isPickOfDay) ||
+      activePicks.find(item => item.pick) ||
+      activePicks[0];
+
+    if (featured) {
+      updateFeaturedPick(featured);
+    } else if (heroPick) {
+      heroPick.textContent = "No upcoming predictions";
+    }
+
+    render(currentFilter);
+    updateStats();
+    renderResults();
+    updateRecordSummary();
+
+  } catch (error) {
+    console.error("Could not load Supabase predictions:", error);
+
+    if (heroPick) heroPick.textContent = "Could not load predictions";
+
+    grid.innerHTML = `
+      <article class="pick-card">
+        <h3>Predictions temporarily unavailable</h3>
+        <p class="vs">Please check the database connection and try again.</p>
+      </article>`;
+
+    const tbody = document.querySelector(".table-wrap tbody");
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr><td colspan="4">Results could not be loaded. Please try again later.</td></tr>`;
+    }
+  }
+}
+
+/* ==========================================
+   START WEBSITE
+========================================== */
+
+async function startGoalRadar() {
+  await Promise.all([
+    loadFixtureData(),
+    loadSupabasePredictions()
+  ]);
+}
+
+startGoalRadar();
 </script>
 
 </body>
