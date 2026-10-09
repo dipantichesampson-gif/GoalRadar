@@ -189,8 +189,8 @@ def is_good_fixture(fixture, diagnostic=False):
     if any(word in text for word in blocked_words):
         return False
 
-    # Keep only recognized league and cup competitions.
-    # Unknown values are logged for diagnosis, not silently accepted.
+    # Fixture responses may not include league.type.
+    # Only reject when a type is present and is explicitly unsupported.
     if league_type not in ("league", "cup"):
         if diagnostic:
             print("  Rejected: unsupported league type")
