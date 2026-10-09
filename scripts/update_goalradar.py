@@ -26,7 +26,7 @@ UPCOMING_LEAGUES = {
     "UCL": 2,
 }
 
-SEASON = 2026
+SEASON = 2024
 last_request_time = 0
 
 
