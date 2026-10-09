@@ -26,7 +26,10 @@ UPCOMING_LEAGUES = {
     "UCL": 2,
 }
 
-SEASON = 2024
+# Keep this as the requested current season.
+# The API may deny access depending on your subscription.
+SEASON = 2026
+
 last_request_time = 0
 
 
@@ -48,9 +51,12 @@ def load_existing_data():
             data.setdefault("picks", [])
             data.setdefault("upcoming", {})
 
+            for name in UPCOMING_LEAGUES:
+                data["upcoming"].setdefault(name, [])
+
             return data
 
-    except Exception as e:
+    except (OSError, json.JSONDecodeError) as e:
         print("Could not load existing data:", e)
 
     return {
@@ -91,7 +97,7 @@ def get(endpoint, params=None):
         url,
         headers={
             "x-apisports-key": API_KEY,
-            "User-Agent": "GoalRadar/1.1",
+            "User-Agent": "GoalRadar/1.2",
         },
         method="GET",
     )
@@ -113,7 +119,6 @@ def get(endpoint, params=None):
         data = json.loads(raw)
 
         errors = data.get("errors")
-
         if errors:
             print("API returned errors:", errors)
             return None
@@ -122,7 +127,6 @@ def get(endpoint, params=None):
 
     except HTTPError as e:
         last_request_time = time.time()
-
         print(f"HTTP error {e.code}: {e.reason}")
 
         try:
@@ -136,8 +140,8 @@ def get(endpoint, params=None):
         print("Network error:", e)
         return None
 
-    except Exception as e:
-        print("Unexpected API error:", e)
+    except (ValueError, OSError) as e:
+        print("API response error:", e)
         return None
 
 
@@ -158,7 +162,7 @@ def is_good_fixture(fixture, diagnostic=False):
     ).lower()
 
     name = str(league.get("name") or "").lower()
-    league_type = str(league.get("type") or "").lower()
+    league_type = str(league.get("type") or "").lower().strip()
 
     if diagnostic:
         print(
@@ -187,13 +191,21 @@ def is_good_fixture(fixture, diagnostic=False):
     ]
 
     if any(word in text for word in blocked_words):
+        if diagnostic:
+            print("  Rejected: youth, women's, or reserve competition")
         return False
 
-    # Fixture responses may not include league.type.
-    # Only reject when a type is present and is explicitly unsupported.
-    if league_type not in ("league", "cup"):
+    # Missing league.type is allowed because fixture responses may omit it.
+    # If a type is present, reject only explicitly unsupported types.
+    if league_type and league_type not in ("league", "cup"):
         if diagnostic:
-            print("  Rejected: unsupported league type")
+            print("  Rejected: unsupported league type:", league_type)
+        return False
+
+    # Avoid accepting incomplete fixtures.
+    if not home or not away:
+        if diagnostic:
+            print("  Rejected: missing home or away team")
         return False
 
     return True
@@ -253,7 +265,6 @@ def extract_prediction(data):
         }
 
     response = data.get("response") or []
-
     if not response:
         return {
             "pick": "Analysis pending",
@@ -329,15 +340,15 @@ def get_upcoming(existing_upcoming):
             },
         )
 
-        # Preserve previously saved fixtures when API access fails.
+        previous = existing_upcoming.get(display_name, [])
+
+        # If API access fails, retain cached fixtures.
         if data is None:
             print(f"Keeping previous {display_name} data.")
-            previous = existing_upcoming.get(display_name, [])
             upcoming[display_name] = previous
 
             if previous:
                 successful += 1
-
             continue
 
         fixtures = data.get("response") or []
@@ -376,14 +387,19 @@ def get_upcoming(existing_upcoming):
                 "round": league.get("round"),
             })
 
-        # Replace cached league fixtures only if the API gave usable results.
+        # Don't erase cached matches just because a successful response
+        # contained no usable fixtures.
         if clean:
             upcoming[display_name] = clean[:10]
             successful += 1
         else:
-            # Empty results can mean no games are scheduled, but preserve
-            # old fixtures when the API plan has denied the season request.
-            upcoming[display_name] = []
+            upcoming[display_name] = previous
+            if previous:
+                successful += 1
+            print(
+                f"{display_name}: no usable fixtures returned; "
+                f"keeping {len(previous)} cached matches"
+            )
 
         print(
             f"{display_name}: "
@@ -422,7 +438,7 @@ def main():
         },
     )
 
-    # Do not overwrite existing data if today's API request fails.
+    # Don't overwrite the data file if today's API request fails.
     if fixtures_data is None:
         print("Today's fixture request failed.")
         print("Keeping existing GoalRadar data.")
@@ -537,7 +553,9 @@ def main():
     # 7. Save output
     # --------------------------------------------------------
 
-    os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+    directory = os.path.dirname(DATA_FILE)
+    if directory:
+        os.makedirs(directory, exist_ok=True)
 
     temp_file = DATA_FILE + ".tmp"
 
