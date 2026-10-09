@@ -320,553 +320,348 @@ footer a{margin-left:15px;font-size:11px}
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-"use strict";
-
-/* ==========================================
-   SUPABASE CONFIGURATION
-========================================== */
-
 const SUPABASE_URL = "https://mydtxdtwhgajgrqaedvg.supabase.co";
 const SUPABASE_KEY = "sb_publishable_GQ_EHwYD3FSP7dxcNPq_yA_-Tfsi3xc";
 
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const grid = document.getElementById("pickGrid");
-const db = window.supabase
-  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
-  : null;
 
 let picks = [];
 let upcoming = {};
 let currentFilter = "All";
 let jsonStats = null;
 
-/* ==========================================
-   HELPERS
-========================================== */
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-}
+const $ = (selector) => document.querySelector(selector);
+const safe = (value) => String(value ?? "").replace(/[&<>"']/g, c => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;",
+  '"': "&quot;", "'": "&#39;"
+}[c]));
 
 function confidenceValue(value) {
-  const number = Number(value);
-  return Number.isFinite(number) ? Math.max(0, Math.min(100, number)) : 0;
-}
-
-function formatDate(value) {
-  if (!value) return "Time TBC";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Time TBC";
-
-  return date.toLocaleString([], {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+  const n = Number(value);
+  return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : 0;
 }
 
 function normalizeLeague(value) {
-  const name = String(value || "").trim().toLowerCase();
-
-  const aliases = {
-    "epl": "premier league",
-    "english premier league": "premier league",
-    "premier league": "premier league",
-    "laliga": "la liga",
-    "la liga": "la liga",
-    "serie a": "serie a",
-    "bundesliga": "bundesliga",
-    "ligue 1": "ligue 1",
-    "ucl": "champions league",
-    "uefa champions league": "champions league",
-    "champions league": "champions league"
-  };
-
-  return aliases[name] || name;
+  const v = String(value || "").toLowerCase().trim();
+  if (["epl", "premier league", "english premier league"].includes(v)) return "EPL";
+  if (["la liga", "laliga", "spanish la liga"].includes(v)) return "La Liga";
+  if (["serie a", "italian serie a"].includes(v)) return "Serie A";
+  if (["bundesliga", "german bundesliga"].includes(v)) return "Bundesliga";
+  if (["ligue 1", "ligue1", "french ligue 1"].includes(v)) return "Ligue 1";
+  if (["ucl", "champions league", "uefa champions league"].includes(v)) return "UCL";
+  return value || "Football";
 }
 
-function matchesLeague(item, filter) {
-  return filter === "All" ||
-    normalizeLeague(item.league) === normalizeLeague(filter);
+function formatKickoff(value) {
+  if (!value) return "Kickoff time TBC";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return "Kickoff time TBC";
+  return d.toLocaleString([], {
+    day: "numeric", month: "short",
+    hour: "2-digit", minute: "2-digit"
+  });
 }
 
-function isUpcoming(item) {
-  const status = String(item.status || "upcoming").toLowerCase();
-  return status === "upcoming" || status === "pending";
+function isUpcoming(p) {
+  return !p.status || String(p.status).toLowerCase() === "upcoming";
 }
-
-function isSettled(item) {
-  const status = String(item.status || "").toLowerCase();
-  const result = String(item.result || "").trim().toLowerCase();
-
-  return ["won", "lost", "void", "settled"].includes(status) ||
-    (result !== "" && result !== "pending");
-}
-
-/* ==========================================
-   RENDER PICK CARDS
-========================================== */
 
 function render(filter = currentFilter) {
   currentFilter = filter;
-  if (!grid) return;
 
-  let matches;
+  // Show saved Supabase predictions for All and for leagues
+  // that have saved predictions. Otherwise show JSON fixtures.
+  let list = picks.filter(p =>
+    filter === "All" || normalizeLeague(p.league) === filter
+  );
 
-  if (filter === "All") {
-    matches = picks.filter(isUpcoming);
-  } else {
-    const databasePicks = picks.filter(item =>
-      isUpcoming(item) && matchesLeague(item, filter)
-    );
-
-    matches = databasePicks.length
-      ? databasePicks
-      : (Array.isArray(upcoming[filter]) ? upcoming[filter] : []);
+  if (filter !== "All" && list.length === 0) {
+    const fixtures = upcoming[filter] || [];
+    if (fixtures.length) {
+      grid.innerHTML = fixtures.map(m => `
+        <article class="pick-card">
+          <div class="league">${safe(m.league || filter)}</div>
+          <h3>${safe(m.home || "Home")}
+            <span class="vs"> VS </span>
+            ${safe(m.away || "Away")}
+          </h3>
+          <div class="pick">${safe(formatKickoff(m.kickoff))}</div>
+          <div class="bottom">
+            <span>${safe(m.venue || "Venue TBC")}</span>
+            <span class="pct">→</span>
+          </div>
+          <div class="vs">${safe(m.round || "Upcoming fixture")}</div>
+        </article>
+      `).join("");
+      return;
+    }
   }
 
-  if (!matches.length) {
+  if (!list.length) {
     grid.innerHTML = `
       <article class="pick-card">
         <h3>No predictions available</h3>
-        <p class="vs">
-          No saved predictions or upcoming fixtures are available for this selection yet.
-        </p>
+        <p class="vs">No saved GoalRadar predictions were found for this selection.</p>
       </article>`;
     return;
   }
 
-  grid.innerHTML = matches.map(item => {
-    const home = escapeHTML(item.home || "Home");
-    const away = escapeHTML(item.away || "Away");
-    const league = escapeHTML(item.league || filter || "Football");
-    const pick = String(item.pick || "").trim();
-    const type = escapeHTML(item.type || "Match");
-    const confidence = confidenceValue(item.confidence);
-
-    // Fixtures without a saved prediction remain fixtures, not betting tips.
-    if (!pick) {
-      return `
-        <article class="pick-card">
-          <div class="league">${league} · Upcoming fixture</div>
-          <h3>${home} <span class="vs">VS</span> ${away}</h3>
-          <div class="pick">${escapeHTML(formatDate(item.kickoff))}</div>
-          <div class="bottom">
-            <span>Prediction not published</span>
-            <span class="pct">—</span>
-          </div>
-        </article>`;
-    }
-
+  grid.innerHTML = list.map(p => {
+    const pct = confidenceValue(p.confidence);
     return `
       <article class="pick-card">
         <div class="league">
-          ${league} · ${type}
-          ${item.isPickOfDay ? " · ⭐ PICK OF THE DAY" : ""}
+          ${safe(p.league)} · ${safe(p.type || "Match")}
+          ${p.isPickOfDay ? " · ★ PICK OF THE DAY" : ""}
         </div>
-        <h3>${home} <span class="vs">VS</span> ${away}</h3>
-        <div class="pick">${escapeHTML(pick)}</div>
-        <div class="vs">${escapeHTML(formatDate(item.kickoff))}</div>
+        <h3>${safe(p.home)}
+          <span class="vs"> VS </span>
+          ${safe(p.away)}
+        </h3>
+        <div class="pick">${safe(p.pick || "Prediction pending")}</div>
+        <div class="vs">${safe(formatKickoff(p.kickoff))}</div>
+        ${p.analysis ? `<p class="vs">${safe(p.analysis)}</p>` : ""}
         <div class="bottom">
           <span>GoalRadar signal</span>
-          <span class="pct">${confidence}%</span>
+          <span class="pct">${pct}%</span>
         </div>
-        <div class="bar"><i style="width:${confidence}%"></i></div>
-        ${item.analysis ? `<p class="vs">${escapeHTML(item.analysis)}</p>` : ""}
+        <div class="bar"><i style="width:${pct}%"></i></div>
       </article>`;
   }).join("");
 }
 
-/* ==========================================
-   FEATURED PICK AND ANALYSIS
-========================================== */
+function updateFeaturedPick(pick) {
+  if (!pick) return;
 
-function updateFeaturedPick(item) {
-  if (!item) return;
+  const pct = confidenceValue(pick.confidence);
+  const teams = $(".score-card .teams");
 
-  const home = item.home || "Home";
-  const away = item.away || "Away";
-  const pick = item.pick || "Analysis pending";
-  const league = item.league || "Football";
-  const type = item.type || "Match";
-  const confidence = confidenceValue(item.confidence);
-
-  const teams = document.querySelector(".score-card .teams");
   if (teams) {
     teams.innerHTML = `
-      <span>${escapeHTML(home)}</span>
+      <span>${safe(pick.home)}</span>
       <b>VS</b>
-      <span>${escapeHTML(away)}</span>`;
+      <span>${safe(pick.away)}</span>`;
   }
 
-  const heroPick = document.querySelector(".score-card .pick");
-  if (heroPick) heroPick.textContent = pick;
+  const heroPick = $(".score-card .pick");
+  if (heroPick) heroPick.textContent = pick.pick || "Prediction pending";
 
-  const heroConfidence = document.querySelector(".score-card .confidence strong");
-  if (heroConfidence) heroConfidence.textContent = `${confidence}%`;
+  const heroConfidence = $(".score-card .confidence strong");
+  if (heroConfidence) heroConfidence.textContent = pct + "%";
 
-  const heroBar = document.querySelector(".score-card .bar i");
-  if (heroBar) heroBar.style.width = `${confidence}%`;
+  const heroBar = $(".score-card .bar i");
+  if (heroBar) heroBar.style.width = pct + "%";
 
-  const heroNote = document.querySelector(".score-card small");
-  if (heroNote) {
-    heroNote.textContent = `${league} · ${type} · GoalRadar prediction`;
+  const heroNote = $(".score-card small");
+  if (heroNote) heroNote.textContent =
+    `${pick.league} · ${pick.type || "Match"} · Saved GoalRadar prediction`;
+
+  const tag = $(".analysis-card .league-tag");
+  if (tag) tag.textContent = pick.league || "Football";
+
+  const match = $(".analysis-card .analysis-match h3");
+  if (match) {
+    match.innerHTML = `${safe(pick.home)} <small>vs</small> ${safe(pick.away)}`;
   }
 
-  const tag = document.querySelector(".analysis-card .league-tag");
-  if (tag) tag.textContent = league;
+  const matchInfo = $(".analysis-card .analysis-match p");
+  if (matchInfo) matchInfo.textContent = formatKickoff(pick.kickoff);
 
-  const matchTitle = document.querySelector(".analysis-card .analysis-match h3");
-  if (matchTitle) {
-    matchTitle.innerHTML = `
-      ${escapeHTML(home)} <small>vs</small> ${escapeHTML(away)}`;
-  }
+  const analysisPick = $(".analysis-card .analysis-pick strong");
+  if (analysisPick) analysisPick.textContent = pick.pick || "Prediction pending";
 
-  const matchInfo = document.querySelector(".analysis-card .analysis-match p");
-  if (matchInfo) {
-    matchInfo.textContent = item.kickoff
-      ? formatDate(item.kickoff)
-      : "Fixture time to be confirmed";
-  }
+  const analysisConfidence = $(".analysis-card .analysis-pick b");
+  if (analysisConfidence) analysisConfidence.textContent = pct + "%";
 
-  const analysisPick = document.querySelector(".analysis-card .analysis-pick strong");
-  if (analysisPick) analysisPick.textContent = pick;
-
-  const analysisConfidence = document.querySelector(".analysis-card .analysis-pick b");
-  if (analysisConfidence) analysisConfidence.textContent = `${confidence}%`;
-
-  const details = [
-    ["Prediction Type", type],
-    ["Confidence", `${confidence}%`],
-    ["League", league],
-    ["Prediction ID", item.fixture_id || item.id || "—"]
+  const boxes = document.querySelectorAll(".analysis-data div");
+  const values = [
+    ["Prediction Type", pick.type || "Match"],
+    ["Confidence", pct + "%"],
+    ["League", pick.league || "Football"],
+    ["Fixture ID", pick.fixture_id || "—"]
   ];
 
-  document.querySelectorAll(".analysis-data div").forEach((box, index) => {
-    if (!details[index]) return;
-    box.innerHTML = `
-      <span>${escapeHTML(details[index][0])}</span>
-      <b>${escapeHTML(details[index][1])}</b>`;
+  boxes.forEach((box, i) => {
+    if (values[i]) {
+      box.innerHTML = `<span>${safe(values[i][0])}</span><b>${safe(values[i][1])}</b>`;
+    }
   });
 
-  const reason = document.querySelector(".analysis-card .reason");
+  const reason = $(".analysis-card .reason");
   if (reason) {
-    reason.innerHTML = `
-      <strong>GoalRadar signal:</strong>
-      ${escapeHTML(item.analysis ||
-        `${type} prediction published by GoalRadar. Predictions are opinions, not guarantees.`)}`;
+    reason.innerHTML = `<strong>GoalRadar signal:</strong> ${safe(
+      pick.analysis || "This prediction was published from the GoalRadar dashboard."
+    )}`;
   }
 }
 
-/* ==========================================
-   TOP STATS
-========================================== */
-
 function updateStats() {
-  const values = document.querySelectorAll(".stats-strip b");
-  if (values.length < 4) return;
+  const stats = document.querySelectorAll(".stats-strip b");
+  const active = picks.filter(isUpcoming);
+  const high = active.filter(p => confidenceValue(p.confidence) >= 75).length;
 
-  const upcomingPicks = picks.filter(isUpcoming);
-  const highConfidence = upcomingPicks.filter(
-    item => confidenceValue(item.confidence) >= 75
-  ).length;
-
-  values[0].textContent = jsonStats?.matches_today ?? upcomingPicks.length;
-  values[1].textContent = jsonStats?.analyzed ?? picks.length;
-  values[2].textContent = jsonStats?.high_confidence ?? highConfidence;
-
-  // Accuracy is only shown if a real value is supplied by the data feed.
-  values[3].textContent = jsonStats?.accuracy ?? "—";
+  if (stats[0]) stats[0].textContent =
+    jsonStats?.matches_today ?? active.length;
+  if (stats[1]) stats[1].textContent =
+    jsonStats?.analyzed ?? picks.length;
+  if (stats[2]) stats[2].textContent =
+    jsonStats?.high_confidence ?? high;
+  // Accuracy stays unknown until actual results are tracked.
+  if (stats[3]) stats[3].textContent = "—";
 }
 
-/* ==========================================
-   LATEST RESULTS
-========================================== */
-
-function renderResults() {
-  const tbody = document.querySelector(".table-wrap tbody");
+function updateResults() {
+  const tbody = $(".table-wrap tbody");
   if (!tbody) return;
 
-  const results = picks.filter(isSettled).sort((a, b) => {
-    const first = new Date(a.kickoff || a.created_at || 0).getTime();
-    const second = new Date(b.kickoff || b.created_at || 0).getTime();
-    return second - first;
-  });
+  // The table uses existing fields only; no "result" column is required.
+  const settled = picks.filter(p =>
+    p.status && !["upcoming", "pending"].includes(String(p.status).toLowerCase())
+  );
 
-  if (!results.length) {
+  if (!settled.length) {
     tbody.innerHTML = `
-      <tr><td colspan="4">No completed predictions have been recorded yet.</td></tr>`;
+      <tr>
+        <td colspan="4">No settled predictions recorded yet.</td>
+      </tr>`;
     return;
   }
 
-  tbody.innerHTML = results.map(item => {
-    const status = String(item.status || "").toLowerCase();
-    const outcome = String(item.result || item.status || "Recorded");
-    const className = status === "won" ? "won" : status === "lost" ? "lost" : "";
-
+  tbody.innerHTML = settled.slice().reverse().map(p => {
+    const status = String(p.status || "Recorded");
+    const cls = status.toLowerCase() === "won" ? "won" :
+                status.toLowerCase() === "lost" ? "lost" : "";
     return `
       <tr>
-        <td>
-          ${escapeHTML(item.home || "Home")} vs ${escapeHTML(item.away || "Away")}
-          <br><small>${escapeHTML(item.league || "Football")}</small>
-        </td>
-        <td>${escapeHTML(item.pick || "—")}</td>
-        <td>${confidenceValue(item.confidence)}%</td>
-        <td class="${className}">${escapeHTML(outcome)}</td>
+        <td>${safe(p.home)} vs ${safe(p.away)}</td>
+        <td>${safe(p.pick)}</td>
+        <td>${confidenceValue(p.confidence)}%</td>
+        <td class="${cls}">${safe(status)}</td>
       </tr>`;
   }).join("");
 }
 
-/* ==========================================
-   RECORD SUMMARY
-========================================== */
+async function loadSupabasePredictions() {
+  const { data, error } = await db
+    .from("predictions")
+    .select("id, league, home_team, away_team, prediction, prediction_type, confidence, kickoff, analysis, is_pick_of_day, status, created_at")
+    .order("created_at", { ascending: false });
 
-function updateRecordSummary() {
-  const boxes = document.querySelectorAll(".record-grid div");
-  if (boxes.length < 4) return;
-
-  const settled = picks.filter(isSettled);
-  const now = new Date();
-
-  function sameDay(value) {
-    const date = new Date(value);
-    return !Number.isNaN(date.getTime()) &&
-      date.getFullYear() === now.getFullYear() &&
-      date.getMonth() === now.getMonth() &&
-      date.getDate() === now.getDate();
+  if (error) {
+    console.error("Supabase predictions error:", error);
+    grid.innerHTML = `
+      <article class="pick-card">
+        <h3>Could not load saved predictions</h3>
+        <p class="vs">Check the browser console and Supabase public SELECT permissions.</p>
+      </article>`;
+    return;
   }
 
-  function sameMonth(value) {
-    const date = new Date(value);
-    return !Number.isNaN(date.getTime()) &&
-      date.getFullYear() === now.getFullYear() &&
-      date.getMonth() === now.getMonth();
+  picks = (data || []).map(row => ({
+    fixture_id: row.id,
+    league: normalizeLeague(row.league),
+    home: row.home_team,
+    away: row.away_team,
+    pick: row.prediction,
+    type: row.prediction_type,
+    confidence: confidenceValue(row.confidence),
+    kickoff: row.kickoff,
+    analysis: row.analysis || "",
+    isPickOfDay: row.is_pick_of_day === true,
+    status: row.status || "upcoming",
+    created_at: row.created_at
+  }));
+
+  const current = picks.find(p => p.isPickOfDay && isUpcoming(p))
+              || picks.find(isUpcoming)
+              || picks[0];
+
+  if (current) updateFeaturedPick(current);
+  else {
+    const heroPick = $(".score-card .pick");
+    if (heroPick) heroPick.textContent = "No saved predictions yet";
   }
 
-  function sameWeek(value) {
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return false;
-
-    const start = new Date(now);
-    start.setHours(0, 0, 0, 0);
-    start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
-
-    return date >= start && date <= now;
-  }
-
-  const dateFor = item => item.kickoff || item.created_at || "";
-  const counts = [
-    settled.filter(item => sameDay(dateFor(item))).length,
-    settled.filter(item => sameWeek(dateFor(item))).length,
-    settled.filter(item => sameMonth(dateFor(item))).length,
-    settled.length
-  ];
-
-  boxes.forEach((box, index) => {
-    const number = box.querySelector("b");
-    const note = box.querySelector("small");
-    if (number) number.textContent = counts[index] ?? 0;
-    if (note) note.textContent = "Settled predictions";
-  });
+  render(currentFilter);
+  updateStats();
+  updateResults();
 }
 
-/* ==========================================
-   FILTER BUTTONS
-========================================== */
+async function loadFixtureFeed() {
+  try {
+    const response = await fetch("data/goalradar.json?ts=" + Date.now(), {
+      cache: "no-store"
+    });
+    if (!response.ok) throw new Error("Fixture feed unavailable");
+
+    const d = await response.json();
+    if (d.upcoming && typeof d.upcoming === "object") {
+      upcoming = d.upcoming;
+    }
+    if (d.stats && typeof d.stats === "object") {
+      jsonStats = d.stats;
+    }
+    if (d.date) {
+      document.querySelectorAll(".date").forEach(el => {
+        el.textContent = d.date;
+      });
+    }
+
+    render(currentFilter);
+    updateStats();
+  } catch (error) {
+    // Supabase predictions can still load if the fixture feed is unavailable.
+    console.warn("Fixture feed unavailable:", error);
+  }
+}
 
 document.querySelectorAll("#filters button").forEach(button => {
   button.addEventListener("click", () => {
-    document.querySelectorAll("#filters button").forEach(item => {
-      item.classList.remove("active");
-    });
-
+    document.querySelectorAll("#filters button").forEach(b => b.classList.remove("active"));
     button.classList.add("active");
     render(button.dataset.league || "All");
   });
 });
 
-/* ==========================================
-   MOBILE MENU
-========================================== */
-
-const menuButton = document.getElementById("menuBtn");
-const nav = document.getElementById("nav");
-
-if (menuButton && nav) {
-  menuButton.addEventListener("click", () => {
-    const open = nav.style.display === "flex";
-    nav.style.display = open ? "none" : "flex";
-    menuButton.setAttribute("aria-expanded", String(!open));
-
-    if (!open) {
-      Object.assign(nav.style, {
-        position: "absolute",
-        top: "72px",
-        left: "0",
-        right: "0",
-        padding: "20px",
-        background: "#060a08",
-        flexDirection: "column"
-      });
-    }
-  });
-
-  nav.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      if (window.innerWidth <= 800) {
-        nav.style.display = "none";
-        menuButton.setAttribute("aria-expanded", "false");
-      }
+document.getElementById("menuBtn").addEventListener("click", () => {
+  const nav = document.getElementById("nav");
+  const isOpen = nav.style.display === "flex";
+  nav.style.display = isOpen ? "none" : "flex";
+  if (!isOpen) {
+    Object.assign(nav.style, {
+      position: "absolute",
+      top: "72px",
+      left: "0",
+      right: "0",
+      padding: "20px",
+      background: "#060a08",
+      flexDirection: "column"
     });
+  }
+});
+
+document.querySelectorAll("#nav a").forEach(link => {
+  link.addEventListener("click", () => {
+    if (window.innerWidth <= 800) {
+      document.getElementById("nav").style.display = "none";
+    }
   });
-}
-
-/* ==========================================
-   EXISTING JSON FIXTURE FEED
-========================================== */
-
-async function loadFixtureData() {
-  try {
-    const response = await fetch(
-      "data/goalradar.json?ts=" + Date.now(),
-      { cache: "no-store" }
-    );
-
-    if (!response.ok) throw new Error("Fixture feed unavailable");
-
-    const data = await response.json();
-
-    if (data.upcoming && typeof data.upcoming === "object") {
-      upcoming = data.upcoming;
-    }
-
-    jsonStats = data.stats || null;
-
-    if (data.date) {
-      document.querySelectorAll(".date").forEach(element => {
-        element.textContent = data.date;
-      });
-    }
-
-    render(currentFilter);
-    updateStats();
-  } catch (error) {
-    // Supabase predictions still load if the JSON feed is unavailable.
-    console.warn("GoalRadar fixture feed:", error.message);
-  }
-}
-
-/* ==========================================
-   SUPABASE PREDICTIONS
-========================================== */
-
-async function loadSupabasePredictions() {
-  const heroPick = document.querySelector(".score-card .pick");
-
-  if (!db) {
-    if (heroPick) heroPick.textContent = "Supabase library unavailable";
-    console.error("Supabase JavaScript library did not load.");
-    return;
-  }
-
-  if (heroPick) heroPick.textContent = "Loading predictions...";
-
-  try {
-    const { data, error } = await db
-      .from("predictions")
-      .select(`
-        id,
-        league,
-        home_team,
-        away_team,
-        prediction,
-        prediction_type,
-        confidence,
-        kickoff,
-        analysis,
-        is_pick_of_day,
-        status,
-        result,
-        created_at
-      `)
-      .order("kickoff", { ascending: true, nullsFirst: false });
-
-    if (error) throw error;
-
-    picks = (data || []).map(row => ({
-      id: row.id,
-      fixture_id: row.id,
-      league: row.league || "Football",
-      home: row.home_team || "Home",
-      away: row.away_team || "Away",
-      pick: row.prediction || "",
-      type: row.prediction_type || "Match",
-      confidence: confidenceValue(row.confidence),
-      kickoff: row.kickoff || "",
-      analysis: row.analysis || "",
-      isPickOfDay: row.is_pick_of_day === true,
-      status: row.status || "upcoming",
-      result: row.result || "",
-      created_at: row.created_at || ""
-    }));
-
-    const activePicks = picks.filter(isUpcoming);
-    const featured =
-      activePicks.find(item => item.isPickOfDay) ||
-      activePicks.find(item => item.pick) ||
-      activePicks[0];
-
-    if (featured) {
-      updateFeaturedPick(featured);
-    } else if (heroPick) {
-      heroPick.textContent = "No upcoming predictions";
-    }
-
-    render(currentFilter);
-    updateStats();
-    renderResults();
-    updateRecordSummary();
-
-  } catch (error) {
-    console.error("Could not load Supabase predictions:", error);
-
-    if (heroPick) heroPick.textContent = "Could not load predictions";
-
-    grid.innerHTML = `
-      <article class="pick-card">
-        <h3>Predictions temporarily unavailable</h3>
-        <p class="vs">Please check the database connection and try again.</p>
-      </article>`;
-
-    const tbody = document.querySelector(".table-wrap tbody");
-    if (tbody) {
-      tbody.innerHTML = `
-        <tr><td colspan="4">Results could not be loaded. Please try again later.</td></tr>`;
-    }
-  }
-}
-
-/* ==========================================
-   START WEBSITE
-========================================== */
+});
 
 async function startGoalRadar() {
-  await Promise.all([
-    loadFixtureData(),
+  await Promise.allSettled([
+    loadFixtureFeed(),
     loadSupabasePredictions()
   ]);
 }
 
 startGoalRadar();
 </script>
+
+
 
 </body>
 </html>
