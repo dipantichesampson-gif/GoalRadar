@@ -369,36 +369,109 @@ function isUpcoming(p) {
   return !p.status || String(p.status).toLowerCase() === "upcoming";
 }
 
-function render(filter = currentFilter) {
+
+function render(filter = "All") {
   currentFilter = filter;
 
-  // Show saved Supabase predictions for All and for leagues
-  // that have saved predictions. Otherwise show JSON fixtures.
-  let list = picks.filter(p =>
+  // Saved predictions from Supabase
+  const saved = picks.filter(p =>
     filter === "All" || normalizeLeague(p.league) === filter
   );
 
-  if (filter !== "All" && list.length === 0) {
-    const fixtures = upcoming[filter] || [];
-    if (fixtures.length) {
-      grid.innerHTML = fixtures.map(m => `
-        <article class="pick-card">
-          <div class="league">${safe(m.league || filter)}</div>
-          <h3>${safe(m.home || "Home")}
-            <span class="vs"> VS </span>
-            ${safe(m.away || "Away")}
-          </h3>
-          <div class="pick">${safe(formatKickoff(m.kickoff))}</div>
-          <div class="bottom">
-            <span>${safe(m.venue || "Venue TBC")}</span>
-            <span class="pct">→</span>
-          </div>
-          <div class="vs">${safe(m.round || "Upcoming fixture")}</div>
-        </article>
-      `).join("");
-      return;
-    }
-  }
+  // API fixtures from data/goalradar.json
+  const allFixtures = Object.entries(upcoming).flatMap(
+    ([league, matches]) =>
+      (Array.isArray(matches) ? matches : []).map(match => ({
+        ...match,
+        league: match.league || league
+      }))
+  );
+
+  let fixtures = allFixtures.filter(match =>
+    filter === "All" || normalizeLeague(match.league) === filter
+  );
+
+  // Show today's fixtures first when kickoff dates are available.
+  const today = new Date().toLocaleDateString();
+
+  fixtures.sort((a, b) => {
+    const da = a.kickoff ? new Date(a.kickoff) : null;
+    const db = b.kickoff ? new Date(b.kickoff) : null;
+
+    const aToday = da && !isNaN(da) &&
+      da.toLocaleDateString() === today;
+    const bToday = db && !isNaN(db) &&
+      db.toLocaleDateString() === today;
+
+    if (aToday && !bToday) return -1;
+    if (!aToday && bToday) return 1;
+
+    return (da?.getTime() || Infinity) -
+           (db?.getTime() || Infinity);
+  });
+
+  // Avoid displaying the same match twice.
+  const savedKeys = new Set(saved.map(p =>
+    `${p.home}|${p.away}`.toLowerCase()
+  ));
+
+  fixtures = fixtures.filter(match =>
+    !savedKeys.has(
+      `${match.home || ""}|${match.away || ""}`.toLowerCase()
+    )
+  );
+
+  const predictionCards = saved.map(p => {
+    const pct = confidenceValue(p.confidence);
+
+    return `
+      <article class="pick-card">
+        <div class="league">
+          ${safe(p.league)} · ${safe(p.type || "Match")}
+          ${p.isPickOfDay ? " · ★ PICK OF THE DAY" : ""}
+        </div>
+        <h3>${safe(p.home)}
+          <span class="vs"> VS </span>
+          ${safe(p.away)}
+        </h3>
+        <div class="pick">${safe(p.pick || "Prediction pending")}</div>
+        <div class="vs">${safe(formatKickoff(p.kickoff))}</div>
+        <div class="bottom">
+          <span>GoalRadar prediction</span>
+          <span class="pct">${pct}%</span>
+        </div>
+        <div class="bar"><i style="width:${pct}%"></i></div>
+      </article>`;
+  });
+
+  const fixtureCards = fixtures.map(match => `
+    <article class="pick-card">
+      <div class="league">
+        ${safe(match.league || filter)} · API FIXTURE
+      </div>
+      <h3>${safe(match.home || "Home")}
+        <span class="vs"> VS </span>
+        ${safe(match.away || "Away")}
+      </h3>
+      <div class="pick">${safe(formatKickoff(match.kickoff))}</div>
+      <div class="bottom">
+        <span>${safe(match.venue || "Upcoming match")}</span>
+        <span class="pct">FIXTURE</span>
+      </div>
+      <div class="vs">${safe(match.round || "No prediction published")}</div>
+    </article>
+  `);
+
+  const cards = [...predictionCards, ...fixtureCards];
+
+  grid.innerHTML = cards.length
+    ? cards.join("")
+    : `<article class="pick-card">
+         <h3>No matches available</h3>
+         <p class="vs">No saved predictions or API fixtures were found for this selection.</p>
+       </article>`;
+}
+
 
   if (!list.length) {
     grid.innerHTML = `
