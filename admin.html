@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GoalRadar | Admin Dashboard</title>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root {
       color-scheme: dark;
@@ -14,59 +16,162 @@
       --green: #b5ff38;
       --muted: #91a0ad;
     }
-    * { box-sizing: border-box; }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      margin: 0; padding: 20px;
-      background: var(--bg); color: #f4f7f9;
+      margin: 0;
+      padding: 20px;
+      background: var(--bg);
+      color: #f4f7f9;
       font: 15px Arial, sans-serif;
     }
-    main { max-width: 1000px; margin: auto; }
-    header { margin: 12px 0 28px; }
-    .brand { color: var(--green); font-weight: 900; letter-spacing: 2px; }
-    h1 { margin-bottom: 8px; }
-    p, small { color: var(--muted); }
-    .panel {
-      background: var(--panel); border: 1px solid var(--line);
-      border-radius: 14px; padding: 20px; margin-bottom: 18px;
+
+    main {
+      max-width: 1000px;
+      margin: auto;
     }
+
+    header {
+      margin: 12px 0 28px;
+    }
+
+    .brand {
+      color: var(--green);
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+    }
+
+    p, small {
+      color: var(--muted);
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
     .grid {
-      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
     }
-    label { display: block; font-size: 13px; margin-bottom: 6px; color: #c8d3dc; }
-    input, select, textarea {
-      width: 100%; padding: 12px; border-radius: 8px;
-      border: 1px solid var(--line); background: #091118;
-      color: white; font: inherit;
+
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #c8d3dc;
     }
-    textarea { min-height: 95px; resize: vertical; }
-    .full { grid-column: 1 / -1; }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #091118;
+      color: white;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 95px;
+      resize: vertical;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
     button {
-      padding: 12px 16px; border: 0; border-radius: 8px;
-      background: var(--green); color: #101609; font-weight: bold;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--green);
+      color: #101609;
+      font-weight: bold;
       cursor: pointer;
     }
-    button.secondary { background: #263541; color: white; }
-    button.danger { background: #6b2830; color: white; }
-    button:disabled { opacity: .5; cursor: wait; }
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-    #message { white-space: pre-wrap; margin-top: 14px; }
+
+    button.secondary {
+      background: #263541;
+      color: white;
+    }
+
+    button.danger {
+      background: #6b2830;
+      color: white;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: wait;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    #message {
+      white-space: pre-wrap;
+      margin-top: 14px;
+    }
+
     .prediction {
-      padding: 14px 0; border-top: 1px solid var(--line);
-      display: flex; justify-content: space-between; gap: 15px;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
       align-items: center;
     }
-    .prediction strong { display: block; margin-bottom: 6px; }
-    .tag { color: var(--green); font-size: 12px; }
-    .hidden { display: none; }
+
+    .prediction strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .tag {
+      color: var(--green);
+      font-size: 12px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
     @media (max-width: 600px) {
-      body { padding: 12px; }
-      .grid { grid-template-columns: 1fr; }
-      .full { grid-column: auto; }
-      .prediction { align-items: flex-start; }
+      body {
+        padding: 12px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .prediction {
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
+
 <body>
 <main>
   <header>
@@ -77,46 +182,67 @@
 
   <section class="panel" id="loginPanel">
     <h2>Admin login</h2>
+
     <form id="loginForm">
       <p>
         <label for="email">Admin email</label>
-        <input id="email" type="email" autocomplete="username" required>
+        <input
+          id="email"
+          type="email"
+          autocomplete="username"
+          required
+        >
       </p>
+
       <p>
         <label for="password">Password</label>
-        <input id="password" type="password" autocomplete="current-password" required>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          required
+        >
       </p>
+
       <button id="loginButton" type="submit">Sign in</button>
     </form>
+
     <div id="loginMessage" role="status"></div>
   </section>
 
   <section id="dashboard" class="hidden">
     <div class="panel">
       <p>Signed in as <strong id="signedInEmail"></strong></p>
-      <button class="secondary" id="logoutButton" type="button">Sign out</button>
+      <button class="secondary" id="logoutButton" type="button">
+        Sign out
+      </button>
     </div>
 
     <section class="panel">
       <h2>Add a prediction</h2>
+
       <form id="predictionForm">
         <div class="grid">
           <div>
             <label for="league">League</label>
             <input id="league" placeholder="Premier League" required>
           </div>
+
           <div>
             <label for="kickoff">Kickoff date and time</label>
             <input id="kickoff" type="datetime-local" required>
           </div>
+
           <div>
             <label for="home">Home team</label>
             <input id="home" required>
           </div>
+
           <div>
             <label for="away">Away team</label>
             <input id="away" required>
           </div>
+
           <div>
             <label for="predictionType">Prediction market</label>
             <select id="predictionType">
@@ -127,14 +253,24 @@
               <option value="Correct Score">Correct score</option>
             </select>
           </div>
+
           <div>
             <label for="pick">Your prediction</label>
             <input id="pick" placeholder="e.g. Home win" required>
           </div>
+
           <div>
             <label for="confidence">Confidence (%)</label>
-            <input id="confidence" type="number" min="0" max="100" value="70" required>
+            <input
+              id="confidence"
+              type="number"
+              min="0"
+              max="100"
+              value="70"
+              required
+            >
           </div>
+
           <div>
             <label for="status">Status</label>
             <select id="status">
@@ -144,10 +280,15 @@
               <option value="void">Void</option>
             </select>
           </div>
+
           <div class="full">
             <label for="analysis">Match analysis</label>
-            <textarea id="analysis" placeholder="Explain your reasoning..."></textarea>
+            <textarea
+              id="analysis"
+              placeholder="Explain your reasoning..."
+            ></textarea>
           </div>
+
           <div class="full">
             <label>
               <input id="pickOfDay" type="checkbox" style="width:auto">
@@ -155,10 +296,14 @@
             </label>
           </div>
         </div>
+
         <div class="actions">
           <button id="saveButton" type="submit">Save prediction</button>
-          <button class="secondary" id="refreshButton" type="button">Refresh list</button>
+          <button class="secondary" id="refreshButton" type="button">
+            Refresh list
+          </button>
         </div>
+
         <div id="message" role="status"></div>
       </form>
     </section>
@@ -172,10 +317,12 @@
 
 <script>
 (() => {
-  const SUPABASE_URL = "https://mydtxdtwhgajgrqaedvg.supabase.co";
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_GQ_EHwYD3FSP7dxcNPq_yA_-Tfsi3xc";
+  const SUPABASE_URL =
+    "https://mydtxdtwhgajgrqaedvg.supabase.co";
 
-  // Change this to the exact email allowed by your SQL policies.
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_GQ_EHwYD3FSP7dxcNPq_yA_-Tfsi3xc";
+
   const ADMIN_EMAIL = "dipantichesampson@gmail.com";
 
   const client = window.supabase.createClient(
@@ -184,8 +331,11 @@
   );
 
   const $ = id => document.getElementById(id);
+
   const loginPanel = $("loginPanel");
   const dashboard = $("dashboard");
+
+  let sessionUpdateInProgress = false;
 
   function showMessage(id, message, error = false) {
     const el = $(id);
@@ -198,182 +348,285 @@
   }
 
   function friendlyError(error) {
-    if (!error) return "An unknown error occurred.";
+    if (!error) {
+      return "An unknown error occurred.";
+    }
+
     if (error.code === "42501") {
       return "Permission denied. Check your RLS policies and admin email.";
     }
+
     return error.message || "Something went wrong.";
   }
 
   async function loadPredictions() {
     $("predictionList").textContent = "Loading predictions...";
-    const { data, error } = await client
-      .from("predictions")
-      .select("id, league, home_team, away_team, prediction, prediction_type, confidence, kickoff, analysis, is_pick_of_day, status")
-      .order("kickoff", { ascending: true });
 
-    if (error) {
-      $("predictionList").textContent = friendlyError(error);
-      return;
-    }
+    try {
+      const { data, error } = await client
+        .from("predictions")
+        .select(
+          "id, league, home_team, away_team, prediction, prediction_type, confidence, kickoff, analysis, is_pick_of_day, status"
+        )
+        .order("kickoff", { ascending: true });
 
-    const list = $("predictionList");
-    list.replaceChildren();
-
-    if (!data || data.length === 0) {
-      list.textContent = "No predictions yet. Add your first one above.";
-      return;
-    }
-
-    data.forEach(item => {
-      const row = document.createElement("div");
-      row.className = "prediction";
-
-      const info = document.createElement("div");
-      const title = document.createElement("strong");
-      title.textContent = `${item.home_team} vs ${item.away_team}`;
-
-      const details = document.createElement("div");
-      details.textContent =
-        `${item.league} · ${item.prediction_type} · ${item.prediction}`;
-
-      const meta = document.createElement("small");
-      const date = item.kickoff ? new Date(item.kickoff).toLocaleString() : "Time not set";
-      meta.textContent =
-        `${date} · Confidence ${item.confidence}% · ${item.status || "upcoming"}`;
-
-      info.append(title, details, meta);
-
-      if (item.is_pick_of_day) {
-        const tag = document.createElement("div");
-        tag.className = "tag";
-        tag.textContent = "★ PICK OF THE DAY";
-        info.append(tag);
+      if (error) {
+        $("predictionList").textContent = friendlyError(error);
+        return;
       }
 
-      const del = document.createElement("button");
-      del.className = "danger";
-      del.type = "button";
-      del.textContent = "Delete";
-      del.addEventListener("click", () => deletePrediction(item.id, del));
+      const list = $("predictionList");
+      list.replaceChildren();
 
-      row.append(info, del);
-      list.append(row);
-    });
+      if (!data || data.length === 0) {
+        list.textContent = "No predictions yet. Add your first one above.";
+        return;
+      }
+
+      data.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "prediction";
+
+        const info = document.createElement("div");
+
+        const title = document.createElement("strong");
+        title.textContent = `${item.home_team} vs ${item.away_team}`;
+
+        const details = document.createElement("div");
+        details.textContent =
+          `${item.league} · ${item.prediction_type} · ${item.prediction}`;
+
+        const meta = document.createElement("small");
+        const date = item.kickoff
+          ? new Date(item.kickoff).toLocaleString()
+          : "Time not set";
+
+        meta.textContent =
+          `${date} · Confidence ${item.confidence}% · ${item.status || "upcoming"}`;
+
+        info.append(title, details, meta);
+
+        if (item.is_pick_of_day) {
+          const tag = document.createElement("div");
+          tag.className = "tag";
+          tag.textContent = "★ PICK OF THE DAY";
+          info.append(tag);
+        }
+
+        const del = document.createElement("button");
+        del.className = "danger";
+        del.type = "button";
+        del.textContent = "Delete";
+
+        del.addEventListener("click", () => {
+          deletePrediction(item.id, del);
+        });
+
+        row.append(info, del);
+        list.append(row);
+      });
+    } catch (error) {
+      $("predictionList").textContent = friendlyError(error);
+    }
   }
 
   async function deletePrediction(id, button) {
-    if (!confirm("Delete this prediction? This cannot be undone.")) return;
-
-    button.disabled = true;
-    const { error } = await client.from("predictions").delete().eq("id", id);
-
-    if (error) {
-      alert(friendlyError(error));
-      button.disabled = false;
+    if (!confirm("Delete this prediction? This cannot be undone.")) {
       return;
     }
-    await loadPredictions();
+
+    button.disabled = true;
+
+    try {
+      const { error } = await client
+        .from("predictions")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        alert(friendlyError(error));
+        button.disabled = false;
+        return;
+      }
+
+      await loadPredictions();
+    } catch (error) {
+      alert(friendlyError(error));
+      button.disabled = false;
+    }
   }
 
   async function showSession(session) {
-    if (!session) {
+    // Prevent overlapping calls from changing the login/dashboard UI.
+    if (sessionUpdateInProgress) return;
+
+    sessionUpdateInProgress = true;
+
+    try {
+      if (!session) {
+        loginPanel.classList.remove("hidden");
+        dashboard.classList.add("hidden");
+        $("signedInEmail").textContent = "";
+        return;
+      }
+
+      const email = session.user?.email || "";
+
+      if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+        await client.auth.signOut();
+
+        loginPanel.classList.remove("hidden");
+        dashboard.classList.add("hidden");
+
+        showMessage(
+          "loginMessage",
+          "This account is not the configured admin email.",
+          true
+        );
+
+        return;
+      }
+
+      // Only show the dashboard for the configured admin account.
+      loginPanel.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+
+      $("signedInEmail").textContent = email;
+      showMessage("loginMessage", "");
+
+      await loadPredictions();
+    } catch (error) {
       loginPanel.classList.remove("hidden");
       dashboard.classList.add("hidden");
-      return;
-    }
 
-    const email = session.user.email || "";
-    if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-      await client.auth.signOut();
-      loginPanel.classList.remove("hidden");
-      dashboard.classList.add("hidden");
-      showMessage("loginMessage", "This account is not the configured admin email.", true);
-      return;
+      showMessage(
+        "loginMessage",
+        "Could not load your dashboard: " + friendlyError(error),
+        true
+      );
+    } finally {
+      sessionUpdateInProgress = false;
     }
-
-    loginPanel.classList.add("hidden");
-    dashboard.classList.remove("hidden");
-    $("signedInEmail").textContent = email;
-    await loadPredictions();
   }
 
   $("loginForm").addEventListener("submit", async event => {
     event.preventDefault();
 
     if (ADMIN_EMAIL === "YOUR_ADMIN_EMAIL_HERE") {
-      showMessage("loginMessage", "First replace YOUR_ADMIN_EMAIL_HERE in the code with your admin email.", true);
+      showMessage(
+        "loginMessage",
+        "First replace YOUR_ADMIN_EMAIL_HERE in the code with your admin email.",
+        true
+      );
       return;
     }
 
     setBusy("loginButton", true);
     showMessage("loginMessage", "Signing in...");
 
-    const { data, error } = await client.auth.signInWithPassword({
-      email: $("email").value.trim(),
-      password: $("password").value
-    });
+    try {
+      const { data, error } = await client.auth.signInWithPassword({
+        email: $("email").value.trim(),
+        password: $("password").value
+      });
 
-    setBusy("loginButton", false);
+      if (error) {
+        showMessage("loginMessage", friendlyError(error), true);
+        return;
+      }
 
-    if (error) {
+      await showSession(data.session);
+    } catch (error) {
       showMessage("loginMessage", friendlyError(error), true);
-      return;
+    } finally {
+      setBusy("loginButton", false);
     }
-    await showSession(data.session);
   });
 
   $("logoutButton").addEventListener("click", async () => {
-    await client.auth.signOut();
-    await showSession(null);
+    try {
+      const { error } = await client.auth.signOut();
+
+      if (error) {
+        showMessage("message", friendlyError(error), true);
+        return;
+      }
+
+      await showSession(null);
+    } catch (error) {
+      showMessage("message", friendlyError(error), true);
+    }
   });
 
   $("refreshButton").addEventListener("click", loadPredictions);
 
   $("predictionForm").addEventListener("submit", async event => {
     event.preventDefault();
+
     setBusy("saveButton", true);
     showMessage("message", "Saving prediction...");
 
-    const kickoffValue = $("kickoff").value;
-    const record = {
-      league: $("league").value.trim(),
-      home_team: $("home").value.trim(),
-      away_team: $("away").value.trim(),
-      prediction: $("pick").value.trim(),
-      prediction_type: $("predictionType").value,
-      confidence: Number($("confidence").value),
-      kickoff: kickoffValue ? new Date(kickoffValue).toISOString() : null,
-      analysis: $("analysis").value.trim(),
-      is_pick_of_day: $("pickOfDay").checked,
-      status: $("status").value
-    };
+    try {
+      const kickoffValue = $("kickoff").value;
 
-    const { error } = await client.from("predictions").insert(record);
-    setBusy("saveButton", false);
+      const record = {
+        league: $("league").value.trim(),
+        home_team: $("home").value.trim(),
+        away_team: $("away").value.trim(),
+        prediction: $("pick").value.trim(),
+        prediction_type: $("predictionType").value,
+        confidence: Number($("confidence").value),
+        kickoff: kickoffValue
+          ? new Date(kickoffValue).toISOString()
+          : null,
+        analysis: $("analysis").value.trim(),
+        is_pick_of_day: $("pickOfDay").checked,
+        status: $("status").value
+      };
 
-    if (error) {
+      const { error } = await client
+        .from("predictions")
+        .insert(record);
+
+      if (error) {
+        showMessage("message", friendlyError(error), true);
+        return;
+      }
+
+      showMessage("message", "Prediction saved successfully!");
+
+      $("predictionForm").reset();
+      $("confidence").value = 70;
+
+      await loadPredictions();
+    } catch (error) {
       showMessage("message", friendlyError(error), true);
-      return;
+    } finally {
+      setBusy("saveButton", false);
     }
-
-    showMessage("message", "Prediction saved successfully!");
-    $("predictionForm").reset();
-    $("confidence").value = 70;
-    await loadPredictions();
   });
 
+  // Restore an existing session when the page opens.
   client.auth.getSession().then(({ data, error }) => {
     if (error) {
       showMessage("loginMessage", friendlyError(error), true);
       return;
     }
+
     showSession(data.session);
+  }).catch(error => {
+    showMessage("loginMessage", friendlyError(error), true);
   });
 
-  client.auth.onAuthStateChange((_event, session) => {
-    // Defer session UI updates until the auth callback has completed.
-    setTimeout(() => showSession(session), 0);
+  // Handle later auth changes without processing the same sign-in twice.
+  client.auth.onAuthStateChange((event, session) => {
+    if (event === "INITIAL_SESSION" || event === "SIGNED_IN") {
+      return;
+    }
+
+    setTimeout(() => {
+      showSession(session);
+    }, 0);
   });
 })();
 </script>
