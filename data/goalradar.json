@@ -1,134 +1,13 @@
 {
-  "updated_at": "2026-10-08T06:08:50.647341+00:00",
-  "date": "08 OCT 2026",
+  "updated_at": "2026-10-09T01:21:46.256331+00:00",
+  "date": "09 OCT 2026",
   "stats": {
-    "matches_today": 141,
-    "analyzed": 12,
+    "matches_today": 467,
+    "analyzed": 0,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
-  "picks": [
-    {
-      "league": "Brazil Serie A",
-      "home": "Cruzeiro",
-      "away": "Sao Paulo",
-      "pick": "Sao Paulo Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1492393,
-      "kickoff": "2026-10-08T00:30:00+00:00"
-    },
-    {
-      "league": "Brazil Serie A",
-      "home": "Santos",
-      "away": "Flamengo",
-      "pick": "Flamengo Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1492398,
-      "kickoff": "2026-10-08T22:30:00+00:00"
-    },
-    {
-      "league": "Brazil Serie A",
-      "home": "Atletico Paranaense",
-      "away": "Atletico-MG",
-      "pick": "Atletico-MG Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1492390,
-      "kickoff": "2026-10-08T23:00:00+00:00"
-    },
-    {
-      "league": "Copa de la División Profesional",
-      "home": "Guabirá",
-      "away": "The Strongest",
-      "pick": "The Strongest Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1619711,
-      "kickoff": "2026-10-08T00:30:00+00:00"
-    },
-    {
-      "league": "Copa de la División Profesional",
-      "home": "Oriente Petrolero",
-      "away": "Universitario de Vinto",
-      "pick": "Oriente Petrolero Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1619713,
-      "kickoff": "2026-10-08T00:30:00+00:00"
-    },
-    {
-      "league": "Copa do Brasil U20",
-      "home": "Atlético Mineiro U20",
-      "away": "Athletic Club MG U20",
-      "pick": "Atlético Mineiro U20 Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1639227,
-      "kickoff": "2026-10-08T18:00:00+00:00"
-    },
-    {
-      "league": "Copa do Brasil U20",
-      "home": "Cruzeiro U20",
-      "away": "Goiás U20",
-      "pick": "Goiás U20 Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1639231,
-      "kickoff": "2026-10-08T18:00:00+00:00"
-    },
-    {
-      "league": "Copa do Brasil U20",
-      "home": "CSA U20",
-      "away": "Santa Cruz AC U20",
-      "pick": "Analysis pending",
-      "type": "Match",
-      "confidence": 0,
-      "fixture_id": 1639232,
-      "kickoff": "2026-10-08T18:00:00+00:00"
-    },
-    {
-      "league": "Copa do Brasil U20",
-      "home": "Grêmio U20",
-      "away": "Operário PR U20",
-      "pick": "Analysis pending",
-      "type": "Match",
-      "confidence": 0,
-      "fixture_id": 1639233,
-      "kickoff": "2026-10-08T18:00:00+00:00"
-    },
-    {
-      "league": "Copa de la División Profesional",
-      "home": "Always Ready",
-      "away": "Nacional Potosí",
-      "pick": "Analysis pending",
-      "type": "Match",
-      "confidence": 0,
-      "fixture_id": 1619714,
-      "kickoff": "2026-10-08T19:00:00+00:00"
-    },
-    {
-      "league": "Copa do Brasil U20",
-      "home": "Flamengo U20",
-      "away": "Vasco da Gama U20",
-      "pick": "Analysis pending",
-      "type": "Match",
-      "confidence": 0,
-      "fixture_id": 1640550,
-      "kickoff": "2026-10-08T19:30:00+00:00"
-    },
-    {
-      "league": "Copa do Brasil U20",
-      "home": "São Paulo U20",
-      "away": "Athletico PR U20",
-      "pick": "Analysis pending",
-      "type": "Match",
-      "confidence": 0,
-      "fixture_id": 1640287,
-      "kickoff": "2026-10-08T20:30:00+00:00"
-    }
-  ],
+  "picks": [],
   "upcoming": {
     "EPL": [],
     "La Liga": [],
