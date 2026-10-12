@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-10-11T06:09:33.100803+00:00",
-  "date": "11 OCT 2026",
+  "updated_at": "2026-10-12T06:12:19.139180+00:00",
+  "date": "12 OCT 2026",
   "stats": {
-    "matches_today": 1159,
+    "matches_today": 208,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
@@ -10,63 +10,63 @@
   "picks": [
     {
       "league": "Premier League",
-      "home": "Crystal Palace",
-      "away": "Nottingham Forest",
-      "pick": "Nottingham Forest Win",
+      "home": "Coventry",
+      "away": "Newcastle",
+      "pick": "Newcastle Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557421,
-      "kickoff": "2026-10-11T13:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Hull City",
-      "away": "Everton",
-      "pick": "Everton Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1557422,
-      "kickoff": "2026-10-11T13:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Liverpool",
-      "away": "Manchester City",
-      "pick": "Manchester City Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1557424,
-      "kickoff": "2026-10-11T15:30:00+00:00"
+      "fixture_id": 1557420,
+      "kickoff": "2026-10-12T19:00:00+00:00"
     },
     {
       "league": "La Liga",
-      "home": "Elche",
-      "away": "Celta Vigo",
-      "pick": "Celta Vigo Win",
+      "home": "Levante",
+      "away": "Sevilla",
+      "pick": "Sevilla Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1570406,
-      "kickoff": "2026-10-11T12:00:00+00:00"
+      "fixture_id": 1570407,
+      "kickoff": "2026-10-12T19:00:00+00:00"
     },
     {
-      "league": "La Liga",
-      "home": "Real Sociedad",
-      "away": "Deportivo La Coruna",
-      "pick": "Real Sociedad Win",
+      "league": "Serie A",
+      "home": "Atalanta",
+      "away": "Venezia",
+      "pick": "Atalanta Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1570412,
-      "kickoff": "2026-10-11T14:15:00+00:00"
+      "fixture_id": 1550137,
+      "kickoff": "2026-10-12T16:30:00+00:00"
     },
     {
-      "league": "La Liga",
-      "home": "Real Betis",
-      "away": "Osasuna",
-      "pick": "Real Betis Win",
+      "league": "Serie A",
+      "home": "Torino",
+      "away": "Udinese",
+      "pick": "Udinese Win",
       "type": "1X2",
-      "confidence": 50,
-      "fixture_id": 1570405,
-      "kickoff": "2026-10-11T16:30:00+00:00"
+      "confidence": 45,
+      "fixture_id": 1550146,
+      "kickoff": "2026-10-12T18:45:00+00:00"
+    },
+    {
+      "league": "Serie A",
+      "home": "Coritiba",
+      "away": "Botafogo",
+      "pick": "Botafogo Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1492404,
+      "kickoff": "2026-10-12T19:00:00+00:00"
+    },
+    {
+      "league": "Serie A",
+      "home": "Chapecoense-sc",
+      "away": "Atletico Paranaense",
+      "pick": "Atletico Paranaense Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1492403,
+      "kickoff": "2026-10-12T22:30:00+00:00"
     }
   ],
   "upcoming": {
