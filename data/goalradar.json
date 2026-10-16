@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-10-15T06:22:25.123446+00:00",
-  "date": "15 OCT 2026",
+  "updated_at": "2026-10-16T06:21:46.070914+00:00",
+  "date": "16 OCT 2026",
   "stats": {
-    "matches_today": 154,
+    "matches_today": 391,
     "analyzed": 5,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Liga Profesional Argentina",
-      "home": "Huracan",
-      "away": "Gimnasia L.P.",
-      "pick": "Huracan Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1493190,
-      "kickoff": "2026-10-15T23:00:00+00:00"
-    },
-    {
-      "league": "CONCACAF Caribbean Club Championship",
-      "home": "Club Sando",
-      "away": "Mount Pleasant Academy",
-      "pick": "Club Sando Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1640552,
-      "kickoff": "2026-10-15T00:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Hunters",
-      "away": "Khovd",
-      "pick": "Hunters Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1640426,
-      "kickoff": "2026-10-15T05:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Amtat FC",
-      "away": "Ulaangom City",
-      "pick": "Amtat FC Win",
+      "league": "La Liga",
+      "home": "Deportivo La Coruna",
+      "away": "Levante",
+      "pick": "Deportivo La Coruna Win",
       "type": "1X2",
       "confidence": 35,
-      "fixture_id": 1640441,
-      "kickoff": "2026-10-15T08:00:00+00:00"
+      "fixture_id": 1570415,
+      "kickoff": "2026-10-16T19:00:00+00:00"
     },
     {
-      "league": "Australian Championship",
-      "home": "Preston Lions",
-      "away": "Wollongong Wolves",
+      "league": "Serie A",
+      "home": "Frosinone",
+      "away": "Sassuolo",
+      "pick": "Frosinone Win",
+      "type": "1X2",
+      "confidence": 35,
+      "fixture_id": 1550151,
+      "kickoff": "2026-10-16T18:45:00+00:00"
+    },
+    {
+      "league": "Bundesliga",
+      "home": "Eintracht Frankfurt",
+      "away": "1. FC Köln",
+      "pick": "1. FC Köln Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1575187,
+      "kickoff": "2026-10-16T18:30:00+00:00"
+    },
+    {
+      "league": "Ligue 1",
+      "home": "Le Mans",
+      "away": "Toulouse",
       "pick": "Analysis pending",
       "type": "Match",
       "confidence": 0,
-      "fixture_id": 1640328,
-      "kickoff": "2026-10-15T08:30:00+00:00"
+      "fixture_id": 1552785,
+      "kickoff": "2026-10-16T18:45:00+00:00"
     },
     {
-      "league": "AFC Champions League Two",
-      "home": "Gangwon FC",
-      "away": "Phnom Penh Crown",
-      "pick": "Phnom Penh Crown Win",
+      "league": "Serie A",
+      "home": "Mirassol",
+      "away": "Internacional",
+      "pick": "Mirassol Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1630369,
-      "kickoff": "2026-10-15T10:00:00+00:00"
+      "fixture_id": 1492417,
+      "kickoff": "2026-10-16T23:00:00+00:00"
+    },
+    {
+      "league": "Eredivisie",
+      "home": "Heerenveen",
+      "away": "Excelsior",
+      "pick": "Excelsior Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1552189,
+      "kickoff": "2026-10-16T18:00:00+00:00"
     }
   ],
   "upcoming": {
