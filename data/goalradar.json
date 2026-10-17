@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-10-16T06:21:46.070914+00:00",
-  "date": "16 OCT 2026",
+  "updated_at": "2026-10-17T06:17:36.771545+00:00",
+  "date": "17 OCT 2026",
   "stats": {
-    "matches_today": 391,
-    "analyzed": 5,
+    "matches_today": 1663,
+    "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
+      "league": "Premier League",
+      "home": "Everton",
+      "away": "Chelsea",
+      "pick": "Chelsea Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1557430,
+      "kickoff": "2026-10-17T11:30:00+00:00"
+    },
+    {
+      "league": "Premier League",
+      "home": "Brentford",
+      "away": "Liverpool",
+      "pick": "Brentford Win",
+      "type": "1X2",
+      "confidence": 35,
+      "fixture_id": 1557428,
+      "kickoff": "2026-10-17T14:00:00+00:00"
+    },
+    {
+      "league": "Premier League",
+      "home": "Fulham",
+      "away": "Hull City",
+      "pick": "Hull City Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1557431,
+      "kickoff": "2026-10-17T14:00:00+00:00"
+    },
+    {
+      "league": "Premier League",
+      "home": "Manchester City",
+      "away": "Ipswich",
+      "pick": "Manchester City Win",
+      "type": "1X2",
+      "confidence": 50,
+      "fixture_id": 1557433,
+      "kickoff": "2026-10-17T14:00:00+00:00"
+    },
+    {
+      "league": "Premier League",
+      "home": "Newcastle",
+      "away": "Aston Villa",
+      "pick": "Newcastle Win",
+      "type": "1X2",
+      "confidence": 35,
+      "fixture_id": 1557434,
+      "kickoff": "2026-10-17T16:30:00+00:00"
+    },
+    {
       "league": "La Liga",
-      "home": "Deportivo La Coruna",
-      "away": "Levante",
-      "pick": "Deportivo La Coruna Win",
-      "type": "1X2",
-      "confidence": 35,
-      "fixture_id": 1570415,
-      "kickoff": "2026-10-16T19:00:00+00:00"
-    },
-    {
-      "league": "Serie A",
-      "home": "Frosinone",
-      "away": "Sassuolo",
-      "pick": "Frosinone Win",
-      "type": "1X2",
-      "confidence": 35,
-      "fixture_id": 1550151,
-      "kickoff": "2026-10-16T18:45:00+00:00"
-    },
-    {
-      "league": "Bundesliga",
-      "home": "Eintracht Frankfurt",
-      "away": "1. FC Köln",
-      "pick": "1. FC Köln Win",
+      "home": "Espanyol",
+      "away": "Atletico Madrid",
+      "pick": "Atletico Madrid Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1575187,
-      "kickoff": "2026-10-16T18:30:00+00:00"
-    },
-    {
-      "league": "Ligue 1",
-      "home": "Le Mans",
-      "away": "Toulouse",
-      "pick": "Analysis pending",
-      "type": "Match",
-      "confidence": 0,
-      "fixture_id": 1552785,
-      "kickoff": "2026-10-16T18:45:00+00:00"
-    },
-    {
-      "league": "Serie A",
-      "home": "Mirassol",
-      "away": "Internacional",
-      "pick": "Mirassol Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1492417,
-      "kickoff": "2026-10-16T23:00:00+00:00"
-    },
-    {
-      "league": "Eredivisie",
-      "home": "Heerenveen",
-      "away": "Excelsior",
-      "pick": "Excelsior Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1552189,
-      "kickoff": "2026-10-16T18:00:00+00:00"
+      "fixture_id": 1570416,
+      "kickoff": "2026-10-17T12:00:00+00:00"
     }
   ],
   "upcoming": {
