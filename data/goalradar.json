@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-10-18T06:17:01.254248+00:00",
-  "date": "18 OCT 2026",
+  "updated_at": "2026-10-19T06:25:23.797029+00:00",
+  "date": "19 OCT 2026",
   "stats": {
-    "matches_today": 1305,
+    "matches_today": 196,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
@@ -10,63 +10,63 @@
   "picks": [
     {
       "league": "Premier League",
-      "home": "Bournemouth",
-      "away": "Sunderland",
-      "pick": "Sunderland Win",
+      "home": "Tottenham",
+      "away": "Coventry",
+      "pick": "Tottenham Win",
       "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1557427,
-      "kickoff": "2026-10-18T13:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Brighton",
-      "away": "Crystal Palace",
-      "pick": "Brighton Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1557429,
-      "kickoff": "2026-10-18T13:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Leeds",
-      "away": "Manchester United",
-      "pick": "Manchester United Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1557432,
-      "kickoff": "2026-10-18T13:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Nottingham Forest",
-      "away": "Arsenal",
-      "pick": "Arsenal Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1557435,
-      "kickoff": "2026-10-18T15:30:00+00:00"
+      "confidence": 35,
+      "fixture_id": 1557436,
+      "kickoff": "2026-10-19T19:00:00+00:00"
     },
     {
       "league": "La Liga",
-      "home": "Osasuna",
-      "away": "Racing Santander",
-      "pick": "Osasuna Win",
+      "home": "Getafe",
+      "away": "Rayo Vallecano",
+      "pick": "Rayo Vallecano Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1570419,
-      "kickoff": "2026-10-18T12:00:00+00:00"
+      "fixture_id": 1570417,
+      "kickoff": "2026-10-19T19:00:00+00:00"
     },
     {
-      "league": "La Liga",
-      "home": "Celta Vigo",
-      "away": "Alaves",
-      "pick": "Celta Vigo Win",
+      "league": "Serie A",
+      "home": "Monza",
+      "away": "Cagliari",
+      "pick": "Cagliari Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1570414,
-      "kickoff": "2026-10-18T14:15:00+00:00"
+      "fixture_id": 1550153,
+      "kickoff": "2026-10-19T16:30:00+00:00"
+    },
+    {
+      "league": "Serie A",
+      "home": "Parma",
+      "away": "Torino",
+      "pick": "Torino Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1550154,
+      "kickoff": "2026-10-19T18:45:00+00:00"
+    },
+    {
+      "league": "Serie A",
+      "home": "Corinthians",
+      "away": "Vitoria",
+      "pick": "Corinthians Win",
+      "type": "1X2",
+      "confidence": 35,
+      "fixture_id": 1492414,
+      "kickoff": "2026-10-19T23:00:00+00:00"
+    },
+    {
+      "league": "Primeira Liga",
+      "home": "SC Braga",
+      "away": "GIL Vicente",
+      "pick": "SC Braga Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1575458,
+      "kickoff": "2026-10-19T19:15:00+00:00"
     }
   ],
   "upcoming": {
