@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-10-19T06:25:23.797029+00:00",
-  "date": "19 OCT 2026",
+  "updated_at": "2026-10-20T06:22:33.434143+00:00",
+  "date": "20 OCT 2026",
   "stats": {
-    "matches_today": 196,
+    "matches_today": 236,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Premier League",
-      "home": "Tottenham",
-      "away": "Coventry",
-      "pick": "Tottenham Win",
-      "type": "1X2",
-      "confidence": 35,
-      "fixture_id": 1557436,
-      "kickoff": "2026-10-19T19:00:00+00:00"
-    },
-    {
-      "league": "La Liga",
-      "home": "Getafe",
-      "away": "Rayo Vallecano",
-      "pick": "Rayo Vallecano Win",
+      "league": "UEFA Champions League",
+      "home": "Fenerbahçe",
+      "away": "Slavia Praha",
+      "pick": "Fenerbahçe Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1570417,
-      "kickoff": "2026-10-19T19:00:00+00:00"
+      "fixture_id": 1635661,
+      "kickoff": "2026-10-20T16:45:00+00:00"
     },
     {
-      "league": "Serie A",
-      "home": "Monza",
-      "away": "Cagliari",
-      "pick": "Cagliari Win",
+      "league": "UEFA Champions League",
+      "home": "Sabah FA",
+      "away": "Borussia Dortmund",
+      "pick": "Sabah FA Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550153,
-      "kickoff": "2026-10-19T16:30:00+00:00"
+      "fixture_id": 1635719,
+      "kickoff": "2026-10-20T16:45:00+00:00"
     },
     {
-      "league": "Serie A",
-      "home": "Parma",
-      "away": "Torino",
-      "pick": "Torino Win",
+      "league": "UEFA Champions League",
+      "home": "AS Roma",
+      "away": "Slovan Bratislava",
+      "pick": "Slovan Bratislava Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550154,
-      "kickoff": "2026-10-19T18:45:00+00:00"
+      "fixture_id": 1635617,
+      "kickoff": "2026-10-20T19:00:00+00:00"
     },
     {
-      "league": "Serie A",
-      "home": "Corinthians",
-      "away": "Vitoria",
-      "pick": "Corinthians Win",
-      "type": "1X2",
-      "confidence": 35,
-      "fixture_id": 1492414,
-      "kickoff": "2026-10-19T23:00:00+00:00"
-    },
-    {
-      "league": "Primeira Liga",
-      "home": "SC Braga",
-      "away": "GIL Vicente",
-      "pick": "SC Braga Win",
+      "league": "UEFA Champions League",
+      "home": "FC Porto",
+      "away": "PSV Eindhoven",
+      "pick": "PSV Eindhoven Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1575458,
-      "kickoff": "2026-10-19T19:15:00+00:00"
+      "fixture_id": 1635655,
+      "kickoff": "2026-10-20T19:00:00+00:00"
+    },
+    {
+      "league": "UEFA Champions League",
+      "home": "Liverpool",
+      "away": "Villarreal",
+      "pick": "Liverpool Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1635688,
+      "kickoff": "2026-10-20T19:00:00+00:00"
+    },
+    {
+      "league": "UEFA Champions League",
+      "home": "Manchester City",
+      "away": "AEK Athens FC",
+      "pick": "AEK Athens FC Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1635693,
+      "kickoff": "2026-10-20T19:00:00+00:00"
     }
   ],
   "upcoming": {
