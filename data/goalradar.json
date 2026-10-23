@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-10-22T06:24:58.920109+00:00",
-  "date": "22 OCT 2026",
+  "updated_at": "2026-10-23T06:23:46.275365+00:00",
+  "date": "23 OCT 2026",
   "stats": {
-    "matches_today": 160,
-    "analyzed": 5,
+    "matches_today": 448,
+    "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Australian Championship",
-      "home": "Lions",
-      "away": "Preston Lions",
-      "pick": "Analysis pending",
-      "type": "Match",
-      "confidence": 0,
-      "fixture_id": 1640336,
-      "kickoff": "2026-10-22T08:30:00+00:00"
-    },
-    {
       "league": "Premier League",
-      "home": "Awassa Kenema",
-      "away": "Ethiopia Nigd Bank",
-      "pick": "Ethiopia Nigd Bank Win",
-      "type": "1X2",
-      "confidence": 50,
-      "fixture_id": 1641326,
-      "kickoff": "2026-10-22T12:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Kedus Giorgis",
-      "away": "Adama Kenema",
-      "pick": "Adama Kenema Win",
+      "home": "Ipswich",
+      "away": "Nottingham Forest",
+      "pick": "Nottingham Forest Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1641328,
-      "kickoff": "2026-10-22T12:00:00+00:00"
+      "fixture_id": 1557443,
+      "kickoff": "2026-10-23T19:00:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Welayta Dicha",
-      "away": "Bahardar",
-      "pick": "Bahardar Win",
+      "league": "La Liga",
+      "home": "Alaves",
+      "away": "Malaga",
+      "pick": "Alaves Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1641329,
-      "kickoff": "2026-10-22T12:00:00+00:00"
+      "fixture_id": 1570423,
+      "kickoff": "2026-10-23T19:00:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Kigezi HomeBoyz",
-      "away": "Entebbe UPPC",
-      "pick": "Entebbe UPPC Win",
+      "league": "Serie A",
+      "home": "Torino",
+      "away": "Monza",
+      "pick": "Torino Win",
       "type": "1X2",
-      "confidence": 50,
-      "fixture_id": 1635294,
-      "kickoff": "2026-10-22T13:00:00+00:00"
+      "confidence": 45,
+      "fixture_id": 1550165,
+      "kickoff": "2026-10-23T18:45:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "SC Villa",
-      "away": "Mbarara City",
-      "pick": "SC Villa Win",
+      "league": "Bundesliga",
+      "home": "VfB Stuttgart",
+      "away": "Borussia Mönchengladbach",
+      "pick": "VfB Stuttgart Win",
       "type": "1X2",
-      "confidence": 50,
-      "fixture_id": 1635295,
-      "kickoff": "2026-10-22T13:00:00+00:00"
+      "confidence": 45,
+      "fixture_id": 1575196,
+      "kickoff": "2026-10-23T18:30:00+00:00"
+    },
+    {
+      "league": "Ligue 1",
+      "home": "Stade Brestois 29",
+      "away": "Nice",
+      "pick": "Stade Brestois 29 Win",
+      "type": "1X2",
+      "confidence": 35,
+      "fixture_id": 1552794,
+      "kickoff": "2026-10-23T18:45:00+00:00"
+    },
+    {
+      "league": "Serie A",
+      "home": "Cruzeiro",
+      "away": "Remo",
+      "pick": "Cruzeiro Win",
+      "type": "1X2",
+      "confidence": 35,
+      "fixture_id": 1492422,
+      "kickoff": "2026-10-23T23:00:00+00:00"
     }
   ],
   "upcoming": {
