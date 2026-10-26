@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-10-25T06:20:25.659910+00:00",
-  "date": "25 OCT 2026",
+  "updated_at": "2026-10-26T06:26:58.469669+00:00",
+  "date": "26 OCT 2026",
   "stats": {
-    "matches_today": 1191,
+    "matches_today": 164,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Premier League",
-      "home": "Crystal Palace",
-      "away": "Newcastle",
-      "pick": "Crystal Palace Win",
+      "league": "La Liga",
+      "home": "Sevilla",
+      "away": "Osasuna",
+      "pick": "Sevilla Win",
       "type": "1X2",
       "confidence": 35,
-      "fixture_id": 1557441,
-      "kickoff": "2026-10-25T14:00:00+00:00"
+      "fixture_id": 1570431,
+      "kickoff": "2026-10-26T20:00:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Hull City",
-      "away": "Brentford",
-      "pick": "Brentford Win",
+      "league": "Ligue 1",
+      "home": "Paris Saint Germain",
+      "away": "Lyon",
+      "pick": "Paris Saint Germain Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557442,
-      "kickoff": "2026-10-25T14:00:00+00:00"
+      "fixture_id": 1552800,
+      "kickoff": "2026-10-26T19:30:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Liverpool",
-      "away": "Brighton",
-      "pick": "Brighton Win",
+      "league": "Serie A",
+      "home": "Coritiba",
+      "away": "Gremio",
+      "pick": "Gremio Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557444,
-      "kickoff": "2026-10-25T14:00:00+00:00"
+      "fixture_id": 1492421,
+      "kickoff": "2026-10-26T22:30:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Manchester United",
-      "away": "Bournemouth",
-      "pick": "Manchester United Win",
+      "league": "Serie A",
+      "home": "Flamengo",
+      "away": "Atletico-MG",
+      "pick": "Flamengo Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557445,
-      "kickoff": "2026-10-25T14:00:00+00:00"
+      "fixture_id": 1492423,
+      "kickoff": "2026-10-26T23:00:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Sunderland",
-      "away": "Leeds",
-      "pick": "Leeds Win",
+      "league": "Primeira Liga",
+      "home": "Santa Clara",
+      "away": "Benfica",
+      "pick": "Benfica Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557446,
-      "kickoff": "2026-10-25T16:30:00+00:00"
+      "fixture_id": 1575524,
+      "kickoff": "2026-10-26T18:45:00+00:00"
     },
     {
-      "league": "La Liga",
-      "home": "Athletic Club",
-      "away": "Getafe",
-      "pick": "Athletic Club Win",
+      "league": "Süper Lig",
+      "home": "Beşiktaş",
+      "away": "Başakşehir",
+      "pick": "Beşiktaş Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1570424,
-      "kickoff": "2026-10-25T13:00:00+00:00"
+      "fixture_id": 1584440,
+      "kickoff": "2026-10-26T16:00:00+00:00"
     }
   ],
   "upcoming": {
