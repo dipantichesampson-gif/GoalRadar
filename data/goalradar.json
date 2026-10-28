@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-10-27T06:26:11.649817+00:00",
-  "date": "27 OCT 2026",
+  "updated_at": "2026-10-28T06:30:09.442632+00:00",
+  "date": "28 OCT 2026",
   "stats": {
-    "matches_today": 330,
+    "matches_today": 498,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
@@ -10,63 +10,63 @@
   "picks": [
     {
       "league": "Serie A",
-      "home": "Sassuolo",
-      "away": "Lazio",
-      "pick": "Lazio Win",
+      "home": "AC Milan",
+      "away": "Bologna",
+      "pick": "AC Milan Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1550167,
+      "kickoff": "2026-10-28T17:30:00+00:00"
+    },
+    {
+      "league": "Serie A",
+      "home": "Parma",
+      "away": "Udinese",
+      "pick": "Udinese Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1550173,
+      "kickoff": "2026-10-28T17:30:00+00:00"
+    },
+    {
+      "league": "Serie A",
+      "home": "Venezia",
+      "away": "Inter",
+      "pick": "Inter Win",
       "type": "1X2",
       "confidence": 50,
-      "fixture_id": 1550174,
-      "kickoff": "2026-10-27T17:30:00+00:00"
+      "fixture_id": 1550176,
+      "kickoff": "2026-10-28T17:30:00+00:00"
     },
     {
       "league": "Serie A",
-      "home": "AS Roma",
-      "away": "Cagliari",
-      "pick": "AS Roma Win",
+      "home": "Genoa",
+      "away": "Juventus",
+      "pick": "Juventus Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550168,
-      "kickoff": "2026-10-27T19:45:00+00:00"
+      "fixture_id": 1550171,
+      "kickoff": "2026-10-28T19:45:00+00:00"
     },
     {
       "league": "Serie A",
-      "home": "Torino",
-      "away": "Como",
-      "pick": "Como Win",
+      "home": "Monza",
+      "away": "Napoli",
+      "pick": "Napoli Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550175,
-      "kickoff": "2026-10-27T19:45:00+00:00"
+      "fixture_id": 1550172,
+      "kickoff": "2026-10-28T19:45:00+00:00"
     },
     {
-      "league": "Liga Profesional Argentina",
-      "home": "Instituto Cordoba",
-      "away": "Deportivo Riestra",
-      "pick": "Instituto Cordoba Win",
+      "league": "Serie A",
+      "home": "RB Bragantino",
+      "away": "Chapecoense-sc",
+      "pick": "RB Bragantino Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1493205,
-      "kickoff": "2026-10-27T00:15:00+00:00"
-    },
-    {
-      "league": "Liga Profesional Argentina",
-      "home": "Argentinos JRS",
-      "away": "Independ. Rivadavia",
-      "pick": "Independ. Rivadavia Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1493198,
-      "kickoff": "2026-10-27T22:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Mount Pleasant Academy",
-      "away": "Montego Bay United",
-      "pick": "Montego Bay United Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1647198,
-      "kickoff": "2026-10-27T01:00:00+00:00"
+      "fixture_id": 1492432,
+      "kickoff": "2026-10-28T22:30:00+00:00"
     }
   ],
   "upcoming": {
