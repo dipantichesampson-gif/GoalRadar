@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-10-28T06:30:09.442632+00:00",
-  "date": "28 OCT 2026",
+  "updated_at": "2026-10-29T06:32:40.298528+00:00",
+  "date": "29 OCT 2026",
   "stats": {
-    "matches_today": 498,
-    "analyzed": 6,
+    "matches_today": 202,
+    "analyzed": 5,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
       "league": "Serie A",
-      "home": "AC Milan",
-      "away": "Bologna",
-      "pick": "AC Milan Win",
+      "home": "Frosinone",
+      "away": "Lecce",
+      "pick": "Lecce Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550167,
-      "kickoff": "2026-10-28T17:30:00+00:00"
+      "fixture_id": 1550170,
+      "kickoff": "2026-10-29T17:30:00+00:00"
     },
     {
       "league": "Serie A",
-      "home": "Parma",
-      "away": "Udinese",
-      "pick": "Udinese Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1550173,
-      "kickoff": "2026-10-28T17:30:00+00:00"
+      "home": "Fiorentina",
+      "away": "Atalanta",
+      "pick": "Analysis pending",
+      "type": "Match",
+      "confidence": 0,
+      "fixture_id": 1550169,
+      "kickoff": "2026-10-29T19:45:00+00:00"
     },
     {
       "league": "Serie A",
-      "home": "Venezia",
-      "away": "Inter",
-      "pick": "Inter Win",
+      "home": "Bahia",
+      "away": "Sao Paulo",
+      "pick": "Sao Paulo Win",
       "type": "1X2",
-      "confidence": 50,
-      "fixture_id": 1550176,
-      "kickoff": "2026-10-28T17:30:00+00:00"
+      "confidence": 45,
+      "fixture_id": 1492431,
+      "kickoff": "2026-10-29T00:30:00+00:00"
     },
     {
       "league": "Serie A",
-      "home": "Genoa",
-      "away": "Juventus",
-      "pick": "Juventus Win",
+      "home": "Remo",
+      "away": "Botafogo",
+      "pick": "Botafogo Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550171,
-      "kickoff": "2026-10-28T19:45:00+00:00"
+      "fixture_id": 1492437,
+      "kickoff": "2026-10-29T00:30:00+00:00"
     },
     {
       "league": "Serie A",
-      "home": "Monza",
-      "away": "Napoli",
-      "pick": "Napoli Win",
+      "home": "Atletico-MG",
+      "away": "Cruzeiro",
+      "pick": "Atletico-MG Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550172,
-      "kickoff": "2026-10-28T19:45:00+00:00"
+      "fixture_id": 1492430,
+      "kickoff": "2026-10-29T22:30:00+00:00"
     },
     {
       "league": "Serie A",
-      "home": "RB Bragantino",
-      "away": "Chapecoense-sc",
-      "pick": "RB Bragantino Win",
+      "home": "Vasco DA Gama",
+      "away": "Flamengo",
+      "pick": "Flamengo Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1492432,
-      "kickoff": "2026-10-28T22:30:00+00:00"
+      "fixture_id": 1492439,
+      "kickoff": "2026-10-29T23:00:00+00:00"
     }
   ],
   "upcoming": {
