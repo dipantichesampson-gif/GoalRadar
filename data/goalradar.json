@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-10-29T06:32:40.298528+00:00",
-  "date": "29 OCT 2026",
+  "updated_at": "2026-10-30T06:32:55.245471+00:00",
+  "date": "30 OCT 2026",
   "stats": {
-    "matches_today": 202,
-    "analyzed": 5,
+    "matches_today": 404,
+    "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Serie A",
-      "home": "Frosinone",
-      "away": "Lecce",
-      "pick": "Lecce Win",
+      "league": "La Liga",
+      "home": "Villarreal",
+      "away": "Espanyol",
+      "pick": "Villarreal Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550170,
-      "kickoff": "2026-10-29T17:30:00+00:00"
+      "fixture_id": 1570442,
+      "kickoff": "2026-10-30T20:00:00+00:00"
+    },
+    {
+      "league": "Bundesliga",
+      "home": "SV Elversberg",
+      "away": "FSV Mainz 05",
+      "pick": "FSV Mainz 05 Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1575211,
+      "kickoff": "2026-10-30T19:30:00+00:00"
+    },
+    {
+      "league": "Ligue 1",
+      "home": "Le Havre",
+      "away": "Paris Saint Germain",
+      "pick": "Paris Saint Germain Win",
+      "type": "1X2",
+      "confidence": 50,
+      "fixture_id": 1552801,
+      "kickoff": "2026-10-30T18:00:00+00:00"
+    },
+    {
+      "league": "Ligue 1",
+      "home": "Nice",
+      "away": "Rennes",
+      "pick": "Rennes Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1552806,
+      "kickoff": "2026-10-30T18:00:00+00:00"
+    },
+    {
+      "league": "Ligue 1",
+      "home": "Lille",
+      "away": "Lens",
+      "pick": "Lille Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1552802,
+      "kickoff": "2026-10-30T20:05:00+00:00"
     },
     {
       "league": "Serie A",
-      "home": "Fiorentina",
-      "away": "Atalanta",
-      "pick": "Analysis pending",
-      "type": "Match",
-      "confidence": 0,
-      "fixture_id": 1550169,
-      "kickoff": "2026-10-29T19:45:00+00:00"
-    },
-    {
-      "league": "Serie A",
-      "home": "Bahia",
-      "away": "Sao Paulo",
-      "pick": "Sao Paulo Win",
+      "home": "Gremio",
+      "away": "Atletico Paranaense",
+      "pick": "Gremio Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1492431,
-      "kickoff": "2026-10-29T00:30:00+00:00"
-    },
-    {
-      "league": "Serie A",
-      "home": "Remo",
-      "away": "Botafogo",
-      "pick": "Botafogo Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1492437,
-      "kickoff": "2026-10-29T00:30:00+00:00"
-    },
-    {
-      "league": "Serie A",
-      "home": "Atletico-MG",
-      "away": "Cruzeiro",
-      "pick": "Atletico-MG Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1492430,
-      "kickoff": "2026-10-29T22:30:00+00:00"
-    },
-    {
-      "league": "Serie A",
-      "home": "Vasco DA Gama",
-      "away": "Flamengo",
-      "pick": "Flamengo Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1492439,
-      "kickoff": "2026-10-29T23:00:00+00:00"
+      "fixture_id": 1492436,
+      "kickoff": "2026-10-30T00:30:00+00:00"
     }
   ],
   "upcoming": {
