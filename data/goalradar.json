@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-10-31T06:32:02.122344+00:00",
-  "date": "31 OCT 2026",
+  "updated_at": "2026-11-01T06:36:59.473894+00:00",
+  "date": "01 NOV 2026",
   "stats": {
-    "matches_today": 1568,
+    "matches_today": 1175,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
@@ -10,63 +10,63 @@
   "picks": [
     {
       "league": "Premier League",
-      "home": "Chelsea",
-      "away": "Manchester United",
-      "pick": "Chelsea Win",
+      "home": "Liverpool",
+      "away": "Arsenal",
+      "pick": "Liverpool Win",
       "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1557450,
-      "kickoff": "2026-10-31T12:30:00+00:00"
+      "confidence": 35,
+      "fixture_id": 1557453,
+      "kickoff": "2026-11-01T16:30:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Bournemouth",
-      "away": "Leeds",
-      "pick": "Leeds Win",
+      "league": "La Liga",
+      "home": "Getafe",
+      "away": "Sevilla",
+      "pick": "Sevilla Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557448,
-      "kickoff": "2026-10-31T15:00:00+00:00"
+      "fixture_id": 1570438,
+      "kickoff": "2026-11-01T13:00:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Brentford",
-      "away": "Nottingham Forest",
-      "pick": "Brentford Win",
+      "league": "La Liga",
+      "home": "Racing Santander",
+      "away": "Real Madrid",
+      "pick": "Real Madrid Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557449,
-      "kickoff": "2026-10-31T15:00:00+00:00"
+      "fixture_id": 1570440,
+      "kickoff": "2026-11-01T15:15:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Coventry",
-      "away": "Sunderland",
-      "pick": "Coventry Win",
+      "league": "La Liga",
+      "home": "Elche",
+      "away": "Valencia",
+      "pick": "Valencia Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557451,
-      "kickoff": "2026-10-31T15:00:00+00:00"
+      "fixture_id": 1570437,
+      "kickoff": "2026-11-01T17:30:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Hull City",
-      "away": "Ipswich",
-      "pick": "Ipswich Win",
+      "league": "La Liga",
+      "home": "Athletic Club",
+      "away": "Real Sociedad",
+      "pick": "Real Sociedad Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557452,
-      "kickoff": "2026-10-31T15:00:00+00:00"
+      "fixture_id": 1570433,
+      "kickoff": "2026-11-01T20:00:00+00:00"
     },
     {
-      "league": "Premier League",
-      "home": "Manchester City",
-      "away": "Brighton",
-      "pick": "Brighton Win",
+      "league": "Serie A",
+      "home": "Como",
+      "away": "Venezia",
+      "pick": "Como Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557454,
-      "kickoff": "2026-10-31T15:00:00+00:00"
+      "fixture_id": 1550180,
+      "kickoff": "2026-11-01T11:30:00+00:00"
     }
   ],
   "upcoming": {
