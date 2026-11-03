@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-11-02T06:57:33.912883+00:00",
-  "date": "02 NOV 2026",
+  "updated_at": "2026-11-03T06:48:51.475324+00:00",
+  "date": "03 NOV 2026",
   "stats": {
-    "matches_today": 231,
+    "matches_today": 222,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Premier League",
-      "home": "Newcastle",
-      "away": "Everton",
-      "pick": "Everton Win",
+      "league": "UEFA Champions League",
+      "home": "Galatasaray",
+      "away": "VfB Stuttgart",
+      "pick": "VfB Stuttgart Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557455,
-      "kickoff": "2026-11-02T20:00:00+00:00"
+      "fixture_id": 1635669,
+      "kickoff": "2026-11-03T17:45:00+00:00"
     },
     {
-      "league": "La Liga",
-      "home": "Deportivo La Coruna",
-      "away": "Osasuna",
-      "pick": "Deportivo La Coruna Win",
+      "league": "UEFA Champions League",
+      "home": "Shakhtar Donetsk",
+      "away": "Sporting CP",
+      "pick": "Sporting CP Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1570436,
-      "kickoff": "2026-11-02T20:00:00+00:00"
+      "fixture_id": 1635723,
+      "kickoff": "2026-11-03T17:45:00+00:00"
     },
     {
-      "league": "Serie A",
-      "home": "Sassuolo",
-      "away": "Fiorentina",
-      "pick": "Fiorentina Win",
+      "league": "UEFA Champions League",
+      "home": "Atletico Madrid",
+      "away": "Bayern München",
+      "pick": "Bayern München Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550185,
-      "kickoff": "2026-11-02T17:30:00+00:00"
+      "fixture_id": 1635622,
+      "kickoff": "2026-11-03T20:00:00+00:00"
     },
     {
-      "league": "Serie A",
-      "home": "Atalanta",
-      "away": "Parma",
-      "pick": "Atalanta Win",
+      "league": "UEFA Champions League",
+      "home": "Barcelona",
+      "away": "Aston Villa",
+      "pick": "Aston Villa Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550178,
-      "kickoff": "2026-11-02T19:45:00+00:00"
+      "fixture_id": 1635627,
+      "kickoff": "2026-11-03T20:00:00+00:00"
     },
     {
-      "league": "Ligue 1",
-      "home": "Lorient",
-      "away": "Stade Brestois 29",
-      "pick": "Stade Brestois 29 Win",
+      "league": "UEFA Champions League",
+      "home": "Bodo/Glimt",
+      "away": "Lille",
+      "pick": "Bodo/Glimt Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1552803,
-      "kickoff": "2026-11-02T19:45:00+00:00"
+      "fixture_id": 1635640,
+      "kickoff": "2026-11-03T20:00:00+00:00"
     },
     {
-      "league": "Serie A",
-      "home": "RB Bragantino",
-      "away": "Santos",
-      "pick": "Santos Win",
+      "league": "UEFA Champions League",
+      "home": "Feyenoord",
+      "away": "Inter",
+      "pick": "Inter Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1492442,
-      "kickoff": "2026-11-02T23:00:00+00:00"
+      "fixture_id": 1635662,
+      "kickoff": "2026-11-03T20:00:00+00:00"
     }
   ],
   "upcoming": {
