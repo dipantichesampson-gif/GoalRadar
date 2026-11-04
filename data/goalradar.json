@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-11-03T06:48:51.475324+00:00",
-  "date": "03 NOV 2026",
+  "updated_at": "2026-11-04T06:53:06.924922+00:00",
+  "date": "04 NOV 2026",
   "stats": {
-    "matches_today": 222,
+    "matches_today": 250,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
@@ -10,63 +10,63 @@
   "picks": [
     {
       "league": "UEFA Champions League",
-      "home": "Galatasaray",
-      "away": "VfB Stuttgart",
-      "pick": "VfB Stuttgart Win",
+      "home": "AEK Athens FC",
+      "away": "Real Madrid",
+      "pick": "Real Madrid Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1635669,
-      "kickoff": "2026-11-03T17:45:00+00:00"
+      "fixture_id": 1635606,
+      "kickoff": "2026-11-04T17:45:00+00:00"
     },
     {
       "league": "UEFA Champions League",
-      "home": "Shakhtar Donetsk",
-      "away": "Sporting CP",
-      "pick": "Sporting CP Win",
+      "home": "Fenerbahçe",
+      "away": "Liverpool",
+      "pick": "Liverpool Win",
       "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1635723,
-      "kickoff": "2026-11-03T17:45:00+00:00"
+      "confidence": 50,
+      "fixture_id": 1635658,
+      "kickoff": "2026-11-04T17:45:00+00:00"
     },
     {
       "league": "UEFA Champions League",
-      "home": "Atletico Madrid",
-      "away": "Bayern München",
-      "pick": "Bayern München Win",
+      "home": "Borussia Dortmund",
+      "away": "Real Betis",
+      "pick": "Real Betis Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1635622,
-      "kickoff": "2026-11-03T20:00:00+00:00"
+      "fixture_id": 1635651,
+      "kickoff": "2026-11-04T20:00:00+00:00"
     },
     {
       "league": "UEFA Champions League",
-      "home": "Barcelona",
-      "away": "Aston Villa",
-      "pick": "Aston Villa Win",
+      "home": "FC Porto",
+      "away": "Napoli",
+      "pick": "Napoli Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1635627,
-      "kickoff": "2026-11-03T20:00:00+00:00"
+      "fixture_id": 1635656,
+      "kickoff": "2026-11-04T20:00:00+00:00"
     },
     {
       "league": "UEFA Champions League",
-      "home": "Bodo/Glimt",
-      "away": "Lille",
-      "pick": "Bodo/Glimt Win",
+      "home": "Lens",
+      "away": "Como",
+      "pick": "Como Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1635640,
-      "kickoff": "2026-11-03T20:00:00+00:00"
+      "fixture_id": 1635681,
+      "kickoff": "2026-11-04T20:00:00+00:00"
     },
     {
       "league": "UEFA Champions League",
-      "home": "Feyenoord",
-      "away": "Inter",
-      "pick": "Inter Win",
+      "home": "PSV Eindhoven",
+      "away": "Club Brugge KV",
+      "pick": "Club Brugge KV Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1635662,
-      "kickoff": "2026-11-03T20:00:00+00:00"
+      "fixture_id": 1635707,
+      "kickoff": "2026-11-04T20:00:00+00:00"
     }
   ],
   "upcoming": {
