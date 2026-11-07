@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-11-06T06:54:49.591807+00:00",
-  "date": "06 NOV 2026",
+  "updated_at": "2026-11-07T06:39:55.490714+00:00",
+  "date": "07 NOV 2026",
   "stats": {
-    "matches_today": 362,
+    "matches_today": 1449,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
@@ -10,63 +10,63 @@
   "picks": [
     {
       "league": "Premier League",
-      "home": "Everton",
-      "away": "Coventry",
-      "pick": "Coventry Win",
+      "home": "Leeds",
+      "away": "Tottenham",
+      "pick": "Tottenham Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557460,
-      "kickoff": "2026-11-06T20:00:00+00:00"
+      "fixture_id": 1557463,
+      "kickoff": "2026-11-07T12:30:00+00:00"
+    },
+    {
+      "league": "Premier League",
+      "home": "Arsenal",
+      "away": "Hull City",
+      "pick": "Arsenal Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1557457,
+      "kickoff": "2026-11-07T15:00:00+00:00"
+    },
+    {
+      "league": "Premier League",
+      "home": "Fulham",
+      "away": "Newcastle",
+      "pick": "Fulham Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1557461,
+      "kickoff": "2026-11-07T15:00:00+00:00"
+    },
+    {
+      "league": "Premier League",
+      "home": "Nottingham Forest",
+      "away": "Manchester City",
+      "pick": "Manchester City Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1557465,
+      "kickoff": "2026-11-07T17:30:00+00:00"
     },
     {
       "league": "La Liga",
-      "home": "Sevilla",
-      "away": "Alaves",
-      "pick": "Sevilla Win",
+      "home": "Malaga",
+      "away": "Racing Santander",
+      "pick": "Racing Santander Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1570450,
-      "kickoff": "2026-11-06T20:00:00+00:00"
+      "fixture_id": 1570447,
+      "kickoff": "2026-11-07T13:00:00+00:00"
     },
     {
-      "league": "Serie A",
-      "home": "Venezia",
-      "away": "Udinese",
-      "pick": "Udinese Win",
+      "league": "La Liga",
+      "home": "Espanyol",
+      "away": "Deportivo La Coruna",
+      "pick": "Espanyol Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1550196,
-      "kickoff": "2026-11-06T19:45:00+00:00"
-    },
-    {
-      "league": "Bundesliga",
-      "home": "Hamburger SV",
-      "away": "Borussia Mönchengladbach",
-      "pick": "Hamburger SV Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1575218,
-      "kickoff": "2026-11-06T19:30:00+00:00"
-    },
-    {
-      "league": "Ligue 1",
-      "home": "Toulouse",
-      "away": "Strasbourg",
-      "pick": "Toulouse Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1552817,
-      "kickoff": "2026-11-06T19:45:00+00:00"
-    },
-    {
-      "league": "Serie A",
-      "home": "Cruzeiro",
-      "away": "Bahia",
-      "pick": "Cruzeiro Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1492444,
-      "kickoff": "2026-11-06T00:30:00+00:00"
+      "fixture_id": 1570446,
+      "kickoff": "2026-11-07T15:15:00+00:00"
     }
   ],
   "upcoming": {
