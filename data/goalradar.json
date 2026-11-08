@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-11-07T06:39:55.490714+00:00",
-  "date": "07 NOV 2026",
+  "updated_at": "2026-11-08T12:33:46.424493+00:00",
+  "date": "08 NOV 2026",
   "stats": {
-    "matches_today": 1449,
+    "matches_today": 1245,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
@@ -10,63 +10,63 @@
   "picks": [
     {
       "league": "Premier League",
-      "home": "Leeds",
-      "away": "Tottenham",
-      "pick": "Tottenham Win",
+      "home": "Brighton",
+      "away": "Brentford",
+      "pick": "Brighton Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557463,
-      "kickoff": "2026-11-07T12:30:00+00:00"
+      "fixture_id": 1557458,
+      "kickoff": "2026-11-08T14:00:00+00:00"
     },
     {
       "league": "Premier League",
-      "home": "Arsenal",
-      "away": "Hull City",
-      "pick": "Arsenal Win",
+      "home": "Crystal Palace",
+      "away": "Liverpool",
+      "pick": "Liverpool Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557457,
-      "kickoff": "2026-11-07T15:00:00+00:00"
+      "fixture_id": 1557459,
+      "kickoff": "2026-11-08T14:00:00+00:00"
     },
     {
       "league": "Premier League",
-      "home": "Fulham",
-      "away": "Newcastle",
-      "pick": "Fulham Win",
+      "home": "Ipswich",
+      "away": "Bournemouth",
+      "pick": "Bournemouth Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557461,
-      "kickoff": "2026-11-07T15:00:00+00:00"
+      "fixture_id": 1557462,
+      "kickoff": "2026-11-08T14:00:00+00:00"
     },
     {
       "league": "Premier League",
-      "home": "Nottingham Forest",
-      "away": "Manchester City",
-      "pick": "Manchester City Win",
+      "home": "Sunderland",
+      "away": "Chelsea",
+      "pick": "Chelsea Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1557465,
-      "kickoff": "2026-11-07T17:30:00+00:00"
+      "fixture_id": 1557466,
+      "kickoff": "2026-11-08T14:00:00+00:00"
+    },
+    {
+      "league": "Premier League",
+      "home": "Manchester United",
+      "away": "Aston Villa",
+      "pick": "Manchester United Win",
+      "type": "1X2",
+      "confidence": 35,
+      "fixture_id": 1557464,
+      "kickoff": "2026-11-08T16:30:00+00:00"
     },
     {
       "league": "La Liga",
-      "home": "Malaga",
-      "away": "Racing Santander",
-      "pick": "Racing Santander Win",
+      "home": "Elche",
+      "away": "Real Betis",
+      "pick": "Real Betis Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1570447,
-      "kickoff": "2026-11-07T13:00:00+00:00"
-    },
-    {
-      "league": "La Liga",
-      "home": "Espanyol",
-      "away": "Deportivo La Coruna",
-      "pick": "Espanyol Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1570446,
-      "kickoff": "2026-11-07T15:15:00+00:00"
+      "fixture_id": 1570445,
+      "kickoff": "2026-11-08T13:00:00+00:00"
     }
   ],
   "upcoming": {
