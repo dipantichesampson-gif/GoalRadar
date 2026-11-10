@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-11-09T14:51:24.556503+00:00",
-  "date": "09 NOV 2026",
+  "updated_at": "2026-11-10T14:03:24.150896+00:00",
+  "date": "10 NOV 2026",
   "stats": {
-    "matches_today": 96,
-    "analyzed": 6,
+    "matches_today": 115,
+    "analyzed": 5,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
       "league": "Premier League",
-      "home": "Erchim",
-      "away": "Khovd Western",
-      "pick": "Erchim Win",
+      "home": "Arnett Gardens",
+      "away": "Waterhouse",
+      "pick": "Arnett Gardens Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1646995,
-      "kickoff": "2026-11-09T05:00:00+00:00"
+      "fixture_id": 1649055,
+      "kickoff": "2026-11-10T01:00:00+00:00"
+    },
+    {
+      "league": "Primera Premier",
+      "home": "Chapulineros",
+      "away": "Cordobés",
+      "pick": "Analysis pending",
+      "type": "Match",
+      "confidence": 0,
+      "fixture_id": 1636031,
+      "kickoff": "2026-11-10T02:05:00+00:00"
     },
     {
       "league": "Premier League",
-      "home": "Ulaangom City",
-      "away": "Khovd",
-      "pick": "Khovd Win",
+      "home": "Central Stallions",
+      "away": "Hunters",
+      "pick": "Central Stallions Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1646996,
-      "kickoff": "2026-11-09T08:00:00+00:00"
-    },
-    {
-      "league": "Frauen Bundesliga",
-      "home": "FC Koln W",
-      "away": "RB Leipzig W",
-      "pick": "RB Leipzig W Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1593167,
-      "kickoff": "2026-11-09T17:00:00+00:00"
-    },
-    {
-      "league": "Non League Premier - Southern Central",
-      "home": "Redditch United",
-      "away": "Peterborough Sports",
-      "pick": "Peterborough Sports Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1596991,
-      "kickoff": "2026-11-09T19:45:00+00:00"
+      "fixture_id": 1646997,
+      "kickoff": "2026-11-10T05:00:00+00:00"
     },
     {
       "league": "Premier League",
-      "home": "Chapelton",
-      "away": "Racing United",
-      "pick": "Racing United Win",
+      "home": "Deren",
+      "away": "Ulaanbaatar",
+      "pick": "Ulaanbaatar Win",
       "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1649427,
-      "kickoff": "2026-11-09T22:05:00+00:00"
+      "confidence": 50,
+      "fixture_id": 1646998,
+      "kickoff": "2026-11-10T08:00:00+00:00"
     },
     {
-      "league": "Liga MX",
-      "home": "Club Queretaro",
-      "away": "Puebla",
-      "pick": "Club Queretaro Win",
+      "league": "Ligue 1",
+      "home": "TP Mazembe",
+      "away": "Don Bosco",
+      "pick": "TP Mazembe Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1551036,
-      "kickoff": "2026-11-09T00:00:00+00:00"
+      "fixture_id": 1644886,
+      "kickoff": "2026-11-10T13:00:00+00:00"
+    },
+    {
+      "league": "Non League Premier - Southern South",
+      "home": "Wimborne Town",
+      "away": "Poole Town",
+      "pick": "Wimborne Town Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1597453,
+      "kickoff": "2026-11-10T19:30:00+00:00"
     }
   ],
   "upcoming": {
