@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-11-10T14:03:24.150896+00:00",
-  "date": "10 NOV 2026",
+  "updated_at": "2026-11-11T13:20:34.912499+00:00",
+  "date": "11 NOV 2026",
   "stats": {
-    "matches_today": 115,
-    "analyzed": 5,
+    "matches_today": 200,
+    "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Premier League",
-      "home": "Arnett Gardens",
-      "away": "Waterhouse",
-      "pick": "Arnett Gardens Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1649055,
-      "kickoff": "2026-11-10T01:00:00+00:00"
-    },
-    {
-      "league": "Primera Premier",
-      "home": "Chapulineros",
-      "away": "Cordobés",
-      "pick": "Analysis pending",
-      "type": "Match",
-      "confidence": 0,
-      "fixture_id": 1636031,
-      "kickoff": "2026-11-10T02:05:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Central Stallions",
-      "away": "Hunters",
-      "pick": "Central Stallions Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1646997,
-      "kickoff": "2026-11-10T05:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Deren",
-      "away": "Ulaanbaatar",
-      "pick": "Ulaanbaatar Win",
+      "league": "SAFF Championship",
+      "home": "India",
+      "away": "Maldives",
+      "pick": "India Win",
       "type": "1X2",
       "confidence": 50,
-      "fixture_id": 1646998,
-      "kickoff": "2026-11-10T08:00:00+00:00"
+      "fixture_id": 1648706,
+      "kickoff": "2026-11-11T09:30:00+00:00"
     },
     {
       "league": "Ligue 1",
-      "home": "TP Mazembe",
-      "away": "Don Bosco",
-      "pick": "TP Mazembe Win",
+      "home": "Blessing",
+      "away": "Saint-Luc",
+      "pick": "Blessing Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1644886,
-      "kickoff": "2026-11-10T13:00:00+00:00"
+      "fixture_id": 1644892,
+      "kickoff": "2026-11-11T12:00:00+00:00"
     },
     {
-      "league": "Non League Premier - Southern South",
-      "home": "Wimborne Town",
-      "away": "Poole Town",
-      "pick": "Wimborne Town Win",
+      "league": "Ligue 1",
+      "home": "New Jack",
+      "away": "FC Mk de Kinshasa",
+      "pick": "FC Mk de Kinshasa Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1597453,
-      "kickoff": "2026-11-10T19:30:00+00:00"
+      "fixture_id": 1646210,
+      "kickoff": "2026-11-11T12:00:00+00:00"
+    },
+    {
+      "league": "Ligue 1",
+      "home": "CS Manika",
+      "away": "Butras",
+      "pick": "CS Manika Win",
+      "type": "1X2",
+      "confidence": 50,
+      "fixture_id": 1644890,
+      "kickoff": "2026-11-11T13:00:00+00:00"
+    },
+    {
+      "league": "Ligue 1",
+      "home": "Lubumbashi Sport",
+      "away": "Malole",
+      "pick": "Lubumbashi Sport Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1644893,
+      "kickoff": "2026-11-11T13:00:00+00:00"
+    },
+    {
+      "league": "Ligue 1",
+      "home": "Tanganyika",
+      "away": "AS New Soger",
+      "pick": "Tanganyika Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1644894,
+      "kickoff": "2026-11-11T13:00:00+00:00"
     }
   ],
   "upcoming": {
