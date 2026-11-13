@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-11-12T14:25:16.662994+00:00",
-  "date": "12 NOV 2026",
+  "updated_at": "2026-11-13T13:44:38.450198+00:00",
+  "date": "13 NOV 2026",
   "stats": {
-    "matches_today": 117,
+    "matches_today": 221,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Australian Championship",
-      "home": "Wests APIA",
-      "away": "Adelaide City",
-      "pick": "Wests APIA Win",
+      "league": "Premier League",
+      "home": "Ulaanbaatar",
+      "away": "Hunters",
+      "pick": "Ulaanbaatar Win",
       "type": "1X2",
       "confidence": 50,
-      "fixture_id": 1640360,
-      "kickoff": "2026-11-12T08:30:00+00:00"
-    },
-    {
-      "league": "Ligue 1",
-      "home": "Tanganyika",
-      "away": "AS New Soger",
-      "pick": "Tanganyika Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1644894,
-      "kickoff": "2026-11-12T10:30:00+00:00"
-    },
-    {
-      "league": "Ligue 1",
-      "home": "Céleste",
-      "away": "Maniema Union",
-      "pick": "Céleste Win",
-      "type": "1X2",
-      "confidence": 35,
-      "fixture_id": 1646213,
-      "kickoff": "2026-11-12T12:00:00+00:00"
+      "fixture_id": 1646999,
+      "kickoff": "2026-11-13T05:00:00+00:00"
     },
     {
       "league": "Premier League",
-      "home": "Kigezi HomeBoyz",
-      "away": "Vipers",
-      "pick": "Vipers Win",
+      "home": "Deren",
+      "away": "Central Stallions",
+      "pick": "Deren Win",
       "type": "1X2",
-      "confidence": 50,
-      "fixture_id": 1635249,
-      "kickoff": "2026-11-12T13:00:00+00:00"
+      "confidence": 45,
+      "fixture_id": 1647000,
+      "kickoff": "2026-11-13T08:00:00+00:00"
+    },
+    {
+      "league": "Australian Championship",
+      "home": "Oakleigh Cannons",
+      "away": "Marconi Stallions",
+      "pick": "Oakleigh Cannons Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1640361,
+      "kickoff": "2026-11-13T08:30:00+00:00"
+    },
+    {
+      "league": "Australian Championship",
+      "home": "Preston Lions",
+      "away": "Lions",
+      "pick": "Lions Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1640362,
+      "kickoff": "2026-11-13T08:30:00+00:00"
     },
     {
       "league": "Ligue 1",
-      "home": "Dauphins Noirs",
-      "away": "Novakin",
-      "pick": "Dauphins Noirs Win",
+      "home": "Don Bosco",
+      "away": "Saint Eloi Lupopo",
+      "pick": "Don Bosco Win",
       "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1646211,
-      "kickoff": "2026-11-12T13:00:00+00:00"
+      "confidence": 35,
+      "fixture_id": 1644897,
+      "kickoff": "2026-11-13T13:00:00+00:00"
     },
     {
       "league": "Ligue 1",
-      "home": "Etoile de Kivu",
-      "away": "FC Renaissance",
-      "pick": "Etoile de Kivu Win",
+      "home": "Simba",
+      "away": "TP Mazembe",
+      "pick": "TP Mazembe Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1646214,
-      "kickoff": "2026-11-12T13:00:00+00:00"
+      "fixture_id": 1644898,
+      "kickoff": "2026-11-13T13:00:00+00:00"
     }
   ],
   "upcoming": {
