@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-11-13T13:44:38.450198+00:00",
-  "date": "13 NOV 2026",
+  "updated_at": "2026-11-14T12:48:49.431491+00:00",
+  "date": "14 NOV 2026",
   "stats": {
-    "matches_today": 221,
+    "matches_today": 1053,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Premier League",
-      "home": "Ulaanbaatar",
-      "away": "Hunters",
-      "pick": "Ulaanbaatar Win",
+      "league": "Serie A",
+      "home": "Mirassol",
+      "away": "Atletico-MG",
+      "pick": "Atletico-MG Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1492455,
+      "kickoff": "2026-11-14T21:30:00+00:00"
+    },
+    {
+      "league": "Serie A",
+      "home": "Chapecoense-sc",
+      "away": "Vasco DA Gama",
+      "pick": "Vasco DA Gama Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1492312,
+      "kickoff": "2026-11-14T23:30:00+00:00"
+    },
+    {
+      "league": "Liga Premier Serie A",
+      "home": "Guerreros del Pacifico",
+      "away": "FC Santiago",
+      "pick": "FC Santiago Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1631805,
+      "kickoff": "2026-11-14T01:00:00+00:00"
+    },
+    {
+      "league": "Primera Premier",
+      "home": "Tigres de Alica",
+      "away": "Jaguares de Chiapas",
+      "pick": "Tigres de Alica Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1636033,
+      "kickoff": "2026-11-14T01:30:00+00:00"
+    },
+    {
+      "league": "Primera Premier",
+      "home": "Reboceros La Piedad",
+      "away": "Racing de Veracruz",
+      "pick": "Racing de Veracruz Win",
       "type": "1X2",
       "confidence": 50,
-      "fixture_id": 1646999,
-      "kickoff": "2026-11-13T05:00:00+00:00"
-    },
-    {
-      "league": "Premier League",
-      "home": "Deren",
-      "away": "Central Stallions",
-      "pick": "Deren Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1647000,
-      "kickoff": "2026-11-13T08:00:00+00:00"
+      "fixture_id": 1636034,
+      "kickoff": "2026-11-14T02:00:00+00:00"
     },
     {
       "league": "Australian Championship",
-      "home": "Oakleigh Cannons",
-      "away": "Marconi Stallions",
-      "pick": "Oakleigh Cannons Win",
+      "home": "South Hobart",
+      "away": "Wollongong Wolves",
+      "pick": "Wollongong Wolves Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1640361,
-      "kickoff": "2026-11-13T08:30:00+00:00"
-    },
-    {
-      "league": "Australian Championship",
-      "home": "Preston Lions",
-      "away": "Lions",
-      "pick": "Lions Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1640362,
-      "kickoff": "2026-11-13T08:30:00+00:00"
-    },
-    {
-      "league": "Ligue 1",
-      "home": "Don Bosco",
-      "away": "Saint Eloi Lupopo",
-      "pick": "Don Bosco Win",
-      "type": "1X2",
-      "confidence": 35,
-      "fixture_id": 1644897,
-      "kickoff": "2026-11-13T13:00:00+00:00"
-    },
-    {
-      "league": "Ligue 1",
-      "home": "Simba",
-      "away": "TP Mazembe",
-      "pick": "TP Mazembe Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1644898,
-      "kickoff": "2026-11-13T13:00:00+00:00"
+      "fixture_id": 1640363,
+      "kickoff": "2026-11-14T04:00:00+00:00"
     }
   ],
   "upcoming": {
