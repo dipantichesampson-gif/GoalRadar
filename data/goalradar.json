@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-11-14T12:48:49.431491+00:00",
-  "date": "14 NOV 2026",
+  "updated_at": "2026-11-15T13:15:44.001607+00:00",
+  "date": "15 NOV 2026",
   "stats": {
-    "matches_today": 1053,
+    "matches_today": 825,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Serie A",
-      "home": "Mirassol",
-      "away": "Atletico-MG",
-      "pick": "Atletico-MG Win",
+      "league": "Liga Premier Serie B",
+      "home": "Deportivo Ayense",
+      "away": "Irapuato II",
+      "pick": "Deportivo Ayense Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1492455,
-      "kickoff": "2026-11-14T21:30:00+00:00"
-    },
-    {
-      "league": "Serie A",
-      "home": "Chapecoense-sc",
-      "away": "Vasco DA Gama",
-      "pick": "Vasco DA Gama Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1492312,
-      "kickoff": "2026-11-14T23:30:00+00:00"
+      "fixture_id": 1631643,
+      "kickoff": "2026-11-15T00:00:00+00:00"
     },
     {
       "league": "Liga Premier Serie A",
-      "home": "Guerreros del Pacifico",
-      "away": "FC Santiago",
-      "pick": "FC Santiago Win",
+      "home": "Dragones de Oaxaca",
+      "away": "Guerreros",
+      "pick": "Dragones de Oaxaca Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1631805,
-      "kickoff": "2026-11-14T01:00:00+00:00"
+      "fixture_id": 1631811,
+      "kickoff": "2026-11-15T00:00:00+00:00"
+    },
+    {
+      "league": "Liga Premier Serie A",
+      "home": "Halcones Negros",
+      "away": "Acatlan",
+      "pick": "Acatlan Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1631812,
+      "kickoff": "2026-11-15T00:00:00+00:00"
     },
     {
       "league": "Primera Premier",
-      "home": "Tigres de Alica",
-      "away": "Jaguares de Chiapas",
-      "pick": "Tigres de Alica Win",
+      "home": "Lobos ULMX",
+      "away": "Deportiva Venados",
+      "pick": "Lobos ULMX Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1636033,
-      "kickoff": "2026-11-14T01:30:00+00:00"
+      "fixture_id": 1636037,
+      "kickoff": "2026-11-15T01:00:00+00:00"
     },
     {
       "league": "Primera Premier",
-      "home": "Reboceros La Piedad",
-      "away": "Racing de Veracruz",
-      "pick": "Racing de Veracruz Win",
+      "home": "Los Cabos United",
+      "away": "Chapulineros",
+      "pick": "Chapulineros Win",
       "type": "1X2",
       "confidence": 50,
-      "fixture_id": 1636034,
-      "kickoff": "2026-11-14T02:00:00+00:00"
+      "fixture_id": 1636038,
+      "kickoff": "2026-11-15T03:00:00+00:00"
     },
     {
       "league": "Australian Championship",
-      "home": "South Hobart",
-      "away": "Wollongong Wolves",
-      "pick": "Wollongong Wolves Win",
+      "home": "Broadmeadow Magic",
+      "away": "Avondale",
+      "pick": "Broadmeadow Magic Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1640363,
-      "kickoff": "2026-11-14T04:00:00+00:00"
+      "fixture_id": 1640366,
+      "kickoff": "2026-11-15T04:00:00+00:00"
     }
   ],
   "upcoming": {
