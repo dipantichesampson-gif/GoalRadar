@@ -1,72 +1,72 @@
 {
-  "updated_at": "2026-11-15T13:15:44.001607+00:00",
-  "date": "15 NOV 2026",
+  "updated_at": "2026-11-16T14:27:13.720258+00:00",
+  "date": "16 NOV 2026",
   "stats": {
-    "matches_today": 825,
+    "matches_today": 83,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
     {
-      "league": "Liga Premier Serie B",
-      "home": "Deportivo Ayense",
-      "away": "Irapuato II",
-      "pick": "Deportivo Ayense Win",
+      "league": "USL Championship",
+      "home": "New Mexico United",
+      "away": "Sacramento Republic",
+      "pick": "Sacramento Republic Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1631643,
-      "kickoff": "2026-11-15T00:00:00+00:00"
+      "fixture_id": 1649528,
+      "kickoff": "2026-11-16T00:00:00+00:00"
     },
     {
-      "league": "Liga Premier Serie A",
-      "home": "Dragones de Oaxaca",
-      "away": "Guerreros",
-      "pick": "Dragones de Oaxaca Win",
+      "league": "Premier Division",
+      "home": "Pigotts Bullets",
+      "away": "Freemansville",
+      "pick": "Pigotts Bullets Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1631811,
-      "kickoff": "2026-11-15T00:00:00+00:00"
+      "fixture_id": 1650010,
+      "kickoff": "2026-11-16T00:00:00+00:00"
     },
     {
-      "league": "Liga Premier Serie A",
-      "home": "Halcones Negros",
-      "away": "Acatlan",
-      "pick": "Acatlan Win",
+      "league": "Ligue 1",
+      "home": "Maniema Union",
+      "away": "Dauphins Noirs",
+      "pick": "Maniema Union Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1631812,
-      "kickoff": "2026-11-15T00:00:00+00:00"
+      "fixture_id": 1644901,
+      "kickoff": "2026-11-16T13:00:00+00:00"
     },
     {
-      "league": "Primera Premier",
-      "home": "Lobos ULMX",
-      "away": "Deportiva Venados",
-      "pick": "Lobos ULMX Win",
+      "league": "Ligue 1",
+      "home": "Saint-Luc",
+      "away": "Sanga Balende",
+      "pick": "Saint-Luc Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1636037,
-      "kickoff": "2026-11-15T01:00:00+00:00"
+      "fixture_id": 1644903,
+      "kickoff": "2026-11-16T13:00:00+00:00"
     },
     {
-      "league": "Primera Premier",
-      "home": "Los Cabos United",
-      "away": "Chapulineros",
-      "pick": "Chapulineros Win",
+      "league": "Frauen Bundesliga",
+      "home": "Stuttgart W",
+      "away": "Bayer Leverkusen W",
+      "pick": "Bayer Leverkusen W Win",
       "type": "1X2",
       "confidence": 50,
-      "fixture_id": 1636038,
-      "kickoff": "2026-11-15T03:00:00+00:00"
+      "fixture_id": 1593174,
+      "kickoff": "2026-11-16T17:00:00+00:00"
     },
     {
-      "league": "Australian Championship",
-      "home": "Broadmeadow Magic",
-      "away": "Avondale",
-      "pick": "Broadmeadow Magic Win",
+      "league": "Division di Honor",
+      "home": "Estrella",
+      "away": "Sporting",
+      "pick": "Sporting Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1640366,
-      "kickoff": "2026-11-15T04:00:00+00:00"
+      "fixture_id": 1647126,
+      "kickoff": "2026-11-16T00:00:00+00:00"
     }
   ],
   "upcoming": {
