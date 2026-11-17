@@ -1,13 +1,23 @@
 {
-  "updated_at": "2026-11-16T14:27:13.720258+00:00",
-  "date": "16 NOV 2026",
+  "updated_at": "2026-11-17T15:18:50.232965+00:00",
+  "date": "17 NOV 2026",
   "stats": {
-    "matches_today": 83,
+    "matches_today": 202,
     "analyzed": 6,
     "high_confidence": 0,
     "upcoming_leagues": 0
   },
   "picks": [
+    {
+      "league": "Premier League",
+      "home": "Waterhouse",
+      "away": "Mount Pleasant Academy",
+      "pick": "Mount Pleasant Academy Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1650163,
+      "kickoff": "2026-11-17T01:00:00+00:00"
+    },
     {
       "league": "USL Championship",
       "home": "New Mexico United",
@@ -16,57 +26,47 @@
       "type": "1X2",
       "confidence": 45,
       "fixture_id": 1649528,
-      "kickoff": "2026-11-16T00:00:00+00:00"
+      "kickoff": "2026-11-17T02:00:00+00:00"
     },
     {
-      "league": "Premier Division",
-      "home": "Pigotts Bullets",
-      "away": "Freemansville",
-      "pick": "Pigotts Bullets Win",
+      "league": "Primera Premier",
+      "home": "Irapuato",
+      "away": "Celaya",
+      "pick": "Irapuato Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1650010,
-      "kickoff": "2026-11-16T00:00:00+00:00"
+      "fixture_id": 1636040,
+      "kickoff": "2026-11-17T02:05:00+00:00"
     },
     {
       "league": "Ligue 1",
-      "home": "Maniema Union",
-      "away": "Dauphins Noirs",
-      "pick": "Maniema Union Win",
+      "home": "Butras",
+      "away": "Tanganyika",
+      "pick": "Tanganyika Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1644901,
-      "kickoff": "2026-11-16T13:00:00+00:00"
+      "fixture_id": 1644904,
+      "kickoff": "2026-11-17T11:00:00+00:00"
+    },
+    {
+      "league": "Premier League",
+      "home": "Kitara",
+      "away": "Blacks Power",
+      "pick": "Kitara Win",
+      "type": "1X2",
+      "confidence": 45,
+      "fixture_id": 1635323,
+      "kickoff": "2026-11-17T13:00:00+00:00"
     },
     {
       "league": "Ligue 1",
-      "home": "Saint-Luc",
-      "away": "Sanga Balende",
-      "pick": "Saint-Luc Win",
+      "home": "AS New Soger",
+      "away": "Lubumbashi Sport",
+      "pick": "Lubumbashi Sport Win",
       "type": "1X2",
       "confidence": 45,
-      "fixture_id": 1644903,
-      "kickoff": "2026-11-16T13:00:00+00:00"
-    },
-    {
-      "league": "Frauen Bundesliga",
-      "home": "Stuttgart W",
-      "away": "Bayer Leverkusen W",
-      "pick": "Bayer Leverkusen W Win",
-      "type": "1X2",
-      "confidence": 50,
-      "fixture_id": 1593174,
-      "kickoff": "2026-11-16T17:00:00+00:00"
-    },
-    {
-      "league": "Division di Honor",
-      "home": "Estrella",
-      "away": "Sporting",
-      "pick": "Sporting Win",
-      "type": "1X2",
-      "confidence": 45,
-      "fixture_id": 1647126,
-      "kickoff": "2026-11-16T00:00:00+00:00"
+      "fixture_id": 1644906,
+      "kickoff": "2026-11-17T13:00:00+00:00"
     }
   ],
   "upcoming": {
